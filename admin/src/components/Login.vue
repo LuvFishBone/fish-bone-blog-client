@@ -1,11 +1,10 @@
 <template>
-    <div id="app">
-       <router-view></router-view>
+    <div>
+        login page
     </div>
 </template>
 
 <script>
-    //console.log(process.env.NODE_ENV);
     export default{
         
     }

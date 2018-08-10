@@ -11,7 +11,8 @@ module.exports = webpackMerge(webpackBase, {
     devtool: 'source-map',
     output: {
         filename: 'js/[name].[chunkhash].js',
-        path: path.resolve(__dirname, '../dist')
+        path: path.resolve(__dirname, '../dist'),
+        publicPath: './'
     },
     plugins:[
         new webpack.HashedModuleIdsPlugin(),
@@ -19,15 +20,16 @@ module.exports = webpackMerge(webpackBase, {
         new HtmlWebpackPlugin({
             title: 'fish bone front-end admin',
             inject: true,
-            template: path.resolve(__dirname ,'../index.html')
+            template: path.resolve(__dirname ,'../index.html'),
+            //favicon: './favicon.ico'
         }),
-        new CopyWebpackPlugin([
-            {
-              from: path.resolve(__dirname, '../src/static'),
-              to: path.resolve(__dirname, '../dist'),
-              ignore: ['.*']
-            }
-        ])
+        // new CopyWebpackPlugin([
+        //     {
+        //       from: path.resolve(__dirname, '../src/static'),
+        //       to: path.resolve(__dirname, '../dist'),
+        //       ignore: ['.*']
+        //     }
+        // ])
     ],
     optimization: {
         runtimeChunk: 'single',

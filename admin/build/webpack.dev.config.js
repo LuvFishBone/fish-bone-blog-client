@@ -8,8 +8,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = webpackMerge(webpackBase, {
     mode: 'development',
     devServer: {
+        historyApiFallback:true,
         contentBase: path.resolve(__dirname, '../dist'),
         hot: true,
+        host: '0.0.0.0',
         port: 8080
     },
     devtool: 'inline-source-map',
@@ -19,7 +21,8 @@ module.exports = webpackMerge(webpackBase, {
         new HtmlWebpackPlugin({
             title: 'fish bone front-end admin',
             inject: true,
-            template: path.resolve(__dirname ,'../index.html')
+            template: path.resolve(__dirname ,'../index.html'),
+            //favicon: './favicon.ico',
         }),
 
     ],
