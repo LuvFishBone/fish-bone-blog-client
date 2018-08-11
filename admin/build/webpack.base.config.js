@@ -12,15 +12,28 @@ module.exports = {
     module: {
        rules:[
            {
+               test: /\.css$/,
+               use: ['style-loader','css-loader']
+           },
+           {
                test: /\.js$/,
                use: [
                    'babel-loader'
                ],
                exclude: /node_modules/
            },
+           { test: /iview.src.*?js$/, loader: 'babel-loader' },
            {
                test: /\.vue$/,
-               use: 'vue-loader'
+               use: [
+                   'vue-loader',
+                   {
+                       loader: 'iview-loader',
+                       options: {
+                           prefix: false
+                       }
+                   }
+                ]
            },
            {
                test: /\.less$/,
@@ -41,6 +54,10 @@ module.exports = {
                 use: [
                     'file-loader'
                 ]
+            },
+            {
+                test: /\.(html|tpl)$/,
+                loader: 'html-loader'
             }
             
        ]

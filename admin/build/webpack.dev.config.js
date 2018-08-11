@@ -12,7 +12,10 @@ module.exports = webpackMerge(webpackBase, {
         contentBase: path.resolve(__dirname, '../dist'),
         hot: true,
         host: '0.0.0.0',
-        port: 8080
+        port: 8080,
+        proxy: {
+            '/api': 'http://localhost:8081'
+        }
     },
     devtool: 'inline-source-map',
     plugins: [
@@ -24,6 +27,9 @@ module.exports = webpackMerge(webpackBase, {
             template: path.resolve(__dirname ,'../index.html'),
             //favicon: './favicon.ico',
         }),
+        new webpack.ProvidePlugin({
+            axios: 'axios'
+        })
 
     ],
     output: {

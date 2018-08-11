@@ -1,6 +1,6 @@
 <template>
     <div>
-        List page
+        发布走势
     </div>
 </template>
 

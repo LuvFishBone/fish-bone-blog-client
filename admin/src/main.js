@@ -1,15 +1,27 @@
 require("babel-polyfill");
 
-import '@/assets/style/app.less'
-import Vue from 'vue'
-import App from '@/App'
-import router from './router'
+import Vue from 'vue';
+import iView from 'iview';
+import App from '@/App';
+import router from './router';
+
+import '@/assets/style/app.less';
+import 'iview/dist/styles/iview.css';
+
+router.beforeEach((to, from, next) => {
+    iView.LoadingBar.start();
+    next();
+});
+
+router.afterEach((to, from, next) => {
+    iView.LoadingBar.finish();
+    window.scrollTo(0, 0);
+});
+
+Vue.use(iView);
 
 new Vue({
     el: '#app',
     router,
-    template: '<App />',
-    components: {
-        App
-    }
+    render: h => h(App)
 })

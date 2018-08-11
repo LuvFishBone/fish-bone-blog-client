@@ -1,6 +1,6 @@
 <template>
     <div>
-        login page
+        article publish
     </div>
 </template>
 

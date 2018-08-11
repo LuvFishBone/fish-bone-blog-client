@@ -23,6 +23,9 @@ module.exports = webpackMerge(webpackBase, {
             template: path.resolve(__dirname ,'../index.html'),
             //favicon: './favicon.ico'
         }),
+        new webpack.ProvidePlugin({
+            axios: 'axios'
+        })
         // new CopyWebpackPlugin([
         //     {
         //       from: path.resolve(__dirname, '../src/static'),
