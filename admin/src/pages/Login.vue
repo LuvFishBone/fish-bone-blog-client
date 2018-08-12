@@ -83,6 +83,7 @@
         justify-content: center;
         align-items: center;
         background: url('../assets/img/login_bg.jpg');
+        background-size: cover; 
         .login-form{
             background: rgba(0, 0, 0, .5);
             padding: 19px 5px 0 17px;
