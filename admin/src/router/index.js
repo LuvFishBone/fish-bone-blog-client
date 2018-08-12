@@ -15,30 +15,37 @@ const router = new Router({
     routes: [
         {
             path: '/login',
+            name: 'login',
             component: Login
         },
         {
             path: '/dashboard',
+            name: 'dashboard',
             component: Dashboard
         },
         {
             path: '/articlelist',
+            name: 'articlelist',
             component: ArticleList
         },
         {
             path: '/publishAnalyze',
+            name: 'publishAnalyze',
             component: PublishAnalyze
         },
         {
             path: '/publishArticle',
+            name: 'publishArticle',
             component: PublishArticle
         },
         {
             path: '/tags',
+            name: 'tags',
             component: Tags
         },
         {
             path: '/about',
+            name: 'about',
             component: About
         },
         {

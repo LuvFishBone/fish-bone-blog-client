@@ -1,12 +1,15 @@
 <template>
-    <div>
-        Artiles List page
-    </div>
+    <Layout>
+        Article List
+    </Layout>
 </template>
 
 <script>
+    import Layout from '@/components/Layout'
     export default{
-        
+       components:{
+           Layout
+       } 
     }
 </script>
 

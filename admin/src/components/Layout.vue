@@ -15,8 +15,11 @@
 </template>
 
 <script>
+    import { mapMutations } from 'vuex'
     import LeftMenu from './LeftMenu'
     import Header from './Header'
+    import { MENU_NAME_SELECTED } from '@/store/mutation-types'
+
     export default {
         data () {
             return {
@@ -31,10 +34,13 @@
           
         },
         methods: {
-
+            ...mapMutations({
+                setMenuSelectedName: MENU_NAME_SELECTED
+            })
         },
         mounted(){
-          //this.$refs.menuLeft.toggleCollapse();
+          const routeName = this.$route.name
+          this.setMenuSelectedName(routeName)
         }
     }
 </script>

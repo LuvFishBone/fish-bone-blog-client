@@ -1,12 +1,15 @@
 <template>
-    <div>
-        ABOUT ME
-    </div>
+    <Layout>
+        About me
+    </Layout>
 </template>
 
 <script>
+    import Layout from '@/components/Layout'
     export default{
-        
+       components:{
+           Layout
+       } 
     }
 </script>
 

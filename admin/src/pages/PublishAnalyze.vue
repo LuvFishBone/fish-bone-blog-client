@@ -1,12 +1,15 @@
 <template>
-    <div>
-        发布走势
-    </div>
+    <Layout>
+        publish analyze
+    </Layout>
 </template>
 
 <script>
+    import Layout from '@/components/Layout'
     export default{
-        
+       components:{
+           Layout
+       } 
     }
 </script>
 

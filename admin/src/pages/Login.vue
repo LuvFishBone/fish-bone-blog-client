@@ -41,8 +41,6 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        //console.log(this.formInline.user);
-                        //this.$Message.success('Success!');
                         this.login();
                     } else {
                         this.$Message.error('Fail!');
