@@ -6,8 +6,8 @@ import query from '../utils/query'
 import escape from '../utils/escape'
 
 class Articles {
-    async addArticle(title, tags, content) {
-        return await query(`INSERT INTO ARTICLE SET title='${title}',tags=${tags},createTime=NOW(),publishTime=NOW(),content=${content}`)
+    async addArticle(title, tags, content, isPublished) {
+        return await query(`INSERT INTO ARTICLE SET title='${title}',tags='${tags}',createTime=NOW(),publishTime=NOW(),content='${content}',isPublished=${isPublished}`)
     }
 
     async getAllArticles() {

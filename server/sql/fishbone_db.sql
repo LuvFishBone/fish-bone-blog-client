@@ -63,7 +63,7 @@ LOCK TABLES `ARTICLE` WRITE;
 
 INSERT INTO `ARTICLE` (`id`, `title`, `tags`, `createTime`, `publishTime`, `content`, `isPublished`)
 VALUES
-	(220,'欢迎来到Ashen Blog!','Blog','2018-01-02 16:05:45','2018-01-02 16:07:26','Enjoy ur self here!\n\n<!-- more -->\n\n```js\nconsole.log(\'Hello World!\')\n```',1);
+	(1,'Welecome to Fishbone blog!','Blog','2018-01-02 16:05:45','2018-01-02 16:07:26','Enjoy ur self here!\n\n<!-- more -->\n\n```js\nconsole.log(\'Hello World!\')\n```',1);
 
 /*!40000 ALTER TABLE `ARTICLE` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -18,11 +18,11 @@ const router = new Router({
             name: 'login',
             component: Login
         },
-        {
-            path: '/dashboard',
-            name: 'dashboard',
-            component: Dashboard
-        },
+        // {
+        //     path: '/dashboard',
+        //     name: 'dashboard',
+        //     component: Dashboard
+        // },
         {
             path: '/articlelist',
             name: 'articlelist',
@@ -66,9 +66,9 @@ router.beforeEach((to, from, next) => {
             })
             .then(res => {
                 // token验证通过
-                const pathArr = ['/dashboard', '/articlelist', '/publishAnalyze', '/publishArticle', '/tags', '/about']
+                const pathArr = ['/publishAnalyze', '/articlelist', '/publishArticle', '/tags', '/about']
                 if (pathArr.indexOf(to.path) === -1) {
-                    next('dashboard')
+                    next('publishAnalyze')
                 }
                 else {
                     next()

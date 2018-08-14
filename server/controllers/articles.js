@@ -7,8 +7,8 @@ import Article from '../models/articles'
 class ArticleControllers {
 
     async addArticle(ctx) {
-        const {title, tags, content} = ctx.request.body
-        const res = await Article.addArticle({title, tags, content})
+        const {title, tags, content, isPublished} = ctx.request.body
+        const res = await Article.addArticle(title, tags, content, isPublished)
         ctx.body = res
     }
 

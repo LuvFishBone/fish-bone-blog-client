@@ -4,7 +4,7 @@
             <FormItem label="文章标题" prop="title">
                 <Row>
                     <Col span="8">
-                        <Input v-model="formData.title" placeholder="文章标题" clearable></Input>
+                        <Input v-model="formData.title" @on-change="addTitle" placeholder="文章标题" clearable></Input>
                     </Col>
                 </Row>
             </FormItem>
@@ -28,8 +28,8 @@
                 </Row>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit()"><Icon type="ios-paper-plane" size="16" /> 发布</Button>
-                <Button style="margin-left: 8px"><Icon type="ios-copy-outline" size="16" /> 保存(草稿)</Button>
+                <Button type="primary" @click="saveArticle()"><Icon type="ios-paper-plane" size="16" /> 发布</Button>
+                <Button @click="saveArticleAsDraft()" style="margin-left: 8px"><Icon type="ios-copy-outline" size="16" /> 保存(草稿)</Button>
             </FormItem>
         </Form>
     </Layout>
@@ -39,6 +39,8 @@
 
     import Layout from '@/components/Layout'
     import Edit from '@/components/Edit'
+    import { mapGetters, mapMutations, mapActions } from 'vuex'
+    import { ADD_ARTICLE, SET_ARTICLE_TITLE, SET_ARTICLE_TAGS, SET_ARTICLE_ISPUBLISHED, CLEAR_ARTICLE } from '../store/mutation-types'
 
     export default{
         data() {
@@ -58,23 +60,40 @@
             Edit
         },
         computed: {
-
+            ...mapGetters([
+                'getArticle'
+            ])
         },
         methods: {
             // randomTagColor: () => {
             //     const colors = ['default', 'primary', 'success', 'error', 'warning', 'magenta', 'red', 'volcano', 'orange', 'gold', 'yellow', 'lime', 'green', 'cyan', 'blue']
             //     return colors[Math.floor(Math.random()*15)]
             // },
+            ...mapMutations({
+                'setArticleTitle': SET_ARTICLE_TITLE,
+                'setArticleTags': SET_ARTICLE_TAGS,
+                'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
+                'clearArticle': CLEAR_ARTICLE
+            }),
+            ...mapActions([
+                'addArticle'
+            ]),
+            addTitle(event) {
+                const title = event.target.value
+                this.setArticleTitle(title)
+            },
             addTags(event) {
                 const tagname = event.target.value
                 if(!tagname) return
                 this.formData.tags.push(tagname)
+                const tags = this.formData.tags.join(',')
+                this.setArticleTags(tags)
                 event.target.value = ''
             },
             removeTag(index){
                 this.formData.tags.splice(index, 1)
             },
-            handleSubmit() {
+            saveArticle() {
                 const formdata = this.formData;
                 if(!formdata.title){
                     this.$Message.error('请填写标题!')
@@ -84,7 +103,24 @@
                     this.$Message.error('请添加Tag!')
                     return
                 }
-                console.log(this.formData)
+                if(!this.getArticle.content){
+                    this.$Message.error('请添加博客内容!')
+                    return
+                }
+                this.setArticleIsPublished(1)
+                this.addArticle().then(res =>{
+                    if(res.status === 200){
+                        this.$Notice.success({
+                            title: '提示',
+                            desc: '添加文章成功'
+                        })
+                        this.clearArticle()
+                        this.$refs['formData'].resetFields();
+                    }
+                })
+            },
+            saveArticleAsDraft() {
+                this.setArticleIsPublished(0)
             }
         }
     }

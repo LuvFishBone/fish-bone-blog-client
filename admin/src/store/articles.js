@@ -13,7 +13,26 @@ const getters = {
 }
 
 const actions = {
-    queryArticle: async function ({commit, state}, payload) {
+    addArticle: async function({commit, state}) {
+        try {
+            return await axios.post(
+                '/api/v1/articles/',
+                {
+                    ...state
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.fishboneToken}`
+                    }
+                }
+            )
+        }
+        catch (error) {
+            console.error(error.response.data.error)
+            return error; 
+        }
+    },
+    queryArticleById: async function ({commit, state}, payload) {
         try {
             await axios.put(
                 `/api/v1/articles/update/${payload.id}`,
@@ -32,7 +51,7 @@ const actions = {
             console.error(error.response.data.error)
         }
     },
-    updateArticle: async function ({commit, state}, payload) {
+    updateArticleById: async function ({commit, state}, payload) {
         try {
             await axios.put(
                 `/api/v1/articles/update/${payload.id}`,
@@ -54,6 +73,9 @@ const actions = {
 }
 
 const mutations = {
+    [mType.ADD_ARTICLE](state, payload){
+
+    },
     [mType.UPDATE_ARTICLE_BY_ID](state, payload){
         state = payload
     },
@@ -66,13 +88,21 @@ const mutations = {
     [mType.SET_ARTICLE_CONTENT](state, content){
         state.content = content
     },
-    [mType.SET_ARTICLE_ISPUBLISHED](state, payload){
-        state.isPublished = payload.isPublished
+    [mType.SET_ARTICLE_ISPUBLISHED](state, isPublished){
+        state.isPublished = isPublished
+    },
+    [mType.CLEAR_ARTICLE](state){
+        state.id = '',
+        state.title = '',
+        state.tags = '',
+        state.content = '',
+        state.isPublished = ''
     }
 }
 
 export default {
     state,
     getters,
-    mutations
+    mutations,
+    actions
 }

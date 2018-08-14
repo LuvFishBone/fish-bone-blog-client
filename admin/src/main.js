@@ -5,7 +5,7 @@ import iView from 'iview'
 import App from '@/App'
 import router from './router'
 import store from './store'
-
+import '../config/axios.config.js'
 import '@/assets/style/app.less'
 import 'iview/dist/styles/iview.css'
 
