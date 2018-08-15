@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
             })
             .then(res => {
                 // token验证通过
-                console.log(res)
+                //console.log(res)
                 const pathArr = ['/publishAnalyze', '/articlelist', '/publishArticle', '/tags', '/about']
                 if (pathArr.indexOf(to.path) === -1) {
                     next('publishAnalyze')
