@@ -17,7 +17,7 @@ app
         maxAge: 7 * 24 * 60 * 60,
         credentials: true,
         methods: 'GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE',
-        headers: 'Content-Type, Accept, Authorization'
+        headers: 'Content-Type, Accept, AuthToken'
     }))
     .use(logger())
     .use(bodyParser())

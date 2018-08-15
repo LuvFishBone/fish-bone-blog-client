@@ -3,9 +3,9 @@ require("babel-polyfill")
 import Vue from 'vue'
 import iView from 'iview'
 import App from '@/App'
+import '@/utils/axios.config.js'
 import router from './router'
 import store from './store'
-import '../config/axios.config.js'
 import '@/assets/style/app.less'
 import 'iview/dist/styles/iview.css'
 

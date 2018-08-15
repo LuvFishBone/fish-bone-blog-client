@@ -93,6 +93,18 @@
             removeTag(index){
                 this.formData.tags.splice(index, 1)
             },
+            addArticleRequest(type) {
+                this.addArticle().then(res =>{
+                    if(res.status === 200){
+                        this.$Notice.success({
+                            title: '提示',
+                            desc: '保存成功'
+                        })
+                        this.clearArticle()
+                        this.$refs['formData'].resetFields();
+                    }
+                })
+            },
             saveArticle() {
                 const formdata = this.formData;
                 if(!formdata.title){
@@ -108,19 +120,11 @@
                     return
                 }
                 this.setArticleIsPublished(1)
-                this.addArticle().then(res =>{
-                    if(res.status === 200){
-                        this.$Notice.success({
-                            title: '提示',
-                            desc: '添加文章成功'
-                        })
-                        this.clearArticle()
-                        this.$refs['formData'].resetFields();
-                    }
-                })
+                this.addArticleRequest();
             },
             saveArticleAsDraft() {
                 this.setArticleIsPublished(0)
+                this.addArticleRequest()
             }
         }
     }

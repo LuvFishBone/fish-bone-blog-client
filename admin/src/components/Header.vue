@@ -2,14 +2,14 @@
   <Header :style="{padding: 0}" class="layout-header-bar">
     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
     <div class="user-info">
-        <Menu class="user-info-menu" mode="horizontal" active-name="1">
-            <Submenu name="3">
+        <Menu class="user-info-menu" mode="horizontal" active-name="1" @on-select="handleMenuItemClick">
+            <Submenu name="user-menu">
                 <template slot="title">
                     <Icon type="ios-contact" size="24" />FishBone
                 </template>
                 <MenuGroup title="操作">
-                    <MenuItem name="3-1">修改密码</MenuItem>
-                    <MenuItem name="3-2">退出登录</MenuItem>
+                    <MenuItem name="updatePwd">修改密码</MenuItem>
+                    <MenuItem name="loginOut">退出登录</MenuItem>
                 </MenuGroup>
             </Submenu>
         </Menu>
@@ -19,22 +19,34 @@
 
 <script>
     export default{
-        data(){
+        data() {
           return {
             isCollapsed: false
           }
         },
         computed: {
-          rotateIcon () {
+          rotateIcon() {
               return [
                 'menu-icon',
                 this.isCollapsed ? 'rotate-icon' : ''
               ];
           },
-          collapsedSider () {
+          collapsedSider() {
             this.$refs.menuLeft.toggleCollapse();
           }
+      },
+      methods: {
+        updatePwd() {
+          console.log('go to update pwd')
+        },
+        loginOut() {
+          localStorage.clear('AuthToken')
+          this.$router.push('/')
+        },
+        handleMenuItemClick (name) {
+          this[name]()
         }
+      }
     }
 </script>
 

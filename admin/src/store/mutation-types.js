@@ -1,6 +1,5 @@
 export const MENU_NAME_SELECTED = 'MENU_NAME_SELECTED'
 
-
 /*article mutation*/
 export const SET_ARTICLE_TITLE = 'SET_ARTICLE_TITLE'
 

@@ -4,7 +4,7 @@ const state = {
     id: '',
     title: '',
     tags: '',
-    content: 'test',
+    content: '',
     isPublished: ''
 }
 
@@ -19,11 +19,6 @@ const actions = {
                 '/api/v1/articles/',
                 {
                     ...state
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.fishboneToken}`
-                    }
                 }
             )
         }
@@ -38,11 +33,6 @@ const actions = {
                 `/api/v1/articles/update/${payload.id}`,
                 {
                     ...payload
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.fishboneToken}`
-                    }
                 }
             )
             commit(mType.UPDATE_ARTICLE_BY_ID, payload)
@@ -58,11 +48,6 @@ const actions = {
                 {
                     ...payload
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.fishboneToken}`
-                    }
-                }
             )
             commit(mType.UPDATE_ARTICLE_BY_ID, payload)
         }

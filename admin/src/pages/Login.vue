@@ -59,11 +59,12 @@
                 .then(res => {
                     const data = res.data
                     console.log('login success, response data->', data)
-                    localStorage.setItem('fishboneToken', data)
+                    localStorage.setItem('AuthToken', data)
                     console.log(this.$router)
-                    this.$router.push('/dashboard')
+                    this.$router.push('/publishAnalyze')
                 })
                 .catch(err => {
+                    console.log(err)
                     const errorMsg = err.response.data.error
                     this.$Message.error(errorMsg);
                 })

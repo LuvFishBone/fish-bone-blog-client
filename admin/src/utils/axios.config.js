@@ -1,25 +1,35 @@
 import axios from 'axios'
+import Vue from 'vue'
 
-axios.interceptors.request.use(config=> {
+const AuthToken = 'AuthToken'
+
+axios.interceptors.request.use( config => {
+    config.headers[AuthToken] = `Bearer ${localStorage.AuthToken}`
     return config;
-}, err=> {
+}, err => {
     console.log({message: '请求超时!'});
-    return Promise.resolve(err);
+    return Promise.reject(err);
 })
 
 axios.interceptors.response.use(data => {
+    console.log(data)
     if (data.status && data.status == 200 && data.data.status == 'error') {
         console.log({message: data.data.msg});
         return;
     }
     return data;
     }, err => {
+        console.log(err)
     if (err.response.status == 504 || err.response.status == 404) {
         console.log({message: '服务器被吃了⊙﹏⊙∥'});
     } else if (err.response.status == 403) {
         console.log({message: '权限不足,请联系管理员!'});
     } else if(err.response.status == 401){
-        console.log({message: '权限不足,请联系管理员!'});
+        console.log({message: 'token验证失败!'});
+        Vue.prototype.$Notice.error({
+            title: '处理失败',
+            desc: 'token验证失败'
+        })
     }else {
         console.log({message: '未知错误!'});
     }
