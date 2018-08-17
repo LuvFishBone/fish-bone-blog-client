@@ -8,12 +8,23 @@
                     </Col>
                 </Row>
             </FormItem>
+            <formItem label="标签颜色">
+                <Row>
+                    <Col span="24">
+                        <RadioGroup v-model="currentTagColor" type="button">
+                            <Radio v-for="item in tagColors" :key="item.name" :label="item.label" >
+                                <span :style="{color: item.label}">{{item.name}}</span>
+                            </Radio>
+                        </RadioGroup>
+                    </Col>
+                </Row>
+            </formItem>
             <FormItem label="添加标签">
                 <Row :gutter="10">
                     <Col span="8">
                         <Input v-model="formData.tag" @on-enter="addTags" placeholder="添加标签,按Enter结束" clearable></Input>
                     </Col>
-                    <Col span="10">
+                    <Col span="8">
                         <span v-for="(item, index) in formData.tags" :key="index">
                             <Tag type="dot" closable color="default" @on-close="removeTag(index)">{{item}}</Tag>
                         </span>
@@ -41,10 +52,15 @@
     import Edit from '@/components/Edit'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     import { ADD_ARTICLE, SET_ARTICLE_TITLE, SET_ARTICLE_TAGS, SET_ARTICLE_ISPUBLISHED, CLEAR_ARTICLE } from '../store/mutation-types'
-
+    import { tagColors } from '@/utils/static-data'
     export default{
+        created() {
+            console.log(tagColors);
+        },
         data() {
             return {
+                tagColors,
+                currentTagColor: tagColors[0].label,
                 formData: {
                     inputNow: false,
                     title: '',
@@ -65,10 +81,6 @@
             ])
         },
         methods: {
-            // randomTagColor: () => {
-            //     const colors = ['default', 'primary', 'success', 'error', 'warning', 'magenta', 'red', 'volcano', 'orange', 'gold', 'yellow', 'lime', 'green', 'cyan', 'blue']
-            //     return colors[Math.floor(Math.random()*15)]
-            // },
             ...mapMutations({
                 'setArticleTitle': SET_ARTICLE_TITLE,
                 'setArticleTags': SET_ARTICLE_TAGS,

@@ -27,11 +27,11 @@ class Articles {
     }
 
     async updateArticle(id, {title, tags, content, isPublished}) {
-        return await query(escape`UPDATE ARTICLE SET title=${title}, tags=${tags}, content=${content} WHERE id=${id}`)
+        return await query(escape`UPDATE ARTICLE SET title='${title}', tags='${tags}', content='${content}' WHERE id=${id}`)
     }
 
     async publishArticle(id, {title, tags, content}) {
-        return await query(escape`UPDATE ARTICLE SET title=${title}, tags=${tags}, content=${content}, publishTime=NOW(), isPublished=1 WHERE id=${id}`)
+        return await query(escape`UPDATE ARTICLE SET title='${title}', tags='${tags}', content='${content}', publishTime=NOW(), isPublished=1 WHERE id=${id}`)
     }
 
     async deleteArticle(id) {

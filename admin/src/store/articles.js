@@ -58,9 +58,9 @@ const actions = {
 }
 
 const mutations = {
-    [mType.ADD_ARTICLE](state, payload){
+    // [mType.ADD_ARTICLE](state, payload){
 
-    },
+    // },
     [mType.UPDATE_ARTICLE_BY_ID](state, payload){
         state = payload
     },
