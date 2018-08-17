@@ -20,13 +20,21 @@
                 </Row>
             </formItem>
             <FormItem label="添加标签">
-                <Row :gutter="10">
-                    <Col span="8">
+                <Row :gutter="5">
+                    <Col span="3">
                         <Input v-model="formData.tag" @on-enter="addTags" placeholder="添加标签,按Enter结束" clearable></Input>
                     </Col>
-                    <Col span="8">
+                    <Col span="2">
+                         <Poptip title="请选择标签" placement="bottom" @on-popper-show="getAllTags">
+                             <div class="tags-box" slot="content">
+                                <Tag v-for="item in existTags" :key="item.id" :color="item.color" @click.native="selectTagsFromExist(item)"> {{item.name}} </Tag>
+                             </div>
+                            <Button><Icon type="ios-pricetags-outline" size="14" /> 标签</Button>
+                        </Poptip>
+                    </Col>
+                    <Col span="10">
                         <span v-for="(item, index) in formData.tags" :key="index">
-                            <Tag type="dot" closable color="default" @on-close="removeTag(index)">{{item}}</Tag>
+                            <Tag type="dot" closable :color="item.color" @on-close="removeTag(index)">{{item.name}}</Tag>
                         </span>
                     </Col>
                 </Row>
@@ -55,11 +63,12 @@
     import { tagColors } from '@/utils/static-data'
     export default{
         created() {
-            console.log(tagColors);
+            //console.log(tagColors);
         },
         data() {
             return {
                 tagColors,
+                existTags: [],
                 currentTagColor: tagColors[0].label,
                 formData: {
                     inputNow: false,
@@ -80,6 +89,9 @@
                 'getArticle'
             ])
         },
+        mounted() {
+            this.getAllTags()
+        },
         methods: {
             ...mapMutations({
                 'setArticleTitle': SET_ARTICLE_TITLE,
@@ -94,12 +106,45 @@
                 const title = event.target.value
                 this.setArticleTitle(title)
             },
+            selectTagsFromExist(item) {
+                this.formData.tags.push({name: item.name, color: item.color})
+            },
+            getAllTags() {
+                axios.get('/api/v1/tags/')
+                .then(res =>{
+                    if(res.status === 200){
+                        this.existTags = res.data
+                    }
+                })
+            },
+            addTagsRequest(name, color) {
+                axios.post('/api/v1/tags/', { name: name, color: color})
+                .then(res =>{
+                    if(res.status === 200)
+                        this.$Notice.success({
+                            title: '成功',
+                            desc: 'TAG添加成功！'
+                        })
+                })
+            },
             addTags(event) {
                 const tagname = event.target.value
                 if(!tagname) return
-                this.formData.tags.push(tagname)
-                const tags = this.formData.tags.join(',')
-                this.setArticleTags(tags)
+                this.formData.tags.push({ name:tagname, color: this.currentTagColor })
+                //let tags = this.formData.tags.join(',')
+                let tags = this.formData.tags;
+                let articleTagsStr = ''
+                tags.map( (res, index) => {
+                    if (index != tags.length-1){
+                        articleTagsStr += res.name +',' 
+                    } else{
+                        articleTagsStr += res.name
+                    }
+                })
+                console.log(articleTagsStr)
+                
+                this.setArticleTags(articleTagsStr)
+                this.addTagsRequest(tagname, this.currentTagColor)
                 event.target.value = ''
             },
             removeTag(index){
@@ -145,5 +190,11 @@
 <style scoped lang="less">
     .article-box{
         padding: 10px;
+    }
+    .tags-box{
+        white-space: pre-line;
+        width: 350px;
+        height: 300px;
+        overflow-y: auto;
     }
 </style>

@@ -1,30 +1,30 @@
  export const tagColors = [
   {
-    label:'#2d8cf0',
-    name:'蓝'
+    label:'#ed4014',
+    name:'赤'
+  },
+  {
+    label:'#ff9900',
+    name:'橙'
+  },
+  {
+    label:'#e6ba00',
+    name:'黄'
   },
   {
     label:'#19be6b',
     name:'绿'
   },
   {
-    label:'#ff9900',
-    name:'橘'
+    label:'#00d6e6',
+    name:'青'
   },
   {
-    label:'#ed4014',
-    name:'红'
+    label:'#2d8cf0',
+    name:'蓝'
   },
   {
-    label:'#17233d',
-    name:'黑'
-  },
-  {
-    label:'#dcdee2',
-    name:'灰'
-  },
-  {
-    label:'#f8f8f9',
-    name:'银'
+    label:'#b300e6',
+    name:'紫'
   }
  ]

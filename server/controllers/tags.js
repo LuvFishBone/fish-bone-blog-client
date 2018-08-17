@@ -8,18 +8,18 @@ class TagsControllers{
     ctx.body = res
   }
 
-  async deleteTag(name){
+  async deleteTag(ctx){
     const res = await Tags.deleteTag(name)
     ctx.body = res
   }
 
-  async getTagByName(name){
+  async getTagByName(ctx){
     const res = await Tags.getTagByName(name)
     ctx.body = res
   }
 
-  async getAllTags(name){
-    const res = await Tags.getAllTags(name)
+  async getAllTags(ctx){
+    const res = await Tags.getAllTags()
     ctx.body = res
   }
 }

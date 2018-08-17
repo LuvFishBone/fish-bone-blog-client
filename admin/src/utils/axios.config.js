@@ -12,11 +12,7 @@ axios.interceptors.request.use( config => {
 })
 
 axios.interceptors.response.use(data => {
-    console.log(data)
-    if (data.status && data.status == 200 && data.data.status == 'error') {
-        console.log({message: data.data.msg});
-        return;
-    }
+    //console.log(data)
     return data;
     }, err => {
         console.log(err)
