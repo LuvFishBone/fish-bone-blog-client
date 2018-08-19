@@ -117,14 +117,20 @@
                     }
                 })
             },
-            addTagsRequest(name, color) {
+            async addTagsRequest(name, color) {
+                let isExist = await axios.get(`/api/v1/tags/${name}`)
+                console.log(isExist)
                 axios.post('/api/v1/tags/', { name: name, color: color})
-                .then(res =>{
-                    if(res.status === 200)
+                .then(res => {
+                    if(res.status === 200){
                         this.$Notice.success({
                             title: '成功',
                             desc: 'TAG添加成功！'
                         })
+                    }
+                    else{
+                        console.log(res);
+                    }
                 })
             },
             addTags(event) {
@@ -140,9 +146,7 @@
                     } else{
                         articleTagsStr += res.name
                     }
-                })
-                console.log(articleTagsStr)
-                
+                })                
                 this.setArticleTags(articleTagsStr)
                 this.addTagsRequest(tagname, this.currentTagColor)
                 event.target.value = ''

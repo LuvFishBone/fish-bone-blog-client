@@ -21,11 +21,14 @@ axios.interceptors.response.use(data => {
     } else if (err.response.status == 403) {
         console.log({message: '权限不足,请联系管理员!'});
     } else if(err.response.status == 401){
-        console.log({message: 'token验证失败!'});
         Vue.prototype.$Notice.error({
             title: '处理失败',
             desc: 'token验证失败'
         })
+    }
+    else if(err.response.status == 500){
+        console.log({message: '服务器错误!'});
+        return Promise.resolve({message: '服务器错误!'});
     }else {
         console.log({message: '未知错误!'});
     }
