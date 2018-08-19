@@ -28,9 +28,8 @@ axios.interceptors.response.use(data => {
     }
     else if(err.response.status == 500){
         console.log({message: '服务器错误!'});
-        return Promise.resolve({message: '服务器错误!'});
     }else {
         console.log({message: '未知错误!'});
     }
-    return Promise.resolve(err);
+    return Promise.reject(err);
 })

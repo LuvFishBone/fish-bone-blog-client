@@ -107,7 +107,9 @@
                 this.setArticleTitle(title)
             },
             selectTagsFromExist(item) {
-                this.formData.tags.push({name: item.name, color: item.color})
+                //this.formData.tags.push({name: item.name, color: item.color})
+                const articleTagsStr = this.formatArticleTags(item.name, item.color)
+                this.setArticleTags(articleTagsStr)
             },
             getAllTags() {
                 axios.get('/api/v1/tags/')
@@ -117,9 +119,7 @@
                     }
                 })
             },
-            async addTagsRequest(name, color) {
-                let isExist = await axios.get(`/api/v1/tags/${name}`)
-                console.log(isExist)
+            addTagRequest(name, color) {
                 axios.post('/api/v1/tags/', { name: name, color: color})
                 .then(res => {
                     if(res.status === 200){
@@ -133,22 +133,39 @@
                     }
                 })
             },
+            async isTagExist(name) {
+                return await axios.get(`/api/v1/tags/${name}`)
+            },
+            formatArticleTags(tagname, color) {
+                let articleTagsStr = ''
+                this.formData.tags.push({ name:tagname, color: color })
+                let tags = this.formData.tags;
+                if(tags.length){
+                    tags.map( (res, index) => {
+                        const tagObjStr = `{"name":"${res.name}","color":"${res.color}"}`
+                        articleTagsStr += (index != tags.length-1) ? `${tagObjStr},` : `${tagObjStr}`
+                    })
+                }
+                return articleTagsStr;
+            },
             addTags(event) {
                 const tagname = event.target.value
                 if(!tagname) return
-                this.formData.tags.push({ name:tagname, color: this.currentTagColor })
-                //let tags = this.formData.tags.join(',')
-                let tags = this.formData.tags;
-                let articleTagsStr = ''
-                tags.map( (res, index) => {
-                    if (index != tags.length-1){
-                        articleTagsStr += res.name +',' 
-                    } else{
-                        articleTagsStr += res.name
+                this.isTagExist(tagname).then(res => {
+                    if(res.status === 200){
+                        if(res.data.length > 0){
+                            this.$Notice.error({
+                                title: '提示',
+                                desc: '此Tag已经存在！'
+                            })
+                        }
+                        if(res.data.length === 0){
+                            this.addTagRequest(tagname, this.currentTagColor)
+                            const articleTagsStr = this.formatArticleTags(tagname, this.currentTagColor)
+                            this.setArticleTags(articleTagsStr)
+                        }
                     }
-                })                
-                this.setArticleTags(articleTagsStr)
-                this.addTagsRequest(tagname, this.currentTagColor)
+                })
                 event.target.value = ''
             },
             removeTag(index){
@@ -163,6 +180,7 @@
                         })
                         this.clearArticle()
                         this.$refs['formData'].resetFields();
+                        this.formData.tags = []
                     }
                 })
             },

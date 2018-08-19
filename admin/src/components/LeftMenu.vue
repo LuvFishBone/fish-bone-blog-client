@@ -9,6 +9,10 @@
         <Icon type="ios-analytics-outline" />
         <span>发布概览</span>
     </MenuItem>
+    <MenuItem name="tags" to="/tags">
+        <Icon type="ios-pricetags" />
+        <span>标签管理</span>
+    </MenuItem>
     <MenuItem name="publishArticle" to="/publishArticle">
         <Icon type="ios-paper-plane" />
         <span>文章发布</span>
@@ -16,10 +20,6 @@
     <MenuItem name="articlelist" to="/articlelist">
         <Icon type="ios-paper" />
         <span>文章列表</span>
-    </MenuItem>
-    <MenuItem name="tags" to="/tags">
-        <Icon type="ios-pricetags" />
-        <span>标签管理</span>
     </MenuItem>
   </Menu>
 </template>

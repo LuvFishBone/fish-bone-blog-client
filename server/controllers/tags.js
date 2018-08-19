@@ -14,10 +14,9 @@ class TagsControllers{
   }
 
   async getTagByName(ctx){
-    console.log(ctx.query)
-    const {name } = ctx.request.query
+    const { name } = ctx.params
+    console.log(name,'tag name')
     const res = await Tags.getTagByName(name)
-    console.log(res)
     ctx.body = res
   }
 

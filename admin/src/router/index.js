@@ -59,29 +59,29 @@ router.beforeEach((to, from, next) => {
     // redirect会重新进行路由守卫，next()不会
     if (localStorage.AuthToken) {
         axios.get(
-                '/api/v1/tokens/check', {
-            })
-            .then(res => {
-                // token验证通过
-                //console.log(res)
-                const pathArr = ['/publishAnalyze', '/articlelist', '/publishArticle', '/tags', '/about']
-                if (pathArr.indexOf(to.path) === -1) {
-                    next('publishAnalyze')
-                }
-                else {
-                    next()
-                }
-            })
-            .catch(err => {
-                // token验证不通过
-                console.log(err)
-                if (to.path !== '/login') {
-                    next('login')
-                }
-                else {
-                    next()
-                }
-            })
+            '/api/v1/tokens/check', {
+        })
+        .then(res => {
+            // token验证通过
+            console.log(res)
+            const pathArr = ['/publishAnalyze', '/articlelist', '/publishArticle', '/tags', '/about']
+            if (pathArr.indexOf(to.path) === -1) {
+                next('publishAnalyze')
+            }
+            else {
+                next()
+            }
+        })
+        .catch(err => {
+            // token验证不通过
+            console.log(err)
+            if (to.path !== '/login') {
+                next('login')
+            }
+            else {
+                next()
+            }
+        })
     }
     else {
         if (to.path !== '/login') {

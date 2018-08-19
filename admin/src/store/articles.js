@@ -68,7 +68,6 @@ const mutations = {
         state.title = title
     },
     [mType.SET_ARTICLE_TAGS](state, tags){
-        console.log(tags)
         state.tags = tags
     },
     [mType.SET_ARTICLE_CONTENT](state, content){
