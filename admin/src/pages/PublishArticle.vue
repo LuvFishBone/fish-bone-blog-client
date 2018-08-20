@@ -8,7 +8,16 @@
                     </Col>
                 </Row>
             </FormItem>
-            <formItem label="标签颜色">
+            <FormItem label="文章状态" prop="isPublished">
+                <Row>
+                    <Col span="8">
+                        <Tag :color="this.formData.isPublished ? 'primary': 'warning'">
+                            {{this.formData.isPublished ? '已发布': '未发布'}}
+                        </Tag>
+                    </Col>
+                </Row>
+            </FormItem>
+            <FormItem label="标签颜色">
                 <Row>
                     <Col span="24">
                         <RadioGroup v-model="currentTagColor" type="button">
@@ -18,7 +27,7 @@
                         </RadioGroup>
                     </Col>
                 </Row>
-            </formItem>
+            </FormItem>
             <FormItem label="添加标签">
                 <Row :gutter="5">
                     <Col span="3">
@@ -29,10 +38,10 @@
                              <div class="tags-box" slot="content">
                                 <Tag v-for="item in existTags" :key="item.id" :color="item.color" @click.native="selectTagsFromExist(item)"> {{item.name}} </Tag>
                              </div>
-                            <Button><Icon type="ios-pricetags-outline" size="14" /> 标签</Button>
+                            <Button><Icon type="ios-pricetags-outline" size="14" /> 选择标签</Button>
                         </Poptip>
                     </Col>
-                    <Col span="10">
+                    <Col span="15">
                         <span v-for="(item, index) in formData.tags" :key="index">
                             <Tag type="dot" closable :color="item.color" @on-close="removeTag(index)">{{item.name}}</Tag>
                         </span>
@@ -42,7 +51,7 @@
             <FormItem>
                 <Row>
                     <Col span="24">
-                        <Edit></Edit>
+                        <Edit :content="formData.content"></Edit>
                     </Col>
                 </Row>
             </FormItem>
@@ -59,30 +68,36 @@
     import Layout from '@/components/Layout'
     import Edit from '@/components/Edit'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
-    import { ADD_ARTICLE, SET_ARTICLE_TITLE, SET_ARTICLE_TAGS, SET_ARTICLE_ISPUBLISHED, CLEAR_ARTICLE } from '../store/mutation-types'
+    import { 
+        ADD_ARTICLE, 
+        SET_ARTICLE_TITLE, 
+        SET_ARTICLE_TAGS, 
+        SET_ARTICLE_ISPUBLISHED, 
+        CLEAR_ARTICLE, 
+        SET_ARTICLE 
+    } from '../store/mutation-types'
     import { tagColors } from '@/utils/static-data'
     export default{
-        created() {
-            //console.log(tagColors);
-        },
         data() {
             return {
                 tagColors,
                 existTags: [],
                 currentTagColor: tagColors[0].label,
                 formData: {
-                    inputNow: false,
-                    title: '',
-                    tag:'',
-                    tags: [],
-                    simplemde: '',
-                    isPublished: ''
+                    id :'',
+                    title : '',
+                    tags : [],
+                    content : '',
+                    isPublished : 1
                 }
             }
         },
         components: {
             Layout,
             Edit
+        },
+        created() {
+            this.articleId = this.$route.query.id
         },
         computed: {
             ...mapGetters([
@@ -91,16 +106,31 @@
         },
         mounted() {
             this.getAllTags()
+            if(this.articleId){
+                this.getArticleById(this.articleId).then(res => {
+                    if(res.status === 200){
+                        this.setArticle(res.data[0])
+                        this.formData.id = this.getArticle.id
+                        this.formData.title = this.getArticle.title
+                        this.formData.tags = JSON.parse(`[${this.getArticle.tags}]`)
+                        this.formData.content = this.getArticle.content
+                        this.formData.isPublished = this.getArticle.isPublished
+                    }
+                })
+            }
         },
         methods: {
             ...mapMutations({
+                'setArticle' : SET_ARTICLE,
                 'setArticleTitle': SET_ARTICLE_TITLE,
                 'setArticleTags': SET_ARTICLE_TAGS,
                 'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
                 'clearArticle': CLEAR_ARTICLE
             }),
             ...mapActions([
-                'addArticle'
+                'addArticle',
+                'getArticleById',
+                'updateArticleById'
             ]),
             addTitle(event) {
                 const title = event.target.value
@@ -138,7 +168,9 @@
             },
             formatArticleTags(tagname, color) {
                 let articleTagsStr = ''
-                this.formData.tags.push({ name:tagname, color: color })
+                if(tagname && color){
+                    this.formData.tags.push({ name:tagname, color: color })
+                }
                 let tags = this.formData.tags;
                 if(tags.length){
                     tags.map( (res, index) => {
@@ -168,19 +200,33 @@
                 })
                 event.target.value = ''
             },
-            removeTag(index){
+            removeTag(index) {
                 this.formData.tags.splice(index, 1)
+                const articleTagsStr = this.formatArticleTags()
+                this.setArticleTags(articleTagsStr)
             },
-            addArticleRequest(type) {
+            saveSuccess(){
+                this.$Notice.success({
+                    title: '提示',
+                    desc: '保存成功'
+                })
+                this.clearArticle()
+                this.$refs['formData'].resetFields();
+                this.formData.tags = []
+                this.$router.push({name: 'articlelist'})
+            },
+            addArticleRequest() {
                 this.addArticle().then(res =>{
                     if(res.status === 200){
-                        this.$Notice.success({
-                            title: '提示',
-                            desc: '保存成功'
-                        })
-                        this.clearArticle()
-                        this.$refs['formData'].resetFields();
-                        this.formData.tags = []
+                        this.saveSuccess()
+                    }
+                })
+            },
+            updateArticleRequest() {
+                this.updateArticleById().then(res => {
+                    console.log(res)
+                    if(res.status === 200){
+                        this.saveSuccess()
                     }
                 })
             },
@@ -199,11 +245,11 @@
                     return
                 }
                 this.setArticleIsPublished(1)
-                this.addArticleRequest();
+                this.articleId ? this.updateArticleRequest() : this.addArticleRequest()
             },
             saveArticleAsDraft() {
                 this.setArticleIsPublished(0)
-                this.addArticleRequest()
+                this.articleId ? this.updateArticleRequest() : this.addArticleRequest()
             }
         }
     }

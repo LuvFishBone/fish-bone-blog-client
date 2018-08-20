@@ -11,19 +11,24 @@
     import { SET_ARTICLE_CONTENT } from '@/store/mutation-types'
 
     export default{
+        props: ['content'],
         mounted(){
-             this.simplemde = new SimpleMDE({
+            console.log('mounted')
+            this.simplemde = new SimpleMDE({
                 element: document.getElementById("articleEdit"),
                 autoDownloadFontAwesome: false,
                 placeholder: '叩首问路，码梦为生！',
                 spellChecker: false
             })
-            //console.log(this.getArticle)
             this.simplemde.value(this.getArticle.content)
             this.simplemde.codemirror.on("change", () => {
-                console.log(this.simplemde.value())
                 this.setArticleContent(this.simplemde.value())
             });
+        },
+        watch:{ 
+            content:function(newv, oldv){
+                this.simplemde.value(this.getArticle.content)
+            }
         },
         computed: {
             ...mapGetters([

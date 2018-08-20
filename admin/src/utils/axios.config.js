@@ -3,7 +3,26 @@ import Vue from 'vue'
 
 const AuthToken = 'AuthToken'
 
+function displaySpin(ope){
+    // const showSpinOption = {
+    //     render: (h) => {
+    //         return h('span', [
+    //             h('Icon', {
+    //                 'class': 'global-spin-icon-load',
+    //                 props: {
+    //                     type: 'ios-loading',
+    //                     size: 18
+    //                 }
+    //             }),
+    //             h('span', 'Loading')
+    //         ])
+    //     }
+    // }
+    ope ? Vue.prototype.$Spin.show() : Vue.prototype.$Spin.hide()
+}
+
 axios.interceptors.request.use( config => {
+    //displaySpin(1)
     config.headers[AuthToken] = `Bearer ${localStorage.AuthToken}`
     return config;
 }, err => {
@@ -13,9 +32,10 @@ axios.interceptors.request.use( config => {
 
 axios.interceptors.response.use(data => {
     //console.log(data)
+    //displaySpin()
     return data;
     }, err => {
-        console.log(err)
+        //displaySpin()
     if (err.response.status == 504 || err.response.status == 404) {
         console.log({message: '服务器被吃了⊙﹏⊙∥'});
     } else if (err.response.status == 403) {

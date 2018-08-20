@@ -15,10 +15,11 @@ const router = new Router()
 router.prefix(`/${baseApi}/${api}`)
 
 router.post('/', verify, ArticleController.addArticle)
-router.put('/update/:id', verify, check, ArticleController.updateArticle)
-router.put('/publish/:id', verify, check, ArticleController.publishArticle)
+router.put('/update/:id', verify, ArticleController.updateArticleById)
 router.get('/', ArticleController.getArticleList)
-router.get('/:id', ArticleController.getOneArticle)
+router.get('/allTotal/', verify, ArticleController.getAllArticleTotal)
+router.get('/allArticle/:offset/:limit', verify, ArticleController.getLimitAllArticles)
+router.get('/:id', ArticleController.getArticleById)
 router.delete('/:id', verify, ArticleController.deleteArticle)
 
 module.exports = router

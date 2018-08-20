@@ -27,29 +27,18 @@ const actions = {
             return error; 
         }
     },
-    queryArticleById: async function ({commit, state}, payload) {
+    getArticleById: async function ({commit, state}, id) {
         try {
-            await axios.put(
-                `/api/v1/articles/update/${payload.id}`,
-                {
-                    ...payload
-                }
-            )
-            commit(mType.UPDATE_ARTICLE_BY_ID, payload)
+            return await axios.get(`/api/v1/articles/${id}`)
         }
         catch (error) {
             console.error(error.response.data.error)
+            return error; 
         }
     },
-    updateArticleById: async function ({commit, state}, payload) {
+    updateArticleById: async function ({commit, state}) {
         try {
-            await axios.put(
-                `/api/v1/articles/update/${payload.id}`,
-                {
-                    ...payload
-                },
-            )
-            commit(mType.UPDATE_ARTICLE_BY_ID, payload)
+            return await axios.put(`/api/v1/articles/update/${state.id}`, {...state })
         }
         catch (error) {
             console.error(error.response.data.error)
@@ -61,8 +50,12 @@ const mutations = {
     // [mType.ADD_ARTICLE](state, payload){
 
     // },
-    [mType.UPDATE_ARTICLE_BY_ID](state, payload){
-        state = payload
+    [mType.SET_ARTICLE](state, payload){
+        state.id = payload.id,
+        state.title = payload.title,
+        state.tags = payload.tags,
+        state.content = payload.content,
+        state.isPublished = payload.isPublished
     },
     [mType.SET_ARTICLE_TITLE](state, title){
         state.title = title
@@ -79,9 +72,9 @@ const mutations = {
     [mType.CLEAR_ARTICLE](state){
         state.id = '',
         state.title = '',
-        state.tags = '',
+        state.tags = [],
         state.content = '',
-        state.isPublished = ''
+        state.isPublished = 1
     }
 }
 

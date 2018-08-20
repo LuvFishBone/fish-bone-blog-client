@@ -12,6 +12,11 @@ class ArticleControllers {
         ctx.body = res
     }
 
+    async getAllArticleTotal(ctx) {
+        const res = await Article.getAllArticleTotal()
+        ctx.body = res
+    }
+
     async getArticleList(ctx) {
         const {isPublished = 0, offset = 0, limit = 0} = ctx.query
         if (isPublished) {
@@ -32,18 +37,21 @@ class ArticleControllers {
         }
     }
 
-    async getOneArticle(ctx) {
-        const res = await Article.getOneArticle(ctx.params.id)
-        if (res.length === 0) {
-            ctx.throw(404, '没有找到到该文章！')
-        }
+    async getLimitAllArticles(ctx) {
+        const { offset, limit } = ctx.params
+        const res = await Article.getLimitAllArticles(offset, limit)
         ctx.body = res
     }
 
-    async updateArticle(ctx) {
+    async getArticleById(ctx) {
+        const res = await Article.getArticleById(ctx.params.id)
+        ctx.body = res
+    }
+
+    async updateArticleById(ctx) {
         const id = ctx.params.id
-        const {title, tags, content} = ctx.request.body
-        ctx.body = await Article.updateArticle(id, {title, tags, content})
+        const {title, tags, content, isPublished} = ctx.request.body
+        ctx.body = await Article.updateArticleById(id, {title, tags, content, isPublished})
     }
 
     async publishArticle(ctx) {
