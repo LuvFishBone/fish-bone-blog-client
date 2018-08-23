@@ -16,7 +16,6 @@ class Tags{
   }
 
   async getTagByName(name) {
-    console.log(name,'tag models name')
     return await query(`SELECT * FROM TAGS WHERE name='${name}'`)
   }
 

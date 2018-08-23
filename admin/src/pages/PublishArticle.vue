@@ -18,15 +18,7 @@
                 </Row>
             </FormItem>
             <FormItem label="标签颜色">
-                <Row>
-                    <Col span="24">
-                        <RadioGroup v-model="currentTagColor" type="button">
-                            <Radio v-for="item in tagColors" :key="item.name" :label="item.label" >
-                                <span :style="{color: item.label}">{{item.name}}</span>
-                            </Radio>
-                        </RadioGroup>
-                    </Col>
-                </Row>
+                <TagColorBar />
             </FormItem>
             <FormItem label="添加标签">
                 <Row :gutter="5">
@@ -67,6 +59,7 @@
 
     import Layout from '@/components/Layout'
     import Edit from '@/components/Edit'
+    import TagColorBar from '@/components/TagColorBar'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     import { 
         ADD_ARTICLE, 
@@ -76,32 +69,31 @@
         CLEAR_ARTICLE, 
         SET_ARTICLE 
     } from '../store/mutation-types'
-    import { tagColors } from '@/utils/static-data'
     export default{
         data() {
             return {
-                tagColors,
                 existTags: [],
-                currentTagColor: tagColors[0].label,
                 formData: {
                     id :'',
                     title : '',
                     tags : [],
                     content : '',
-                    isPublished : 1
+                    isPublished : 0
                 }
             }
         },
         components: {
             Layout,
-            Edit
+            Edit,
+            TagColorBar
         },
         created() {
             this.articleId = this.$route.query.id
         },
         computed: {
             ...mapGetters([
-                'getArticle'
+                'getArticle',
+                'getTagColor'
             ])
         },
         mounted() {
@@ -192,8 +184,8 @@
                             })
                         }
                         if(res.data.length === 0){
-                            this.addTagRequest(tagname, this.currentTagColor)
-                            const articleTagsStr = this.formatArticleTags(tagname, this.currentTagColor)
+                            this.addTagRequest(tagname, this.getTagColor)
+                            const articleTagsStr = this.formatArticleTags(tagname, this.getTagColor)
                             this.setArticleTags(articleTagsStr)
                         }
                     }

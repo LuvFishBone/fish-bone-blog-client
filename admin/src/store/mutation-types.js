@@ -16,3 +16,10 @@ export const QUERY_ARTICLE_BY_ID = 'QUERY_ARTICLE_BY_ID'
 //export const UPDATE_ARTICLE_BY_ID = 'UPDATE_ARTICLE_BY_ID'
 
 export const CLEAR_ARTICLE = 'CLEAR_ARTICLE'
+
+
+/*tags mutation*/
+export const SET_TAG_COLORT = 'SET_TAG_COLORT'
+
+export const SET_TAG_LIST = 'SET_TAG_LIST'
+
