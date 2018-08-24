@@ -20,8 +20,24 @@ const actions = {
             })
         }
         catch(error){
-            console.error(error.response.data.error)
             return error; 
+        }
+    },
+    isTagExist: async function({commit, state}, name) {
+        try{
+            return await axios.get(`/api/v1/tags/${name}`)
+        }
+        catch(error){
+            return error;
+        }
+        return await axios.get(`/api/v1/tags/${name}`)
+    },
+    addOneTag: async function({commit, state}, payload) {
+        try{
+           return await axios.post('/api/v1/tags/', {...payload})
+        }
+        catch(error){
+            return error;
         }
     }
 }

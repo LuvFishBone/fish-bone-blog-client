@@ -23,7 +23,8 @@
             <FormItem label="添加标签">
                 <Row :gutter="5">
                     <Col span="3">
-                        <Input v-model="formData.tag" @on-enter="addTags" placeholder="添加标签,按Enter结束" clearable></Input>
+                        <!-- <Input v-model="formData.tag" @on-enter="addTags" placeholder="添加标签,按Enter结束" clearable></Input> -->
+                        <TagAddInput :addTagCallBack="addTagCallBack" :width="135" />
                     </Col>
                     <Col span="2">
                          <Poptip title="请选择标签" placement="bottom" @on-popper-show="getAllTags">
@@ -60,6 +61,7 @@
     import Layout from '@/components/Layout'
     import Edit from '@/components/Edit'
     import TagColorBar from '@/components/TagColorBar'
+    import TagAddInput from '@/components/TagAddInput'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     import { 
         ADD_ARTICLE, 
@@ -85,7 +87,8 @@
         components: {
             Layout,
             Edit,
-            TagColorBar
+            TagColorBar,
+            TagAddInput
         },
         created() {
             this.articleId = this.$route.query.id
@@ -141,23 +144,6 @@
                     }
                 })
             },
-            addTagRequest(name, color) {
-                axios.post('/api/v1/tags/', { name: name, color: color})
-                .then(res => {
-                    if(res.status === 200){
-                        this.$Notice.success({
-                            title: '成功',
-                            desc: 'TAG添加成功！'
-                        })
-                    }
-                    else{
-                        console.log(res);
-                    }
-                })
-            },
-            async isTagExist(name) {
-                return await axios.get(`/api/v1/tags/${name}`)
-            },
             formatArticleTags(tagname, color) {
                 let articleTagsStr = ''
                 if(tagname && color){
@@ -171,26 +157,6 @@
                     })
                 }
                 return articleTagsStr;
-            },
-            addTags(event) {
-                const tagname = event.target.value
-                if(!tagname) return
-                this.isTagExist(tagname).then(res => {
-                    if(res.status === 200){
-                        if(res.data.length > 0){
-                            this.$Notice.error({
-                                title: '提示',
-                                desc: '此Tag已经存在！'
-                            })
-                        }
-                        if(res.data.length === 0){
-                            this.addTagRequest(tagname, this.getTagColor)
-                            const articleTagsStr = this.formatArticleTags(tagname, this.getTagColor)
-                            this.setArticleTags(articleTagsStr)
-                        }
-                    }
-                })
-                event.target.value = ''
             },
             removeTag(index) {
                 this.formData.tags.splice(index, 1)
@@ -242,6 +208,10 @@
             saveArticleAsDraft() {
                 this.setArticleIsPublished(0)
                 this.articleId ? this.updateArticleRequest() : this.addArticleRequest()
+            },
+            addTagCallBack(tagname){
+                const articleTagsStr = this.formatArticleTags(tagname, this.getTagColor)
+                this.setArticleTags(articleTagsStr)
             }
         }
     }

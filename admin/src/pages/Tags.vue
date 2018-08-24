@@ -1,8 +1,11 @@
 <template>
     <Layout>
-        <Form class="tags-box" :model="formData" :label-width="80">
+        <Form ref="tagsForm" class="tags-box" :model="tagsForm" :label-width="80">
             <FormItem label="标签颜色">
                 <TagColorBar />
+            </FormItem>
+            <FormItem label="添加标签">
+                <TagAddInput :width="315" />
             </FormItem>
             <FormItem label="所有标签">
                 <Row>
@@ -19,20 +22,22 @@
     
     import Layout from '@/components/Layout'
     import TagColorBar from '@/components/TagColorBar'
+    import TagAddInput from '@/components/TagAddInput'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     export default {
         
         data() {
             return {
-                formData: { 
+                tagsForm: { 
 
                 }
             }
         },
         components:{
             Layout,
-            TagColorBar
+            TagColorBar,
+            TagAddInput
         },
         methods: {
             ...mapGetters([
