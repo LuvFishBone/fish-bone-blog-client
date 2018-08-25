@@ -65,7 +65,7 @@ CREATE TABLE `ARTICLE` (
 
 LOCK TABLES `ARTICLE` WRITE;
 /*!40000 ALTER TABLE `ARTICLE` DISABLE KEYS */;
-INSERT INTO `ARTICLE` VALUES (1,'Welecome to Fishbone blog!','Blog','2018-01-02 16:05:45','2018-01-02 16:07:26','Enjoy ur self here!\n\n<!-- more -->\n\n```js\nconsole.log(\'Hello World!\')\n```',1,'2018-08-18 17:12:50'),(2,'123','tag1','2018-08-18 17:12:50','2018-08-18 17:12:50','123',1,'2018-08-18 17:12:50');
+INSERT INTO `ARTICLE` VALUES (1,'123','{"name":"test","color":"#ed4014"}','2018-08-18 17:12:50','2018-08-18 17:12:50','123',1,'2018-08-18 17:12:50');
 /*!40000 ALTER TABLE `ARTICLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,12 +107,12 @@ DROP TABLE IF EXISTS `TAGS`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `TAGS` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `color` varchar(45) NOT NULL,
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `color` varchar(45) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `TAGS` (
 
 LOCK TABLES `TAGS` WRITE;
 /*!40000 ALTER TABLE `TAGS` DISABLE KEYS */;
-INSERT INTO `TAGS` VALUES (1,'tag1','#2d8cf0'),(2,'tag2','#b300e6'),(8,'tag4','#ed4014'),(15,'tag7','#ed4014');
+INSERT INTO `TAGS` VALUES (1,'tag1','#2d8cf0');
 /*!40000 ALTER TABLE `TAGS` ENABLE KEYS */;
 UNLOCK TABLES;
 

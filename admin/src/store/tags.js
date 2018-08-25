@@ -39,6 +39,14 @@ const actions = {
         catch(error){
             return error;
         }
+    },
+    removeTagByName: async ({commit, state}, name) => {
+        try{
+            return await axios.delete(`/api/v1/tags/${name}`)
+        }
+        catch(error){
+            return error
+        }
     }
 }
 

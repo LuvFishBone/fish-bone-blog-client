@@ -27,9 +27,10 @@
                         <TagAddInput :addTagCallBack="addTagCallBack" :width="135" />
                     </Col>
                     <Col span="2">
-                         <Poptip title="请选择标签" placement="bottom" @on-popper-show="getAllTags">
+                         <Poptip title="请选择标签" placement="bottom">
                              <div class="tags-box" slot="content">
-                                <Tag v-for="item in existTags" :key="item.id" :color="item.color" @click.native="selectTagsFromExist(item)"> {{item.name}} </Tag>
+                                <!-- <Tag v-for="item in existTags" :key="item.id" :color="item.color" @click.native="selectTagsFromExist(item)"> {{item.name}} </Tag> -->
+                                <TagList :closable="false" :tagSelected="selectTagsFromExist" />
                              </div>
                             <Button><Icon type="ios-pricetags-outline" size="14" /> 选择标签</Button>
                         </Poptip>
@@ -62,6 +63,7 @@
     import Edit from '@/components/Edit'
     import TagColorBar from '@/components/TagColorBar'
     import TagAddInput from '@/components/TagAddInput'
+    import TagList from '@/components/TagList'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     import { 
         ADD_ARTICLE, 
@@ -88,7 +90,8 @@
             Layout,
             Edit,
             TagColorBar,
-            TagAddInput
+            TagAddInput,
+            TagList,
         },
         created() {
             this.articleId = this.$route.query.id
@@ -100,7 +103,6 @@
             ])
         },
         mounted() {
-            this.getAllTags()
             if(this.articleId){
                 this.getArticleById(this.articleId).then(res => {
                     if(res.status === 200){
@@ -132,17 +134,8 @@
                 this.setArticleTitle(title)
             },
             selectTagsFromExist(item) {
-                //this.formData.tags.push({name: item.name, color: item.color})
                 const articleTagsStr = this.formatArticleTags(item.name, item.color)
                 this.setArticleTags(articleTagsStr)
-            },
-            getAllTags() {
-                axios.get('/api/v1/tags/')
-                .then(res =>{
-                    if(res.status === 200){
-                        this.existTags = res.data
-                    }
-                })
             },
             formatArticleTags(tagname, color) {
                 let articleTagsStr = ''

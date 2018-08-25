@@ -9,8 +9,8 @@
             </FormItem>
             <FormItem label="所有标签">
                 <Row>
-                    <Col span="12">
-                        
+                    <Col span="24">
+                        <TagList :closable="true"  />
                     </Col>
                 </Row>
             </FormItem>
@@ -23,6 +23,7 @@
     import Layout from '@/components/Layout'
     import TagColorBar from '@/components/TagColorBar'
     import TagAddInput from '@/components/TagAddInput'
+    import TagList from '@/components/TagList'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     export default {
@@ -37,7 +38,8 @@
         components:{
             Layout,
             TagColorBar,
-            TagAddInput
+            TagAddInput,
+            TagList
         },
         methods: {
             ...mapGetters([

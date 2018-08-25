@@ -1,6 +1,7 @@
 <template>
-    <div class="tags-box">
-        <Tag v-for="item in list" :key="item.id" :color="item.color"> {{item.name}} </Tag>
+    <div>
+        <Tag v-for="item in list" :key="item.id" :color="item.color" :name="item.name"  type="dot" @on-close="remove" @click.native="tagClick(item)" :closable="closable">{{item.name}}</Tag>
+        <Tag v-if="!list.length" type="border">暂无数据</Tag>
     </div>
 </template>
 
@@ -9,23 +10,51 @@
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     export default{
-        data() {
+        props: {
+            closable: Boolean,
+            tagSelected: Function
+        },
+        data () {
             return {
                 list: []
             }
         },
+        methods: {
+            ...mapActions([
+                'removeTagByName',
+                'getTagList'
+            ]),
+            remove: function(event, name) {
+                this.removeTagByName(name).then((res) => {
+                    this.$Notice.success({
+                        title: '提示',
+                        desc: 'Tag删除成功！'
+                    })
+                    this.getTagList()
+                } )
+            },
+            tagClick: function(item) {
+                console.log(item)
+                this.tagSelected && this.tagSelected(item)
+            }
+        },
         computed: {
-
+            ...mapGetters([
+                'getAllTags'
+            ])
+        },
+        mounted(){
+            this.list = this.getAllTags
+        },
+        watch:{
+            getAllTags: function(newVal, oldVal){
+                this.list = this.getAllTags
+            }
         }
     }
 </script>
 
 <style scoped lang="less">
-    .tags-box{
-        white-space: pre-line;
-        width: 350px;
-        height: 300px;
-        overflow-y: auto;
-    }
+
 </style>
 

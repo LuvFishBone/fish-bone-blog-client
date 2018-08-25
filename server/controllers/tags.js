@@ -8,14 +8,15 @@ class TagsControllers{
     ctx.body = res
   }
 
-  async deleteTag(ctx){
-    const res = await Tags.deleteTag(name)
+  async removeTagByName(ctx){
+    const { name } = ctx.params
+    console.log(name)
+    const res = await Tags.removeTagByName(name)
     ctx.body = res
   }
 
   async getTagByName(ctx){
     const { name } = ctx.params
-    console.log(name,'tag name')
     const res = await Tags.getTagByName(name)
     ctx.body = res
   }
