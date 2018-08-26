@@ -13,13 +13,17 @@
         <Icon type="ios-pricetags" />
         <span>标签管理</span>
     </MenuItem>
+    <MenuItem name="articlelist" to="/articlelist">
+        <Icon type="ios-paper" />
+        <span>文章列表</span>
+    </MenuItem>
     <MenuItem name="publishArticle" to="/publishArticle">
         <Icon type="ios-paper-plane" />
         <span>文章发布</span>
     </MenuItem>
-    <MenuItem name="articlelist" to="/articlelist">
-        <Icon type="ios-paper" />
-        <span>文章列表</span>
+    <MenuItem name="about" to="/about">
+        <Icon type="md-person" />
+        <span>About Me</span>
     </MenuItem>
   </Menu>
 </template>
@@ -40,9 +44,6 @@
             ...mapGetters([
                 'getMenuSelectedName'
             ]),
-        },
-        created(){
-            //console.log(this.getMenuSelectedName);
         },
         methods: {
             ...mapMutations({

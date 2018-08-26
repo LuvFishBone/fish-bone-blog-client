@@ -13,7 +13,6 @@
     export default{
         props: ['content'],
         mounted(){
-            console.log('mounted')
             this.simplemde = new SimpleMDE({
                 element: document.getElementById("articleEdit"),
                 autoDownloadFontAwesome: false,

@@ -8,12 +8,6 @@ const getters = {
     getMenuSelectedName: state => state.menuSelectedName
 }
 
-// const actions = {
-//     setMenuSelectedName(){
-
-//     }
-// }
-
 const mutations = {
     [mType.MENU_NAME_SELECTED](state, menuName){
         state.menuSelectedName = menuName

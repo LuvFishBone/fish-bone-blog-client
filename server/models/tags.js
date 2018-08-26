@@ -7,20 +7,19 @@ import escape from '../utils/escape'
 
 class Tags{
 
-  async addTag(name, color) {
-    console.log(name, color)
+  async addTag (name, color) {
     return await query(`INSERT INTO TAGS SET name='${name}',color='${color}'`)
   }
 
-  async removeTagByName(name) {
+  async removeTagByName (name) {
     return await query(`DELETE FROM TAGS WHERE name='${name}'`)
   }
 
-  async getTagByName(name) {
+  async getTagByName (name) {
     return await query(`SELECT * FROM TAGS WHERE name='${name}'`)
   }
 
-  async getAllTags() {
+  async getAllTags () {
     return await query(`SELECT * FROM TAGS ORDER BY id DESC`)
   }
 }

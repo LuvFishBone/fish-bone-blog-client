@@ -1,27 +1,26 @@
 import Tags from '../models/tags'
 
-class TagsControllers{
+class TagsControllers {
 
-  async addTag(ctx){
+  async addTag (ctx) {
     const {name, color} = ctx.request.body
     const res = await Tags.addTag(name, color)
     ctx.body = res
   }
 
-  async removeTagByName(ctx){
+  async removeTagByName (ctx) {
     const { name } = ctx.params
-    console.log(name)
     const res = await Tags.removeTagByName(name)
     ctx.body = res
   }
 
-  async getTagByName(ctx){
+  async getTagByName (ctx) {
     const { name } = ctx.params
     const res = await Tags.getTagByName(name)
     ctx.body = res
   }
 
-  async getAllTags(ctx){
+  async getAllTags (ctx) {
     const res = await Tags.getAllTags()
     ctx.body = res
   }
