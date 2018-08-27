@@ -18,6 +18,23 @@
                         key: 'id'
                     },
                     {
+                        title: 'Thumbnail',
+                        key: 'thumbnail',
+                        render: (h, params) => {
+                            if(params.row.thumbnail){
+                                return h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                }, 'Review')
+                            }else{
+                                return h('span', {
+                                }, '--')
+                            }
+                        }
+                    },
+                    {
                         title: 'Title',
                         key: 'title'
                     },
@@ -122,10 +139,7 @@
                 currentPageNum: 1
             }
         },
-        computed: {
-
-        },
-        mounted() {
+        mounted () {
             this.getTotal()
             this.getLimitArticle(1)
         },
@@ -133,25 +147,22 @@
             Layout
         },
         methods: {
-            // removeTag() { 
-            //     alert(123)
-            // },
             getTotal() {
                 return axios.get('/api/v1/articles/allTotal/').then(res => {
-                    if(res.status === 200){
+                    if(res.status === 200) {
                         this.total = res.data[0].total
                     }
                 })
             },
-            getLimitArticle(pageNum) {
+            getLimitArticle (pageNum) {
                 const offset = (pageNum-1) * this.pageSize
                 axios.get(`/api/v1/articles/allArticle/${offset}/${this.pageSize}`).then(res => {
-                    if(res.status === 200){
+                    if(res.status === 200) {
                         this.articles = res.data
                     }
                 })
             },
-            deleteArticle(id) {
+            deleteArticle (id) {
                 axios.delete(`/api/v1/articles/${id}`).then(res => {
                     //console.log(res)
                     if(res.status === 200){
@@ -166,12 +177,15 @@
                     }
                 })
             },
-            viewArticle(id) {
+            viewArticle (id) {
                 console.log(id)
                 this.$router.push({ path: `/publishArticle?id=${id}`})
             },
-            pageChage(num) {
+            pageChage (num) {
                 this.getLimitArticle(num)
+            },
+            reviewThumbnail () {
+                alert('review img');
             }
         }
     }

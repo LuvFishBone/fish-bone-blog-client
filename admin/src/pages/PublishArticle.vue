@@ -8,6 +8,15 @@
                     </Col>
                 </Row>
             </FormItem>
+            <FormItem label="文章缩略图" prop="title">
+                <Row>
+                    <Col span="8">
+                        <Upload action="/api/v1/uploadfiles/" :headers="uploadHeader" :on-remove="removeFile">
+                            <Button icon="ios-cloud-upload-outline">Upload files</Button>
+                        </Upload>
+                    </Col>
+                </Row>
+            </FormItem>
             <FormItem label="文章状态" prop="isPublished">
                 <Row>
                     <Col span="8">
@@ -83,6 +92,9 @@
                     tags : [],
                     content : '',
                     isPublished : 0
+                },
+                uploadHeader: {
+                    AuthToken: `Bearer ${localStorage.AuthToken}`
                 }
             }
         },
@@ -117,6 +129,9 @@
             }
         },
         methods: {
+            removeFile (file, fileList) {
+                console.log(file)
+            },
             ...mapMutations({
                 'setArticle' : SET_ARTICLE,
                 'setArticleTitle': SET_ARTICLE_TITLE,

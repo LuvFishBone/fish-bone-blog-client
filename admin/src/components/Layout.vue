@@ -6,7 +6,7 @@
             </Sider>
             <Layout>
                 <Header></Header>
-                <Content :style="{margin: '10px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '10px', background: '#fff'}">
                     <slot></slot>
                 </Content>
             </Layout>

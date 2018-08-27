@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.22-ndb-7.6.6, for macos10.13 (x86_64)
 --
 -- Host: localhost    Database: fishbone_db
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.22-ndb-7.6.6-cluster-gpl
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `ABOUT` (
 
 LOCK TABLES `ABOUT` WRITE;
 /*!40000 ALTER TABLE `ABOUT` DISABLE KEYS */;
-INSERT INTO `ABOUT` VALUES (1,'叩首问路，码梦为生！');
+INSERT INTO `ABOUT` VALUES (1,'这里是自我介绍-修改');
 /*!40000 ALTER TABLE `ABOUT` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,6 +49,7 @@ DROP TABLE IF EXISTS `ARTICLE`;
 CREATE TABLE `ARTICLE` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT '',
+  `thumbnail` varchar(255) DEFAULT NULL,
   `tags` varchar(255) DEFAULT '',
   `createTime` datetime NOT NULL,
   `publishTime` datetime NOT NULL,
@@ -56,7 +57,7 @@ CREATE TABLE `ARTICLE` (
   `isPublished` tinyint(1) NOT NULL DEFAULT '0',
   `updateTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +66,7 @@ CREATE TABLE `ARTICLE` (
 
 LOCK TABLES `ARTICLE` WRITE;
 /*!40000 ALTER TABLE `ARTICLE` DISABLE KEYS */;
-INSERT INTO `ARTICLE` VALUES (1,'123','{"name":"test","color":"#ed4014"}','2018-08-18 17:12:50','2018-08-18 17:12:50','123',1,'2018-08-18 17:12:50');
+INSERT INTO `ARTICLE` VALUES (1,'123',NULL,'{\"name\":\"test\",\"color\":\"#ed4014\"}','2018-08-18 17:12:50','2018-08-18 17:12:50','123',1,'2018-08-18 17:12:50');
 /*!40000 ALTER TABLE `ARTICLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,6 +82,7 @@ CREATE TABLE `READING` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `author` varchar(255) NOT NULL DEFAULT '',
   `score` float NOT NULL,
+  `experience` varchar(600) DEFAULT NULL,
   `progress` float DEFAULT NULL,
   `startTime` datetime DEFAULT NULL,
   `finishTime` datetime DEFAULT NULL,
@@ -94,7 +96,7 @@ CREATE TABLE `READING` (
 
 LOCK TABLES `READING` WRITE;
 /*!40000 ALTER TABLE `READING` DISABLE KEYS */;
-INSERT INTO `READING` VALUES (1,'百年孤独','马尔克斯加西亚[智利]',1,NULL,NULL,NULL);
+INSERT INTO `READING` VALUES (1,'百年孤独','马尔克斯加西亚[智利]',1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `READING` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,7 +114,7 @@ CREATE TABLE `TAGS` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +123,7 @@ CREATE TABLE `TAGS` (
 
 LOCK TABLES `TAGS` WRITE;
 /*!40000 ALTER TABLE `TAGS` DISABLE KEYS */;
-INSERT INTO `TAGS` VALUES (1,'tag1','#2d8cf0');
+INSERT INTO `TAGS` VALUES (1,'tag1','#2d8cf0'),(2,'dfdfd','#ed4014');
 /*!40000 ALTER TABLE `TAGS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-20 21:58:37
+-- Dump completed on 2018-08-27 21:14:43
