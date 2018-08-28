@@ -30,7 +30,6 @@
             addTags(event){
                 const tagname = event.target.value
                 if(!tagname) return
-                console.log(tagname)
                 this.isTagExist(tagname).then(res => {
                     if(res.status === 200){
                         if(res.data.length > 0){

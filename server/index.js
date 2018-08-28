@@ -1,6 +1,6 @@
 import 'source-map-support/register'
-import koaBody from 'koa-body'
 import Koa from 'koa'
+import bodyParser from 'koa-bodyparser'
 import path from 'path'
 import koaStatic from 'koa-static'
 import logger from 'koa-logger'
@@ -25,16 +25,7 @@ app
         path.join( __dirname,  './static')
     ))
     .use(logger())
-    .use(koaBody({
-        multipart:true, 
-        encoding:'gzip',
-        formidable:{
-            uploadDir:path.join(__dirname,'static/upload/'), 
-            keepExtensions: true,    
-            maxFieldsSize:2 * 1024 * 1024, 
-            onFileBegin:(name, file) => {},
-        }
-    }))
+    .use(bodyParser())
     .use(helmet())
 
 routing(app)

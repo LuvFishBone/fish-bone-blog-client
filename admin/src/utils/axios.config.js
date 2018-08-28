@@ -24,6 +24,7 @@ function displaySpin(ope){
 axios.interceptors.request.use( config => {
     //displaySpin(1)
     config.headers[AuthToken] = `Bearer ${localStorage.AuthToken}`
+    // config.headers['Content-Type'] = 'application/json, charset=utf-8'
     return config;
 }, err => {
     console.log({message: '请求超时!'});

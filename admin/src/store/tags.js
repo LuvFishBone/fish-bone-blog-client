@@ -34,7 +34,7 @@ const actions = {
     },
     addOneTag: async function({commit, state}, payload) {
         try{
-           return await axios.post('/api/v1/tags/', {...payload})
+           return await axios.post('/api/v1/tags/', { ...payload })
         }
         catch(error){
             return error;
