@@ -14,7 +14,8 @@ module.exports = webpackMerge(webpackBase, {
         host: '0.0.0.0',
         port: 8080,
         proxy: {
-            '/api': 'http://localhost:8081'
+            '/api': 'http://localhost:8081',
+            '/uploads' :'http://localhost:8081'
         }
     },
     devtool: 'inline-source-map',

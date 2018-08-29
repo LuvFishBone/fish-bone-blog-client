@@ -10,10 +10,22 @@
             </FormItem>
             <FormItem label="文章缩略图" prop="title">
                 <Row>
-                    <Col span="8">
-                        <Upload action="/api/v1/uploadfiles/" :headers="uploadHeader" :on-remove="removeFile">
-                            <Button icon="ios-cloud-upload-outline">Upload files</Button>
+                    <Col span="2">
+                        <Upload
+                            action = "/api/v1/uploadfiles/"
+                            :headers="uploadHeader"
+                            :multiple="false"
+                            :on-remove="removeFile"
+                            :before-upload="controlUpload"
+                            :default-file-list="uploadedImgs">
+                            <Button icon="ios-cloud-upload-outline">图片上传</Button>
                         </Upload>
+                    </Col>
+                    <Col span="8">
+                        <div v-if="uploadImg !== null">
+                            文件名: {{ uploadImg.name }} 
+                            <Button type="text" @click="upload" :loading="loadingStatus">{{ loadingStatus ? '努力上传中...' : '上传' }}</Button>
+                        </div>
                     </Col>
                 </Row>
             </FormItem>
@@ -80,11 +92,20 @@
         SET_ARTICLE_TAGS, 
         SET_ARTICLE_ISPUBLISHED, 
         CLEAR_ARTICLE, 
-        SET_ARTICLE 
+        SET_ARTICLE,
+        SET_ARTICLE_THUMBNAIL 
     } from '../store/mutation-types'
     export default{
         data() {
             return {
+                uploadImg: null,
+                loadingStatus: false,
+                uploadedImgs: [
+                    {
+                        name:'123',
+                        url:'https://imququ.com/'
+                    }
+                ],
                 existTags: [],
                 formData: {
                     id :'',
@@ -132,12 +153,29 @@
             removeFile (file, fileList) {
                 console.log(file)
             },
+            upload () {
+                this.loadingStatus = true;
+                let data = new FormData();
+                data.append('file', this.uploadImg)
+                axios.post('/api/v1/uploadfiles/', data).then(res =>{
+                    const fileName = res.data.filename                
+                    this.setArticleThumbnail(fileName)
+                    this.uploadImg = null;
+                    this.loadingStatus = false;
+                    this.$Message.success('上传成功！')
+                })
+            },
+            controlUpload(file){
+                this.uploadImg = file;
+                return false;
+            },
             ...mapMutations({
                 'setArticle' : SET_ARTICLE,
                 'setArticleTitle': SET_ARTICLE_TITLE,
                 'setArticleTags': SET_ARTICLE_TAGS,
                 'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
-                'clearArticle': CLEAR_ARTICLE
+                'clearArticle': CLEAR_ARTICLE,
+                'setArticleThumbnail': SET_ARTICLE_THUMBNAIL
             }),
             ...mapActions([
                 'addArticle',

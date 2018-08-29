@@ -3,6 +3,7 @@ import * as mType from './mutation-types'
 const state = {
     id: '',
     title: '',
+    thumbnail: '',
     tags: '',
     content: '',
     isPublished: ''
@@ -68,6 +69,9 @@ const mutations = {
     },
     [mType.SET_ARTICLE_ISPUBLISHED](state, isPublished){
         state.isPublished = isPublished
+    },
+    [mType.SET_ARTICLE_THUMBNAIL](state, imgUrl){
+        state.thumbnail = imgUrl
     },
     [mType.CLEAR_ARTICLE](state){
         state.id = '',
