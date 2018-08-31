@@ -27,3 +27,8 @@ export const SET_TAG_COLORT = 'SET_TAG_COLORT'
 
 export const SET_TAG_LIST = 'SET_TAG_LIST'
 
+
+/*types mutation*/
+export const SET_TYPE_LIST = 'SET_TYPE_LIST'
+export const GET_TYPE_LIST = 'GET_TYPE_LIST'
+

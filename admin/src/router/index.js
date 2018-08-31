@@ -6,6 +6,7 @@ import ArticleList from '@/pages/ArticleList'
 import PublishAnalyze from '@/pages/PublishAnalyze'
 import PublishArticle from '@/pages/PublishArticle'
 import Tags from '@/pages/Tags'
+import Types from '@/pages/Types'
 import About from '@/pages/About'
 
 Vue.use(Router)
@@ -44,6 +45,11 @@ const router = new Router({
             component: Tags
         },
         {
+            path: '/types',
+            name: 'types',
+            component: Types
+        },
+        {
             path: '/about',
             name: 'about',
             component: About
@@ -63,7 +69,7 @@ router.beforeEach((to, from, next) => {
         })
         .then(res => {
             // token验证通过
-            const pathArr = ['/publishAnalyze', '/articlelist', '/publishArticle', '/tags', '/about']
+            const pathArr = ['/publishAnalyze', '/articlelist', '/publishArticle', '/tags', '/types', '/about']
             if (pathArr.indexOf(to.path) === -1) {
                 next('publishAnalyze')
             }

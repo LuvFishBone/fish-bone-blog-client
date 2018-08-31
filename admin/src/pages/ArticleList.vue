@@ -1,8 +1,6 @@
 <template>
     <Layout>
-        <template>
-            <Table :columns="columns" :data="articles"></Table>
-        </template>
+        <Table :columns="columns" :data="articles"></Table>
         <Page class-name="paging" :total="total" :current.sync="currentPageNum" :page-size="pageSize" show-elevator prev-text="Previous" next-text="Next" @on-change="pageChage" />
     </Layout>
 </template>

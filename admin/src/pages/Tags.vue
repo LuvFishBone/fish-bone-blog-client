@@ -42,9 +42,6 @@
             TagList
         },
         methods: {
-            ...mapGetters([
-                'getAllTags'
-            ]),
             ...mapActions([
                 'getTagList'
             ])

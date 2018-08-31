@@ -9,6 +9,10 @@
         <Icon type="ios-analytics-outline" />
         <span>发布概览</span>
     </MenuItem>
+    <MenuItem name="types" to="/types">
+        <Icon type="md-list-box" />
+        <span>类别管理</span>
+    </MenuItem>
     <MenuItem name="tags" to="/tags">
         <Icon type="ios-pricetags" />
         <span>标签管理</span>

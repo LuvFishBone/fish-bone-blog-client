@@ -3,7 +3,6 @@ import Tags from '../models/tags'
 class TagsControllers {
 
   async addTag (ctx) {
-    console.log(ctx.request.body)
     const {name, color} = ctx.request.body
     const res = await Tags.addTag(name, color)
     ctx.body = res

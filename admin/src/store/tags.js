@@ -30,7 +30,6 @@ const actions = {
         catch(error){
             return error;
         }
-        return await axios.get(`/api/v1/tags/${name}`)
     },
     addOneTag: async function({commit, state}, payload) {
         try{
