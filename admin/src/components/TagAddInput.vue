@@ -9,7 +9,7 @@
     export default {
         props: {
            width: Number,
-           addTagCallBack: {}
+           addTagCallBack: Function
         },
         data() {
             return {
@@ -39,13 +39,13 @@
                             })
                         }
                         if(res.data.length === 0){
-                            this.addOneTag({name: tagname, color: this.getTagColor}).then(res =>{
+                            this.addOneTag({name: tagname, color: this.getTagColor}).then(res => {
                                 this.$Notice.success({
                                     title: '提示',
                                     desc: 'Tag添加成功！'
                                 })
                                 this.getTagList()
-                                this.addTagCallBack && (typeof this.addTagCallBack) === 'function' && this.addTagCallBack(tagname)
+                                this.addTagCallBack && (typeof this.addTagCallBack) === 'function' && this.addTagCallBack({name: tagname, color: this.getTagColor})
                             })
                         }
                     }

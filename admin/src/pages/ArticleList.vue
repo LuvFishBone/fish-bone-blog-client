@@ -9,6 +9,7 @@
     import Layout from '@/components/Layout'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     import { SET_TYPE_LIST } from '../store/mutation-types'
+    import utils from '@/utils'
 
     export default{
         data () {
@@ -25,11 +26,14 @@
                         render: (h, params) => {
                             const _this = this
                             function articleTypeFilter (value) {
-                                _this.getAllTypes.map(item => {
-                                    console.log(value)
-                                    if(item.id === value)
-                                        return item.name
-                                })
+                                let res = '';
+                                for(let item of _this.getAllTypes){
+                                    if(value === item.id){
+                                        res = item.name;
+                                        break;
+                                    }
+                                }
+                                return res;
                             } 
                             return h('span', articleTypeFilter(params.row.type))
                         }
@@ -42,10 +46,14 @@
                         title: 'Tags',
                         key: 'tags',
                         render: (h, params) => {
+                            const _this = this
                             function parseTags(h){
                                 let res = []
-                                const tagObj = JSON.parse(`[${params.row.tags}]`)
-                                tagObj.map(item => {
+                                // const tagObj = JSON.parse(`[${params.row.tags}]`)
+                                const tagArr = params.row.tags.split(',')
+                                const allTags = _this.getAllTags()
+                                const tagObjs = utils.createTagObjs(tagArr, allTags)
+                                tagObjs.map(item => {
                                     res.push(h('Tag', {
                                         attrs: {
                                             color: item.color,
@@ -84,12 +92,12 @@
                         }  
                     },
                     {
-                        title: 'Publish Date',
-                        key: 'publishTime',
+                        title: 'Create Time',
+                        key: 'createTime',
                     },
                     {
-                        title: 'Last Update',
-                        key: 'updateTime',
+                        title: 'Publish Date',
+                        key: 'publishTime',
                     },
                     {
                         title: 'Action',
@@ -137,6 +145,7 @@
             this.getTotal()
             this.getLimitArticle(1)
             this.getTypes()
+            this.getTagList()
         },
         components: {
             Layout
@@ -151,7 +160,11 @@
                 'setTypeList': SET_TYPE_LIST
             }),
             ...mapActions([
-                'getTypeList'
+                'getTypeList',
+                'getTagList'
+            ]),
+            ...mapGetters([
+                'getAllTags'
             ]),
             getTypes () {
                 this.getTypeList().then(res => {

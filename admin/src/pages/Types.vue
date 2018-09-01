@@ -149,12 +149,7 @@
                     } 
                 })
             }
-        },
-        // watch:{
-        //     getAllTypes: function(newVal, oldVal){
-        //         this.list = this.getAllTypes
-        //     }
-        // }
+        }
     }
 </script>
 

@@ -11,17 +11,11 @@ export const SET_ARTICLE_CONTENT = 'SET_ARTICLE_CONTENT'
 
 export const SET_ARTICLE_ISPUBLISHED = 'SET_ARTICLE_ISPUBLISHED'
 
-export const SET_ARTICLE_THUMBNAIL = 'SET_ARTICLE_THUMBNAIL'
-
 export const QUERY_ARTICLE_BY_ID = 'QUERY_ARTICLE_BY_ID'
 
 export const SET_ARTICLE_TYPE = 'SET_ARTICLE_TYPE'
 
-//export const UPDATE_ARTICLE_BY_ID = 'UPDATE_ARTICLE_BY_ID'
-
 export const CLEAR_ARTICLE = 'CLEAR_ARTICLE'
-
-
 
 
 /*tags mutation*/
@@ -32,5 +26,6 @@ export const SET_TAG_LIST = 'SET_TAG_LIST'
 
 /*types mutation*/
 export const SET_TYPE_LIST = 'SET_TYPE_LIST'
+
 export const GET_TYPE_LIST = 'GET_TYPE_LIST'
 

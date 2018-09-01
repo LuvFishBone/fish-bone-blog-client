@@ -34,7 +34,6 @@
                 } )
             },
             tagClick: function(item) {
-                console.log(item)
                 this.tagSelected && this.tagSelected(item)
             }
         },
@@ -44,7 +43,7 @@
             ])
         },
         mounted(){
-            this.list = this.getAllTags
+            this.getTagList()
         },
         watch:{
             getAllTags: function(newVal, oldVal){

@@ -76,8 +76,9 @@ const mutations = {
     },
     [mType.CLEAR_ARTICLE] (state) {
         state.id = '',
+        state.type = '',
         state.title = '',
-        state.tags = [],
+        state.tags = '',
         state.content = '',
         state.isPublished = 1
     }

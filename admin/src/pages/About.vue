@@ -27,7 +27,6 @@
        methods: {
            getAbout () {
                 axios.get(this.apiUrl).then( res => {
-                    console.log(res)
                     this.content = res.data[0].content
                     this.createSMDE()
                 })

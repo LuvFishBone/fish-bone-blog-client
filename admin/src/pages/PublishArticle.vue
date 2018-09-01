@@ -56,7 +56,7 @@
             <Row>
                 <Col span="24">
                     <FormItem label="已选标签">
-                        <span v-for="(item, index) in formData.tags" :key="index">
+                        <span v-for="(item, index) in selectedTagObjArr" :key="index">
                             <Tag type="dot" closable :color="item.color" @on-close="removeTag(index)">{{item.name}}</Tag>
                         </span>
                     </FormItem>
@@ -96,13 +96,16 @@
         SET_ARTICLE_ISPUBLISHED, 
         CLEAR_ARTICLE, 
         SET_ARTICLE,
-        SET_ARTICLE_THUMBNAIL,
+        SET_TYPE_LIST,
         SET_ARTICLE_TYPE
     } from '../store/mutation-types'
+    import utils from '@/utils'
+
     export default{
         data () {
             return {
                 typeList: [],
+                selectedTagObjArr: [],
                 formData: {
                     id: '',
                     type: '',
@@ -135,55 +138,61 @@
                 this.getArticleById(this.articleId).then(res => {
                     if(res.status === 200){
                         this.setArticle(res.data[0])
-                        this.formData.id = this.getArticle.id
-                        this.formData.title = this.getArticle.title
-                        this.formData.tags = JSON.parse(`[${this.getArticle.tags}]`)
-                        this.formData.content = this.getArticle.content
-                        this.formData.isPublished = this.getArticle.isPublished
+                        this.formData = { ...this.getArticle }
+                        this.formData.tags = this.formData.tags.split(',')
+                        const tagArr = this.formData.tags
+                        const allTags = this.getAllTags()
+                        this.selectedTagObjArr = utils.createTagObjs(tagArr, allTags)
                     }
                 })
             }
-            this.getTypeList()
+            this.getTypes()
+            this.getTagList()
         },
         methods: {
+            ...mapGetters([
+                'getAllTags'
+            ]),
             ...mapMutations({
                 'setArticle': SET_ARTICLE,
                 'setArticleType': SET_ARTICLE_TYPE,
                 'setArticleTitle': SET_ARTICLE_TITLE,
                 'setArticleTags': SET_ARTICLE_TAGS,
                 'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
-                'clearArticle': CLEAR_ARTICLE,
-                'setArticleThumbnail': SET_ARTICLE_THUMBNAIL
+                'setTypeList': SET_TYPE_LIST,
+                'clearArticle': CLEAR_ARTICLE
             }),
             ...mapActions([
                 'addArticle',
                 'getArticleById',
                 'updateArticleById',
-                'getTypeList'
+                'getTypeList',
+                'getTagList'
             ]),
             addTitle (event) {
                 const title = event.target.value
                 this.setArticleTitle(title)
             },
             selectTagsFromExist (item) {
-                const articleTagsStr = this.formatArticleTags(item.name, item.color)
+                const articleTagsStr = this.formatArticleTags(item)
                 this.setArticleTags(articleTagsStr)
             },
-            formatArticleTags (tagname, color) {
-                let articleTagsStr = ''
-                if(tagname && color){
-                    this.formData.tags.push({ name:tagname, color: color })
+            formatArticleTags (tagObj) {
+                let tagStr = ''
+                if(tagObj && tagObj.name){
+                    this.formData.tags.push(tagObj.name)
+                    this.selectedTagObjArr.push({ name: tagObj.name, color: tagObj.color })
                 }
                 let tags = this.formData.tags;
                 if(tags.length){
                     tags.map( (res, index) => {
-                        const tagObjStr = `{"name":"${res.name}","color":"${res.color}"}`
-                        articleTagsStr += (index != tags.length-1) ? `${tagObjStr},` : `${tagObjStr}`
+                        tagStr += (index != tags.length-1) ? `${res},` : res
                     })
                 }
-                return articleTagsStr;
+                return tagStr
             },
             removeTag (index) {
+                this.selectedTagObjArr.splice(index, 1)
                 this.formData.tags.splice(index, 1)
                 const articleTagsStr = this.formatArticleTags()
                 this.setArticleTags(articleTagsStr)
@@ -194,8 +203,6 @@
                     desc: '保存成功'
                 })
                 this.clearArticle()
-                this.$refs['formData'].resetFields();
-                this.formData.tags = []
                 this.$router.push({name: 'articlelist'})
             },
             addArticleRequest () {
@@ -207,7 +214,6 @@
             },
             updateArticleRequest () {
                 this.updateArticleById().then(res => {
-                    console.log(res)
                     if(res.status === 200){
                         this.saveSuccess()
                     }
@@ -238,17 +244,18 @@
                 this.setArticleIsPublished(0)
                 this.articleId ? this.updateArticleRequest() : this.addArticleRequest()
             },
-            addTagCallBack (tagname) {
-                const articleTagsStr = this.formatArticleTags(tagname, this.getTagColor)
+            addTagCallBack (tagObj) {
+                const articleTagsStr = this.formatArticleTags(tagObj)
                 this.setArticleTags(articleTagsStr)
             },
             typeChange (){
                 this.setArticleType(this.formData.type);
-            }
-        },
-        watch: {
-            getAllTypes: function(newVal, oldVal){
-                this.typeList = this.getAllTypes
+            },
+            getTypes () {
+                this.getTypeList().then(res => {
+                    this.setTypeList(res.data)
+                    this.typeList = this.getAllTypes
+                })
             }
         }
     }
