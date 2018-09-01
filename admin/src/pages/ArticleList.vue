@@ -7,29 +7,31 @@
 
 <script>
     import Layout from '@/components/Layout'
+    import { mapGetters, mapMutations, mapActions } from 'vuex'
+    import { SET_TYPE_LIST } from '../store/mutation-types'
+
     export default{
         data () {
             return {
+                typeList: [],
                 columns: [
                     {
                         title: 'ID',
                         key: 'id'
                     },
                     {
-                        title: 'Thumbnail',
-                        key: 'thumbnail',
+                        title: 'Type',
+                        key: 'type',
                         render: (h, params) => {
-                            if(params.row.thumbnail){
-                                return h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                }, 'Review')
-                            }else{
-                                return h('span', {
-                                }, '--')
-                            }
+                            const _this = this
+                            function articleTypeFilter (value) {
+                                _this.getAllTypes.map(item => {
+                                    console.log(value)
+                                    if(item.id === value)
+                                        return item.name
+                                })
+                            } 
+                            return h('span', articleTypeFilter(params.row.type))
                         }
                     },
                     {
@@ -47,13 +49,7 @@
                                     res.push(h('Tag', {
                                         attrs: {
                                             color: item.color,
-                                            //closable: true
                                         },
-                                        // on: {
-                                        //     'on-close': () => {
-                                        //         this.removeTag()
-                                        //     }
-                                        // }
                                     }, item.name))
                                 })
                                 return res
@@ -140,12 +136,30 @@
         mounted () {
             this.getTotal()
             this.getLimitArticle(1)
+            this.getTypes()
         },
         components: {
             Layout
         },
+        computed: {
+            ...mapGetters([
+                'getAllTypes'
+            ])
+        },
         methods: {
-            getTotal() {
+            ...mapMutations({
+                'setTypeList': SET_TYPE_LIST
+            }),
+            ...mapActions([
+                'getTypeList'
+            ]),
+            getTypes () {
+                this.getTypeList().then(res => {
+                    this.setTypeList(res.data)
+                    this.typeList = this.getAllTypes
+                })
+            },
+            getTotal () {
                 return axios.get('/api/v1/articles/allTotal/').then(res => {
                     if(res.status === 200) {
                         this.total = res.data[0].total
@@ -168,15 +182,12 @@
                             title: '提示',
                             desc: '删除成功！'
                         })
-                        
-                        console.log(this.currentPageNum)
                         this.getTotal()
                         this.getLimitArticle(this.currentPageNum)
                     }
                 })
             },
             viewArticle (id) {
-                console.log(id)
                 this.$router.push({ path: `/publishArticle?id=${id}`})
             },
             pageChage (num) {

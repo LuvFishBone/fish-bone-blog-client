@@ -1,79 +1,82 @@
 <template>
     <Layout>
         <Form class="article-box" :label-width="80" ref="formData" :model="formData">
-            <FormItem label="文章标题" prop="title">
-                <Row>
-                    <Col span="8">
-                        <Input v-model="formData.title" @on-change="addTitle" placeholder="文章标题" clearable></Input>
-                    </Col>
-                </Row>
-            </FormItem>
-            <FormItem label="文章缩略图" prop="title">
-                <Row>
-                    <Col span="2">
-                        <Upload
-                            action = "/api/v1/uploadfiles/"
-                            :headers="uploadHeader"
-                            :multiple="false"
-                            :on-remove="removeFile"
-                            :before-upload="controlUpload"
-                            :default-file-list="uploadedImgs">
-                            <Button icon="ios-cloud-upload-outline">图片上传</Button>
-                        </Upload>
-                    </Col>
-                    <Col span="8">
-                        <div v-if="uploadImg !== null">
-                            文件名: {{ uploadImg.name }} 
-                            <Button type="text" @click="upload" :loading="loadingStatus">{{ loadingStatus ? '努力上传中...' : '上传' }}</Button>
-                        </div>
-                    </Col>
-                </Row>
-            </FormItem>
-            <FormItem label="文章状态" prop="isPublished">
-                <Row>
-                    <Col span="8">
+            <Row>
+                <Col span="8">
+                    <FormItem label="文章状态" prop="isPublished">
                         <Tag :color="this.formData.isPublished ? 'primary': 'warning'">
                             {{this.formData.isPublished ? '已发布': '未发布'}}
                         </Tag>
-                    </Col>
-                </Row>
-            </FormItem>
-            <FormItem label="标签颜色">
-                <TagColorBar />
-            </FormItem>
-            <FormItem label="添加标签">
-                <Row :gutter="5">
-                    <Col span="3">
-                        <!-- <Input v-model="formData.tag" @on-enter="addTags" placeholder="添加标签,按Enter结束" clearable></Input> -->
-                        <TagAddInput :addTagCallBack="addTagCallBack" :width="135" />
-                    </Col>
-                    <Col span="2">
-                         <Poptip title="请选择标签" placement="bottom">
-                             <div class="tags-box" slot="content">
-                                <!-- <Tag v-for="item in existTags" :key="item.id" :color="item.color" @click.native="selectTagsFromExist(item)"> {{item.name}} </Tag> -->
-                                <TagList :closable="false" :tagSelected="selectTagsFromExist" />
-                             </div>
-                            <Button><Icon type="ios-pricetags-outline" size="14" /> 选择标签</Button>
-                        </Poptip>
-                    </Col>
-                    <Col span="15">
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row>
+                <Col span="10">
+                    <FormItem label="文章类型">
+                        <Select v-model="formData.type" @on-change="typeChange">
+                            <Option 
+                                v-for="item in typeList" 
+                                :value="item.id" 
+                                :key="item.id">
+                                {{item.name}}
+                            </Option>
+                        </Select>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="文章标题" prop="title">
+                        <Input v-model="formData.title" @on-change="addTitle" placeholder="文章标题" clearable></Input>
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row>
+                <Col span="10">
+                    <FormItem label="标签颜色">
+                        <TagColorBar />
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="添加标签">
+                        <Row :gutter="5">
+                            <Col span="10">
+                                <TagAddInput :addTagCallBack="addTagCallBack" />
+                            </Col>
+                            <Col span="10">
+                                <Poptip title="请选择标签" placement="bottom">
+                                    <div class="tags-box" slot="content">
+                                        <TagList :closable="false" :tagSelected="selectTagsFromExist" />
+                                    </div>
+                                    <Button><Icon type="ios-pricetags-outline" size="14" /> 选择标签</Button>
+                                </Poptip>
+                            </Col>
+                        </Row>
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row>
+                <Col span="24">
+                    <FormItem label="已选标签">
                         <span v-for="(item, index) in formData.tags" :key="index">
                             <Tag type="dot" closable :color="item.color" @on-close="removeTag(index)">{{item.name}}</Tag>
                         </span>
-                    </Col>
-                </Row>
-            </FormItem>
-            <FormItem>
-                <Row>
-                    <Col span="24">
+                    </FormItem>
+                </Col>
+            </Row>    
+            <Row>
+                <Col span="24">
+                    <FormItem>
                         <Edit :content="formData.content"></Edit>
-                    </Col>
-                </Row>
-            </FormItem>
-            <FormItem>
-                <Button type="primary" @click="saveArticle()"><Icon type="ios-paper-plane" size="16" /> 发布</Button>
-                <Button @click="saveArticleAsDraft()" style="margin-left: 8px"><Icon type="ios-copy-outline" size="16" /> 保存(草稿)</Button>
-            </FormItem>
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row>
+                <Col span="24">
+                    <FormItem>
+                        <Button type="primary" @click="saveArticle()"><Icon type="ios-paper-plane" size="16" /> 发布</Button>
+                        <Button @click="saveArticleAsDraft()" style="margin-left: 8px"><Icon type="ios-copy-outline" size="16" /> 保存(草稿)</Button>
+                    </FormItem>
+                </Col>
+            </Row>
         </Form>
     </Layout>
 </template>
@@ -93,29 +96,20 @@
         SET_ARTICLE_ISPUBLISHED, 
         CLEAR_ARTICLE, 
         SET_ARTICLE,
-        SET_ARTICLE_THUMBNAIL 
+        SET_ARTICLE_THUMBNAIL,
+        SET_ARTICLE_TYPE
     } from '../store/mutation-types'
     export default{
-        data() {
+        data () {
             return {
-                uploadImg: null,
-                loadingStatus: false,
-                uploadedImgs: [
-                    {
-                        name:'123',
-                        url:'https://imququ.com/'
-                    }
-                ],
-                existTags: [],
+                typeList: [],
                 formData: {
-                    id :'',
+                    id: '',
+                    type: '',
                     title : '',
                     tags : [],
                     content : '',
                     isPublished : 0
-                },
-                uploadHeader: {
-                    AuthToken: `Bearer ${localStorage.AuthToken}`
                 }
             }
         },
@@ -126,16 +120,17 @@
             TagAddInput,
             TagList,
         },
-        created() {
+        created () {
             this.articleId = this.$route.query.id
         },
         computed: {
             ...mapGetters([
                 'getArticle',
-                'getTagColor'
+                'getTagColor',
+                'getAllTypes'
             ])
         },
-        mounted() {
+        mounted () {
             if(this.articleId){
                 this.getArticleById(this.articleId).then(res => {
                     if(res.status === 200){
@@ -148,29 +143,12 @@
                     }
                 })
             }
+            this.getTypeList()
         },
         methods: {
-            removeFile (file, fileList) {
-                console.log(file)
-            },
-            upload () {
-                this.loadingStatus = true;
-                let data = new FormData();
-                data.append('file', this.uploadImg)
-                axios.post('/api/v1/uploadfiles/', data).then(res =>{
-                    const fileName = res.data.filename                
-                    this.setArticleThumbnail(fileName)
-                    this.uploadImg = null;
-                    this.loadingStatus = false;
-                    this.$Message.success('上传成功！')
-                })
-            },
-            controlUpload(file){
-                this.uploadImg = file;
-                return false;
-            },
             ...mapMutations({
-                'setArticle' : SET_ARTICLE,
+                'setArticle': SET_ARTICLE,
+                'setArticleType': SET_ARTICLE_TYPE,
                 'setArticleTitle': SET_ARTICLE_TITLE,
                 'setArticleTags': SET_ARTICLE_TAGS,
                 'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
@@ -180,17 +158,18 @@
             ...mapActions([
                 'addArticle',
                 'getArticleById',
-                'updateArticleById'
+                'updateArticleById',
+                'getTypeList'
             ]),
-            addTitle(event) {
+            addTitle (event) {
                 const title = event.target.value
                 this.setArticleTitle(title)
             },
-            selectTagsFromExist(item) {
+            selectTagsFromExist (item) {
                 const articleTagsStr = this.formatArticleTags(item.name, item.color)
                 this.setArticleTags(articleTagsStr)
             },
-            formatArticleTags(tagname, color) {
+            formatArticleTags (tagname, color) {
                 let articleTagsStr = ''
                 if(tagname && color){
                     this.formData.tags.push({ name:tagname, color: color })
@@ -204,12 +183,12 @@
                 }
                 return articleTagsStr;
             },
-            removeTag(index) {
+            removeTag (index) {
                 this.formData.tags.splice(index, 1)
                 const articleTagsStr = this.formatArticleTags()
                 this.setArticleTags(articleTagsStr)
             },
-            saveSuccess(){
+            saveSuccess () {
                 this.$Notice.success({
                     title: '提示',
                     desc: '保存成功'
@@ -219,14 +198,14 @@
                 this.formData.tags = []
                 this.$router.push({name: 'articlelist'})
             },
-            addArticleRequest() {
+            addArticleRequest () {
                 this.addArticle().then(res =>{
                     if(res.status === 200){
                         this.saveSuccess()
                     }
                 })
             },
-            updateArticleRequest() {
+            updateArticleRequest () {
                 this.updateArticleById().then(res => {
                     console.log(res)
                     if(res.status === 200){
@@ -234,8 +213,12 @@
                     }
                 })
             },
-            saveArticle() {
+            saveArticle () {
                 const formdata = this.formData;
+                if(!formdata.type){
+                    this.$Message.error('请选择类型!')
+                    return
+                }
                 if(!formdata.title){
                     this.$Message.error('请填写标题!')
                     return
@@ -251,13 +234,21 @@
                 this.setArticleIsPublished(1)
                 this.articleId ? this.updateArticleRequest() : this.addArticleRequest()
             },
-            saveArticleAsDraft() {
+            saveArticleAsDraft () {
                 this.setArticleIsPublished(0)
                 this.articleId ? this.updateArticleRequest() : this.addArticleRequest()
             },
-            addTagCallBack(tagname){
+            addTagCallBack (tagname) {
                 const articleTagsStr = this.formatArticleTags(tagname, this.getTagColor)
                 this.setArticleTags(articleTagsStr)
+            },
+            typeChange (){
+                this.setArticleType(this.formData.type);
+            }
+        },
+        watch: {
+            getAllTypes: function(newVal, oldVal){
+                this.typeList = this.getAllTypes
             }
         }
     }

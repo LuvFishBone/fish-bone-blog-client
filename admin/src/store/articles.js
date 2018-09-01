@@ -3,7 +3,7 @@ import * as mType from './mutation-types'
 const state = {
     id: '',
     title: '',
-    thumbnail: '',
+    type: '',
     tags: '',
     content: '',
     isPublished: ''
@@ -48,32 +48,33 @@ const actions = {
 }
 
 const mutations = {
-    // [mType.ADD_ARTICLE](state, payload){
-
-    // },
-    [mType.SET_ARTICLE](state, payload){
+    [mType.SET_ARTICLE] (state, payload) {
         state.id = payload.id,
         state.title = payload.title,
+        state.type = payload.type,
         state.tags = payload.tags,
         state.content = payload.content,
         state.isPublished = payload.isPublished
     },
-    [mType.SET_ARTICLE_TITLE](state, title){
+    [mType.SET_ARTICLE_TYPE] (state, type) {
+        state.type = type
+    },
+    [mType.SET_ARTICLE_TITLE] (state, title) {
         state.title = title
     },
-    [mType.SET_ARTICLE_TAGS](state, tags){
+    [mType.SET_ARTICLE_TAGS] (state, tags) {
         state.tags = tags
     },
-    [mType.SET_ARTICLE_CONTENT](state, content){
+    [mType.SET_ARTICLE_CONTENT] (state, content) {
         state.content = content
     },
-    [mType.SET_ARTICLE_ISPUBLISHED](state, isPublished){
+    [mType.SET_ARTICLE_ISPUBLISHED] (state, isPublished) {
         state.isPublished = isPublished
     },
-    [mType.SET_ARTICLE_THUMBNAIL](state, imgUrl){
+    [mType.SET_ARTICLE_THUMBNAIL] (state, imgUrl) {
         state.thumbnail = imgUrl
     },
-    [mType.CLEAR_ARTICLE](state){
+    [mType.CLEAR_ARTICLE] (state) {
         state.id = '',
         state.title = '',
         state.tags = [],

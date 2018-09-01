@@ -29,9 +29,7 @@ const actions = {
     },
     getTypeList: async ({commit, state}) => {
         try {
-            return await axios.get('/api/v1/types/').then(res => {
-                commit(mType.SET_TYPE_LIST, res.data)
-            })
+            return await axios.get('/api/v1/types/')
         }
         catch(error){
             return error; 

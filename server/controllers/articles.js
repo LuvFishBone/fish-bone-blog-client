@@ -6,18 +6,18 @@ import Article from '../models/articles'
 
 class ArticleControllers {
 
-    async addArticle(ctx) {
-        const {title, tags, content, isPublished} = ctx.request.body
-        const res = await Article.addArticle(title, tags, content, isPublished)
+    async addArticle (ctx) {
+        const {type, title, tags, content, isPublished} = ctx.request.body
+        const res = await Article.addArticle(type, title, tags, content, isPublished)
         ctx.body = res
     }
 
-    async getAllArticleTotal(ctx) {
+    async getAllArticleTotal (ctx) {
         const res = await Article.getAllArticleTotal()
         ctx.body = res
     }
 
-    async getArticleList(ctx) {
+    async getArticleList (ctx) {
         const {isPublished = 0, offset = 0, limit = 0} = ctx.query
         if (isPublished) {
             const res = {
@@ -37,30 +37,30 @@ class ArticleControllers {
         }
     }
 
-    async getLimitAllArticles(ctx) {
+    async getLimitAllArticles (ctx) {
         const { offset, limit } = ctx.params
         const res = await Article.getLimitAllArticles(offset, limit)
         ctx.body = res
     }
 
-    async getArticleById(ctx) {
+    async getArticleById (ctx) {
         const res = await Article.getArticleById(ctx.params.id)
         ctx.body = res
     }
 
-    async updateArticleById(ctx) {
+    async updateArticleById (ctx) {
         const id = ctx.params.id
-        const {title, tags, content, isPublished} = ctx.request.body
-        ctx.body = await Article.updateArticleById(id, {title, tags, content, isPublished})
+        const {type, title, tags, content, isPublished} = ctx.request.body
+        ctx.body = await Article.updateArticleById(id, {type, title, tags, content, isPublished})
     }
 
-    async publishArticle(ctx) {
+    async publishArticle (ctx) {
         const id = ctx.params.id
         const {title, tags, content} = ctx.request.body
         ctx.body = await Article.publishArticle(id, {title, tags, content})
     }
 
-    async deleteArticle(ctx) {
+    async deleteArticle (ctx) {
         ctx.body = await Article.deleteArticle(ctx.params.id)
     }
 }

@@ -13,7 +13,7 @@
                     :key="item.id" 
                     :name="item.name"
                     @click.native="typeClick(item)">
-                        {{item.name}}
+                    {{item.name}}
                   </Tag>
             </div>
         </div>
@@ -23,7 +23,7 @@
 <script>
     import Layout from '@/components/Layout'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
-
+    import { SET_TYPE_LIST } from '../store/mutation-types'
     export default {
         data () {
             return {
@@ -33,8 +33,7 @@
             }
         },
         mounted () {
-            this.getTypeList()
-            this.list = this.getAllTypes
+            this.getTypes()
         },
         computed: {
             ...mapGetters([
@@ -45,6 +44,9 @@
             Layout
         },
         methods:{
+            ...mapMutations({
+                'setTypeList': SET_TYPE_LIST
+            }),
             ...mapActions([
                 'getTypeByName',
                 'addType',
@@ -62,8 +64,14 @@
                     if(res.status === 200) {
                         this.$Message.success('文章类型增加成功！')
                         this.name = ''
-                        this.getTypeList()
+                        this.getTypes()
                     }
+                })
+            },
+            getTypes () {
+                this.getTypeList().then(res => {
+                    this.setTypeList(res.data)
+                    this.list = this.getAllTypes
                 })
             },
             addTypeHandle () {
@@ -99,7 +107,7 @@
                 this.deleteTypeById(name).then(res => {
                     if(res.status === 200){
                         this.$Message.success('删除成功！')
-                        this.getTypeList()
+                        this.getTypes()
                     }
                 })
             },
@@ -142,11 +150,11 @@
                 })
             }
         },
-        watch:{
-            getAllTypes: function(newVal, oldVal){
-                this.list = this.getAllTypes
-            }
-        }
+        // watch:{
+        //     getAllTypes: function(newVal, oldVal){
+        //         this.list = this.getAllTypes
+        //     }
+        // }
     }
 </script>
 
