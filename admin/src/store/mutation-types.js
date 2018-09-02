@@ -1,5 +1,7 @@
 export const MENU_NAME_SELECTED = 'MENU_NAME_SELECTED'
 
+export const MENU_DISPLAY_TOGGLE = 'MENU_DISPLAY_TOGGLE'
+
 /*article mutation*/
 export const SET_ARTICLE = 'SET_ARTICLE'
 

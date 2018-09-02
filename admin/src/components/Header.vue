@@ -18,24 +18,29 @@
 </template>
 
 <script>
+    import { mapMutations, mapGetters } from 'vuex'
+    import { MENU_DISPLAY_TOGGLE } from '@/store/mutation-types'
+
     export default{
         data() {
-          return {
-            isCollapsed: false
-          }
+          return {}
         },
         computed: {
           rotateIcon() {
               return [
                 'menu-icon',
-                this.isCollapsed ? 'rotate-icon' : ''
+                this.getIsCollapsed() ? 'rotate-icon' : ''
               ];
           },
-          collapsedSider() {
-            this.$refs.menuLeft.toggleCollapse();
-          }
+
       },
       methods: {
+        ...mapGetters([
+            'getIsCollapsed'
+        ]),
+        ...mapMutations({
+          displayMenu: MENU_DISPLAY_TOGGLE
+        }),
         updatePwd() {
           console.log('go to update pwd')
         },
@@ -45,6 +50,9 @@
         },
         handleMenuItemClick (name) {
           this[name]()
+        },
+        collapsedSider() {
+          this.displayMenu()
         }
       }
     }

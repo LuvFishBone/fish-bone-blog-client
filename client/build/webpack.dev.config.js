@@ -12,7 +12,7 @@ module.exports = webpackMerge(webpackBase, {
         contentBase: path.resolve(__dirname, '../dist'),
         hot: true,
         host: '0.0.0.0',
-        port: 8080,
+        port: 8082,
         proxy: {
             '/api': 'http://localhost:8081',
         }
