@@ -23,6 +23,9 @@
             }
         },
         methods: {
+            ...mapGetters([
+                'getTagColor'
+            ]),
             ...mapMutations({
                 'setTagColor': mType.SET_TAG_COLORT
             })
@@ -31,7 +34,7 @@
             //...mapGetters(['getTagColor'])
             currentTagColor:{
                 get: function() {
-                    return this.tagColors[0].label
+                    return this.getTagColor()
                 },
                 set: function(newColor){
                     this.setTagColor(newColor)

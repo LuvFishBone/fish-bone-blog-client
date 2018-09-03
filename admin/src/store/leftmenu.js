@@ -2,7 +2,7 @@ import * as mType from './mutation-types'
 
 const state = {
     menuSelectedName: 'publishAnalyze',
-    isCollapsed: true
+    isCollapsed: false
 }
 
 const getters = {

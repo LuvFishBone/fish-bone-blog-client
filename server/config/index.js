@@ -7,7 +7,7 @@ export const db = {
 }
 
 export const dbName = {
-    database: 'fishbone_db'
+    database: 'fishbone_blog_db'
 }
 
 export const port = 8081
