@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="fishbone">
        <router-view></router-view>
     </div>
 </template>

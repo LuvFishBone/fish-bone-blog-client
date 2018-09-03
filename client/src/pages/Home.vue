@@ -1,6 +1,6 @@
 <template>
-    <div>
-        主页
+    <div class="home-page-box">
+        主页1
     </div>
 </template>
 
@@ -10,7 +10,7 @@
     }
 </script>
 
-<style>
-
+<style scoped lang="less">
+    
 </style>
 

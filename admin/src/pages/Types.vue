@@ -137,10 +137,9 @@
                             return
                         }
                         this.updateTypeById({ id: this.id, name: this.name }).then(res => {
-                            console.log(res)
                             if(res.status === 200) {
                                 this.$Message.success('更新成功！')
-                                this.getTypeList()
+                                this.getTypes()
                             }
                         })
                     },
