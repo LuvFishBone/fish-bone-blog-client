@@ -1,5 +1,6 @@
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const px2rem = require('postcss-px2rem')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -12,8 +13,23 @@ module.exports = {
     module: {
        rules:[
            {
-               test: /\.css$/,
-               use: ['style-loader','css-loader']
+               test: /\.(less|css)$/,
+               use: [
+                   'style-loader',
+                   'css-loader',
+                   'less-loader',
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: [
+                                require("autoprefixer")
+                            ],
+                            postcss: function() {
+                                return [px2rem({remUnit: 75})];
+                            },
+                        }
+                    }
+            ]
            },
            {
                test: /\.js$/,
@@ -30,18 +46,10 @@ module.exports = {
                    {
                        loader: 'iview-loader',
                        options: {
-                           prefix: false
+                           prefix: false,
                        }
                    }
                 ]
-           },
-           {
-               test: /\.less$/,
-               use: [
-                   'style-loader',
-                   'css-loader',
-                   'less-loader'
-               ]
            },
            {
                 test: /\.(png|svg|jpg|gif)$/,

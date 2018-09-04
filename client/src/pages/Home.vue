@@ -1,12 +1,16 @@
 <template>
-    <div class="home-page-box">
-        主页1
-    </div>
+    <Layout>
+        <div>主页</div>
+    </Layout>
 </template>
 
 <script>
-    export default {
+    import Layout from "@/components/layout"
 
+    export default {
+        components: {
+            Layout
+        }        
     }
 </script>
 
