@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const px2rem = require('postcss-px2rem')
 
@@ -21,12 +22,9 @@ module.exports = {
                     {
                         loader: "postcss-loader",
                         options: {
-                            plugins: [
-                                require("autoprefixer")
-                            ],
-                            postcss: function() {
-                                return [px2rem({remUnit: 75})];
-                            },
+                            config: {
+                                path: './config'
+                            }
                         }
                     }
             ]
@@ -71,7 +69,19 @@ module.exports = {
        ]
     },
     plugins: [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        // new webpack.LoaderOptionsPlugin({
+        //     options: {
+        //         postcss: function() {
+        //             return [px2rem({remUnit: 100})];
+        //         },
+        //         vue: {
+        //             loaders:{
+        //                 postcss: [px2rem({remUnit: 100})]
+        //             }
+        //         },
+        //     }
+        // })
     ],
     resolve: {
         extensions: ['.js', '.vue', '.json'],
