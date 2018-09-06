@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const px2rem = require('postcss-px2rem')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -21,11 +20,11 @@ module.exports = {
                    'less-loader',
                     {
                         loader: "postcss-loader",
-                        options: {
-                            config: {
-                                path: './config'
-                            }
-                        }
+                        // options: {
+                        //     config: {
+                        //         path: './config'
+                        //     }
+                        // }
                     }
             ]
            },
