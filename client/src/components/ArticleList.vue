@@ -37,7 +37,7 @@
                         </div>
                     </a>
                 </li>
-                                <li class="item">
+                <li class="item">
                     <a href="">
                         <div class="content-box">
                             <div class="info-box">
@@ -58,7 +58,7 @@
                         </div>
                     </a>
                 </li>
-                                <li class="item">
+                <li class="item">
                     <a href="">
                         <div class="content-box">
                             <div class="info-box">

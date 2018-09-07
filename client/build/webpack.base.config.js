@@ -19,12 +19,7 @@ module.exports = {
                    'css-loader',
                    'less-loader',
                     {
-                        loader: "postcss-loader",
-                        // options: {
-                        //     config: {
-                        //         path: './config'
-                        //     }
-                        // }
+                        loader: "postcss-loader"
                     }
             ]
            },

@@ -7,7 +7,6 @@ import router from './router'
 import '@/utils/axios.config.js'
 import '@/assets/style/app.less'
 
-
 router.beforeEach((to, from, next) => {
     next();
 });

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
+import Article from '@/pages/Article'
 
 Vue.use(Router)
 
@@ -11,6 +12,11 @@ const router = new Router({
             path: '/',
             name: 'index',
             component: Home
+        },
+        {
+            path: '/article',
+            name: 'articleDetail',
+            component: Article
         }
     ]
 })

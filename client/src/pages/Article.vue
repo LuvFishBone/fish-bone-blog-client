@@ -2,12 +2,11 @@
     <base-layout>
         <content-layout>
             <template slot="contentView">
-                <article-list />
+                <article-detail />
             </template>
             <template slot="rightSide">
                 <right-aside-layout>
-                    <blog-intro></blog-intro>
-                    <right-aside-tags></right-aside-tags>
+                    <article-catalog />
                 </right-aside-layout>
             </template>
         </content-layout>
@@ -19,19 +18,17 @@
     import BaseLayout from '@/components/BaseLayout'
     import ContentLayout from '@/components/ContentLayout'
     import RightAsideLayout from '@/components/RightAsideLayout'
-    import ArticleList from '@/components/ArticleList'
-    import BlogIntro from '@/components/BlogIntro'
-    import RightAsideTags from '@/components/RightAsideTags'
+    import ArticleCatalog from '@/components/ArticleCatalog'
+    import ArticleDetail from '@/components/ArticleDetail'
 
     export default {
         components: {
             BaseLayout,
             ContentLayout,
             RightAsideLayout,
-            ArticleList,
-            BlogIntro,
-            RightAsideTags,
-        }        
+            ArticleCatalog,
+            ArticleDetail,
+        }
     }
 </script>
 

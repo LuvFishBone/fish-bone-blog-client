@@ -70,7 +70,7 @@
                     font-size: 13px;
                     transition: all .3s ease-in-out;
                     &:hover{
-                        background: #307fffab;
+                        background: #ed4014;
                         color: #fff;
                     }
                 }

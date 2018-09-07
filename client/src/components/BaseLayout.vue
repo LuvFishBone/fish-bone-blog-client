@@ -64,8 +64,8 @@
                         width: 50px;
                         height: 50px;
                         margin-right: 20px;
-                        background: url('../assets/img/fishbone_72px.png') center center no-repeat;
-                        background-size: 40px;
+                        background: url('../assets/img/fish_logo.png') center center no-repeat;
+                        background-size: 50px;
                         cursor: pointer;
                     }
                     .menu-box{

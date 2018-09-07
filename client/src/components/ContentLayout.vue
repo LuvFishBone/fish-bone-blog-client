@@ -17,6 +17,7 @@
 
 <style scoped lang="less">
     .main-content{
+        padding-top: 20px;
         display: flex;
         .content-view{
             flex: 1;
