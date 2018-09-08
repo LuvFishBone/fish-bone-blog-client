@@ -13,15 +13,14 @@ module.exports = {
     module: {
        rules:[
            {
-               test: /\.(less|css)$/,
+               test: /\.(less)$/,
                use: [
                    'style-loader',
                    'css-loader',
+                   'postcss-loader',
                    'less-loader',
-                    {
-                        loader: "postcss-loader"
-                    }
-            ]
+                ],
+                exclude: /node_modules/
            },
            {
                test: /\.js$/,

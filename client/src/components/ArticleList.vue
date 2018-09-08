@@ -28,6 +28,7 @@
                                         <li class="tags"><span>标签1</span></li>
                                         <li>4天前</li>
                                         <li>1111 次阅读</li>
+                                        <!-- <li><i class="icon ion-md-heart"></i> 2000</li> -->
                                     </ul>
                                 </div>
                             </div>

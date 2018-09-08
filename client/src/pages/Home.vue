@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <content-layout>
+        <content-aside-layout>
             <template slot="contentView">
                 <article-list />
             </template>
@@ -10,14 +10,14 @@
                     <right-aside-tags></right-aside-tags>
                 </right-aside-layout>
             </template>
-        </content-layout>
+        </content-aside-layout>
     </base-layout>
 </template>
 
 <script>
 
     import BaseLayout from '@/components/BaseLayout'
-    import ContentLayout from '@/components/ContentLayout'
+    import ContentAsideLayout from '@/components/ContentAsideLayout'
     import RightAsideLayout from '@/components/RightAsideLayout'
     import ArticleList from '@/components/ArticleList'
     import BlogIntro from '@/components/BlogIntro'
@@ -26,7 +26,7 @@
     export default {
         components: {
             BaseLayout,
-            ContentLayout,
+            ContentAsideLayout,
             RightAsideLayout,
             ArticleList,
             BlogIntro,
