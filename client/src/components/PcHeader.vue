@@ -4,10 +4,9 @@
         <a class="logo"></a>
         <div class="menu-box">
             <ul class="menu">
-                <li class="active"><router-link :to="{name:'index'}">主页</router-link></li>
-                <li><router-link :to="{name:'pigeonhole'}">归档</router-link></li>
-                <li><router-link :to="{name:'tags'}">标签</router-link></li>
-                <li><router-link :to="{name:'about'}">关于</router-link></li>
+                <li v-for="item in menus" :key="item.name" :class="{active: item.name == currentMenu}">
+                    <router-link :to="{name:item.name}">{{item.desc}}</router-link>
+                </li>
             </ul>
         </div>
     </div>
@@ -15,9 +14,23 @@
 </template>
 
 <script>
-  export default{
 
-  }
+    import { menus } from '@/utils/static-data'
+    import { mapGetters, mapMutations } from 'vuex'
+    import { SET_CURRENT_MENU_NAME } from '@/store/mutation-types'
+
+    export default{
+        data () {
+            return {
+                currentMenu: '',
+                menus: []
+            }
+        },
+        beforeMount () {
+            this.menus = menus
+            this.currentMenu = this.$route.name
+        }
+    }
 </script>
 
 <style scoped lang="less">
@@ -43,6 +56,7 @@
                     display: flex;
                     align-items: center;
                     margin: 0;
+                    font-size: 17px;
                     cursor: pointer;
                     a{
                         transition: all .3s ease-in-out;

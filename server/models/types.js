@@ -16,8 +16,6 @@ class Tags{
   }
 
   async updateTypeById (id, name) {
-    console.log(id, '->server')
-    console.log(name, '->server')
     return await query(`UPDATE TYPES SET name='${name}'  WHERE id=${id}`)
   }
 

@@ -5,6 +5,8 @@ const state = {
     title: '',
     type: '',
     tags: '',
+    views: '',
+    likes: '',
     content: '',
     isPublished: ''
 }
@@ -53,6 +55,8 @@ const mutations = {
         state.title = payload.title,
         state.type = payload.type,
         state.tags = payload.tags,
+        state.views = payload.views,
+        state.likes = payload.likes,
         state.content = payload.content,
         state.isPublished = payload.isPublished
     },
@@ -64,6 +68,12 @@ const mutations = {
     },
     [mType.SET_ARTICLE_TAGS] (state, tags) {
         state.tags = tags
+    },
+    [mType.SET_ARTICLE_VIEWS] (state, views) {
+        state.views = views
+    },
+    [mType.SET_ARTICLE_LIKES] (state, likes) {
+        state.likes = likes
     },
     [mType.SET_ARTICLE_CONTENT] (state, content) {
         state.content = content
@@ -79,6 +89,8 @@ const mutations = {
         state.type = '',
         state.title = '',
         state.tags = '',
+        state.views = '',
+        state.likes = '',
         state.content = '',
         state.isPublished = 1
     }

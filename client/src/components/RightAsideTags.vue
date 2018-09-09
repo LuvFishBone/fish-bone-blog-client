@@ -1,7 +1,7 @@
 <template>
     <div class="right-aside-tags">
         <div class="title">
-            <span>标签</span>
+            <span class="tag">标签</span>
             <a class="more" href="/">更多</a>
         </div>
         <div class="content">
@@ -39,7 +39,10 @@
             -webkit-box-pack: justify;
             -ms-flex-pack: justify;
             justify-content: space-between;
-            border-bottom: 1px solid #f6f6f6;
+            border-bottom: 1px solid #f6f6f6; /*no*/
+            .tag{
+                font-size: 16px;
+            }
             .more{
                 color: #007fff;
                 font-size: 12px;

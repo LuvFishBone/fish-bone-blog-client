@@ -53,11 +53,10 @@
             border-radius: 100%;
             background: url('../assets/img/fishbone_128px.png') center center no-repeat;
             background-size: 100px;
-            margin-bottom: 1rem;
-            
+            margin-bottom: 5px;
         }
         .nickname{
-            margin-bottom: .5rem;
+            margin-bottom: 15px;
             font-size: 24px;
             font-weight: bold;
         }

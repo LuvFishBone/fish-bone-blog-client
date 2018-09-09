@@ -1,34 +1,44 @@
 <template>
     <div class="article-box">
         <div class="title-bar">
-            <h5>文章列表</h5>
+            <h5 class="title">文章列表</h5>
             <ul class="category">
                 <li class="active">
                     <span>推荐</span>
                 </li>
                 <li>
-                    <span>JAVA</span>
+                    <span>前端</span>
                 </li>
                 <li>
-                    <span>CSS</span>
+                    <span>后端</span>
+                </li>
+                <li>
+                    <span>算法</span>
+                </li>
+                <li>
+                    <span>计算机基础</span>
                 </li>
             </ul>
         </div>
         <div class="article-list">
             <ul>
-                <li class="item">
-                    <a href="">
+                <li class="item" v-for="item in articles" :key="item.id">
+                    <router-link :to="{name: 'articleDetail', params: {id: item.id}}">
                         <div class="content-box">
                             <div class="info-box">
                                 <div class="info-row title-row">
-                                    OkHttp、rxJava、Retrofit联合网络请求（一）
+                                    {{item.title}}
                                 </div>
                                 <div class="info-row meta-row">
                                     <ul class="meta-list">
-                                        <li class="tags"><span>标签1</span></li>
-                                        <li>4天前</li>
-                                        <li>1111 次阅读</li>
-                                        <!-- <li><i class="icon ion-md-heart"></i> 2000</li> -->
+                                        <li class="tags">
+                                            <span v-for="tag in item.tags.split(',')" :key="tag">
+                                                <i class="icon ion-md-pricetags"></i> {{tag}}
+                                            </span>
+                                        </li>
+                                        <li><i class="icon ion-md-time"></i> {{item.publishTime}}</li>
+                                        <li v-if="item.views"><i class="icon ion-md-eye"></i> {{item.views}}</li>
+                                        <li v-if="item.likes"><i class="icon ion-md-heart"></i> {{item.likes}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -36,50 +46,9 @@
 
                             </div>
                         </div>
-                    </a>
+                    </router-link>
                 </li>
-                <li class="item">
-                    <a href="">
-                        <div class="content-box">
-                            <div class="info-box">
-                                <div class="info-row title-row">
-                                    OkHttp、rxJava、Retrofit联合网络请求（一）
-                                </div>
-                                <div class="info-row meta-row">
-                                    <ul class="meta-list">
-                                        <li class="tags"><span>标签1</span></li>
-                                        <li>4天前</li>
-                                        <li>1111 次阅读</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="article-thumb">
 
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="item">
-                    <a href="">
-                        <div class="content-box">
-                            <div class="info-box">
-                                <div class="info-row title-row">
-                                    OkHttp、rxJava、Retrofit联合网络请求（一）
-                                </div>
-                                <div class="info-row meta-row">
-                                    <ul class="meta-list">
-                                        <li class="tags"><span>标签1</span></li>
-                                        <li>4天前</li>
-                                        <li>1111 次阅读</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="article-thumb">
-
-                            </div>
-                        </div>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
@@ -87,7 +56,22 @@
 
 <script>
     export default{
-
+        data (){
+            return {
+                articles: [],
+                pageSize: 3,
+                pageNum: 1
+            }
+        },
+        beforeMount () {
+            const offset = (this.pageNum-1) * this.pageSize
+            axios.get(`/api/v1/articles/allArticle/${offset}/${this.pageSize}`).then(res => {
+                if(res.status === 200) {
+                    this.articles = res.data
+                    console.log(this.articles)
+                }
+            })      
+        }
     }
 </script>
 
@@ -103,6 +87,9 @@
             -ms-flex-pack: justify;
             justify-content: space-between;
             border-bottom: 1px solid #f6f6f6;
+            .title{
+                font-size: 16px;
+            }
             .category{
                 display: flex;
                 align-items: baseline;
@@ -139,13 +126,16 @@
                             .info-box{
                                 flex: 1;
                                 .title-row{
+                                    max-width: 550px;
                                     margin: 5px 0 8px;
                                     white-space: nowrap;
                                     overflow: hidden;
                                     text-overflow: ellipsis;
+                                    font-size: 18px;
+                                    font-weight: bold;
                                 }
                                 .meta-row{
-                                    font-size: 12px;
+                                    font-size: 14px;
                                     color: #8f969c;
                                     .meta-list{
                                         display: flex;
@@ -158,6 +148,7 @@
                                             &:after{
                                                 content: "\B7";
                                                 margin: 0 .4em;
+                                                font-size: 14px;
                                                 color: #8f969c;
                                             }
                                         }

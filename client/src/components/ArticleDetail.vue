@@ -24,7 +24,7 @@
 <style scoped lang="less">
     .article-details{
         background: #fff;
-        padding: 20px 15px;
+        padding: 10px 15px 20px;
         min-height: 250px;
         .title{
             height: 50px;

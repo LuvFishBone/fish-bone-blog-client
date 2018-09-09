@@ -14,7 +14,7 @@
 
 <style scoped lang="less">
     .main-content{
-        padding-top: 20px;
+        padding-top: 10px;
         .content-view{
             min-height: 250px;
             background: #fff;

@@ -31,6 +31,18 @@
             </Row>
             <Row>
                 <Col span="10">
+                    <FormItem label="文章阅读数" prop="views">
+                        <Input v-model="formData.views" @on-change="addViews" placeholder="文章阅读数" clearable></Input>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="文章喜欢数" prop="likes">
+                        <Input v-model="formData.likes" @on-change="addLikes" placeholder="文章喜欢数" clearable></Input>
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row>
+                <Col span="10">
                     <FormItem label="标签颜色">
                         <TagColorBar />
                     </FormItem>
@@ -92,7 +104,9 @@
     import { 
         ADD_ARTICLE, 
         SET_ARTICLE_TITLE, 
-        SET_ARTICLE_TAGS, 
+        SET_ARTICLE_TAGS,
+        SET_ARTICLE_VIEWS,
+        SET_ARTICLE_LIKES,
         SET_ARTICLE_ISPUBLISHED, 
         CLEAR_ARTICLE, 
         SET_ARTICLE,
@@ -111,6 +125,8 @@
                     type: '',
                     title : '',
                     tags : [],
+                    views: '',
+                    like: '',
                     content : '',
                     isPublished : 0
                 }
@@ -158,6 +174,8 @@
                 'setArticleType': SET_ARTICLE_TYPE,
                 'setArticleTitle': SET_ARTICLE_TITLE,
                 'setArticleTags': SET_ARTICLE_TAGS,
+                'setArticleViews': SET_ARTICLE_VIEWS,
+                'setArticleLikes': SET_ARTICLE_LIKES,
                 'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
                 'setTypeList': SET_TYPE_LIST,
                 'clearArticle': CLEAR_ARTICLE
@@ -172,6 +190,14 @@
             addTitle (event) {
                 const title = event.target.value
                 this.setArticleTitle(title)
+            },
+            addViews (event) {
+                const views = event.target.value || 0
+                this.setArticleViews(parseInt(views))
+            },
+            addLikes (event) {
+                const likes = event.target.value || 0
+                this.setArticleLikes(parseInt(likes))
             },
             selectTagsFromExist (item) {
                 const articleTagsStr = this.formatArticleTags(item)

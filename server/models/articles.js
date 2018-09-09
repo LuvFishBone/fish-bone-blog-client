@@ -6,8 +6,8 @@ import query from '../utils/query'
 import escape from '../utils/escape'
 
 class Articles {
-    async addArticle (type, title, tags, content, isPublished) {
-        return await query(`INSERT INTO ARTICLE SET type='${type}', title='${title}', tags='${tags}', createTime=NOW(), publishTime=NOW(), content='${content}', isPublished=${isPublished}`)
+    async addArticle (type, title, tags, views, likes, content, isPublished) {
+        return await query(`INSERT INTO ARTICLE SET type='${type}', title='${title}', tags='${tags}', views='${views}', likes='${likes}', createTime=NOW(), publishTime=NOW(), content='${content}', isPublished=${isPublished}`)
     }
 
     async getAllArticles () {
@@ -34,12 +34,12 @@ class Articles {
         return await query(`SELECT * FROM ARTICLE WHERE id=${id}`)
     }
 
-    async updateArticleById (id, {type, title, tags, content, isPublished}) {
-        return await query(`UPDATE ARTICLE SET type='${type}', title='${title}', tags='${tags}', content='${content}', publishTime=NOW(), isPublished=${isPublished} WHERE id=${id}`)
+    async updateArticleById (id, {type, title, tags, views, likes, content, isPublished}) {
+        return await query(`UPDATE ARTICLE SET type='${type}', title='${title}', tags='${tags}', views='${views}', likes='${likes}', content='${content}', publishTime=NOW(), isPublished=${isPublished} WHERE id=${id}`)
     }
 
-    async publishArticle (id, {type, title, tags, content}) {
-        return await query(escape`UPDATE ARTICLE SET type='${type}', title='${title}', tags='${tags}', content='${content}', publishTime=NOW(), isPublished=1 WHERE id=${id}`)
+    async publishArticle (id, {type, title, tags, views, likes, content}) {
+        return await query(escape`UPDATE ARTICLE SET type='${type}', title='${title}', tags='${tags}', views='${views}', likes='${likes}', content='${content}', publishTime=NOW(), isPublished=1 WHERE id=${id}`)
     }
 
     async deleteArticle (id) {

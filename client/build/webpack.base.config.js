@@ -17,6 +17,13 @@ module.exports = {
                use: [
                    'style-loader',
                    'css-loader',
+                   {
+                        loader: 'px2rem-loader',
+                        options: {
+                            remUnit: 50,
+                            remPrecision: 8
+                        }
+                    },
                    'postcss-loader',
                    'less-loader',
                 ],
