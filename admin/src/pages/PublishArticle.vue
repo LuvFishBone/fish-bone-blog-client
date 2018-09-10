@@ -125,8 +125,8 @@
                     type: '',
                     title : '',
                     tags : [],
-                    views: '',
-                    like: '',
+                    views: 0,
+                    likes: 0,
                     content : '',
                     isPublished : 0
                 }

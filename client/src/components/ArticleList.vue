@@ -23,7 +23,7 @@
         <div class="article-list">
             <ul>
                 <li class="item" v-for="item in articles" :key="item.id">
-                    <router-link :to="{name: 'articleDetail', params: {id: item.id}}">
+                    <router-link :to="{name: 'article', params: {id: item.id}}">
                         <div class="content-box">
                             <div class="info-box">
                                 <div class="info-row title-row">
@@ -56,7 +56,7 @@
 
 <script>
     export default{
-        data (){
+        data () {
             return {
                 articles: [],
                 pageSize: 3,

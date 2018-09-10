@@ -2,7 +2,7 @@
     <base-layout>
         <content-aside-layout>
             <template slot="contentView">
-                <article-detail />
+                <article-detail :articleInfo="article" />
             </template>
             <template slot="rightSide">
                 <right-aside-layout>
@@ -22,6 +22,29 @@
     import ArticleDetail from '@/components/ArticleDetail'
 
     export default {
+        data () {
+            return {
+                article:{}
+            }
+        },
+        beforeRouteEnter (to, from, next) {
+            const articleId = to.params.id
+            axios.get(`/api/v1/articles/${articleId}`).then(res => {
+                if(res.status === 200) {
+                    next((vm) => {
+                        vm.article = res.data[0]
+                    })
+                }
+            })
+        },
+        // mounted () {
+        //     const articleId = this.$route.params.id
+        //     axios.get(`/api/v1/articles/${articleId}`).then(res => {
+        //         if(res.status === 200) {
+        //             this.article = res.data[0]
+        //         }
+        //     })
+        // },
         components: {
             BaseLayout,
             ContentAsideLayout,

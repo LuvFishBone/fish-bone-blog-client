@@ -16,6 +16,8 @@
     .main-content{
         padding-top: 10px;
         .content-view{
+            width: 100%;
+            word-wrap: break-word;
             min-height: 250px;
             background: #fff;
         }
