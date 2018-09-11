@@ -1,5 +1,5 @@
 import marked from 'marked';
-import highlight from 'highlight.js/lib/highlight';
+import highlight from 'highlight.js';
 const languages = ['cpp', 'xml', 'bash', 'coffeescript', 'css', 'markdown', 'http', 'java', 'javascript', 'json', 'less', 'makefile', 'nginx', 'php', 'python', 'scss', 'sql', 'stylus'];
 highlight.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'));
 highlight.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
@@ -19,9 +19,7 @@ highlight.registerLanguage('python', require('highlight.js/lib/languages/python'
 highlight.registerLanguage('scss', require('highlight.js/lib/languages/scss'));
 highlight.registerLanguage('sql', require('highlight.js/lib/languages/sql'));
 highlight.registerLanguage('stylus', require('highlight.js/lib/languages/stylus'));
-highlight.configure({
-    classPrefix: '', // don't append class prefix
-});
+
 // https://github.com/chjj/marked
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -33,10 +31,13 @@ marked.setOptions({
     smartLists: true,
     smartypants: false,
     highlight(code, lang) {
-        if (!~languages.indexOf(lang)) {
-            return highlight.highlightAuto(code).value
+        if (!lang) {
+            return;
         }
-        return highlight.highlight(lang, code).value
+        if (!~languages.indexOf(lang)) {
+            return highlight.highlightAuto(code).value;
+        }
+        return highlight.highlight(lang, code).value;
     }
 })
 

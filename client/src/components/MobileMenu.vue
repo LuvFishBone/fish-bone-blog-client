@@ -54,7 +54,7 @@
   z-index: -1;
   opacity: 0;
   background: rgba(0,0,0,.6);
-  transition: all 0.5s cubic-bezier(0.5, 0, 0, 1);
+  // transition: opacity 0.5s cubic-bezier(0.5, 0, 0, 1);
   .mobile-menu{
       position: fixed;
       z-index: 260;

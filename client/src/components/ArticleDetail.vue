@@ -66,5 +66,8 @@
                 padding-left: 20px;
             }
         }
+        .content{
+            font-size: 16px;
+        }
     }
 </style>
