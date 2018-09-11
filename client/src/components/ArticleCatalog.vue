@@ -1,66 +1,48 @@
 
 <template>
     <div id="article-catalog" class="article-catalog">
-        <div class="title">文章目录</div>
+        <div class="title">目录</div>
         <ul class="catalog-list">
-            <li class="catalog-h1">
-                <a href="/">支持评论</a>   
-            </li> 
-            <li class="catalog-h2">
-                <a href="/">服务端渲染动态标题（SEO)</a>   
-            </li>
-            <li class="catalog-h3">
-                <a href="/">支持评论</a>   
-            </li> 
-            <li class="catalog-h1">
-                <a href="/">disqus接入单页应用</a>   
-            </li>
-            <li class="catalog-h2">
-                <a href="/">支持评论</a>   
-            </li> 
-            <li class="catalog-h3">
-                <a href="/">升级http2</a>   
-            </li>  
-            <li class="catalog-h1">
-                <a href="/">支持评论</a>   
-            </li> 
-            <li class="catalog-h2">
-                <a href="/">服务端渲染动态标题（SEO)</a>   
-            </li>
-            <li class="catalog-h3">
-                <a href="/">支持评论</a>   
-            </li> 
-            <li class="catalog-h1">
-                <a href="/">disqus接入单页应用</a>   
-            </li>
-            <li class="catalog-h2">
-                <a href="/">支持评论</a>   
-            </li> 
-            <li class="catalog-h3">
-                <a href="/">升级http2</a>   
+            <li v-for="item in catalogs" :key="item.href" :class="'catalog-'+item.tagName">
+                <a :href="item.href">{{item.text}}</a>   
             </li> 
         </ul>
     </div>
 </template>
 
 <script>
-    export default{
+    import { mapGetters } from 'vuex'
 
+    export default{
+        data () {
+            return {
+                catalogs: []
+            }
+        },
+        computed: {
+            ...mapGetters(['getArticleCatalog'])
+        },
+        watch: {
+            getArticleCatalog: function (val, oldVal) {
+                this.catalogs = val;
+            }
+        }
     }
 </script>
 
 <style scoped lang="less">
     .article-catalog{
         background: #fff;
-        padding: 15px;
         .title{
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-weight: 400;
-            color: gray;
+            height: 45px;
+            line-height: 45px;
+            padding-left: 15px;
+            padding-right: 15px;
             font-size: 16px;
+            border-bottom: 1px solid #f6f6f6; /*no*/
         }
         .catalog-list{
+            padding: 15px;
             li{
                 text-align: left;
                 margin-bottom: 5px;
@@ -68,12 +50,26 @@
                 word-wrap: break-word;
                 word-break: all;
                 a{
-                    color: #bfbfbf;
-                    text-decoration: none;
-                    word-wrap: break-word;
-                    word-break: break-all;
+                    display: block;
+                    position: relative;
+                    padding: 2px 0 2px 12px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: #34495e;
                     &:hover{
                         color: #2d8cf0;
+                    }
+                    &:before{
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        margin-top: -2px;
+                        width: 4px; /*no*/
+                        height: 4px; /*no*/
+                        background-color: currentColor;
+                        border-radius: 50%;
                     }
                 }
             }

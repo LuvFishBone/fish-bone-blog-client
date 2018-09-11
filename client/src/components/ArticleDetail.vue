@@ -1,42 +1,69 @@
 <template>
-    <div class="article-details">
-        <div class="title">
-            <h1>{{article.title}}</h1>
-        </div>
-        <div class="date-info">
-            <span class="datetime"><i class="icon ion-ios-time"></i> {{article.publishTime}}</span>
-            <span class="readers" v-if="article.views"><i class="icon ion-ios-eye"></i> {{article.views}}</span>
-            <span class="readers" v-if="article.likes"><i class="icon ion-ios-heart"></i> {{article.likes}}</span>
-            <div class="tags-box">
-                <span class="i-tag red"><i class="icon ion-ios-pricetags"></i> 标签</span>
-                <span class="i-tag blue"><i class="icon ion-ios-pricetags"></i> 标签</span>
+    <div>
+        <mobile-article-catalog />
+        <div class="article-details">
+            <div class="title">
+                <h1>{{article.title}}</h1>
             </div>
+            <div class="date-info">
+                <span class="datetime"><i class="icon ion-ios-time"></i> {{article.publishTime}}</span>
+                <span class="readers" v-if="article.views"><i class="icon ion-ios-eye"></i> {{article.views}}</span>
+                <span class="readers" v-if="article.likes"><i class="icon ion-ios-heart"></i> {{article.likes}}</span>
+                <div class="tags-box">
+                    <span class="i-tag red"><i class="icon ion-ios-pricetags"></i> 标签</span>
+                    <span class="i-tag blue"><i class="icon ion-ios-pricetags"></i> 标签</span>
+                </div>
+            </div>
+            <div class="content markdown-body" v-html="parsedMarkdownStr" ref="post"></div>
         </div>
-        <div class="content" v-html="parsedMarkdownStr" ref="post"></div>
     </div>
 </template>
 
 <script>
 
+    import { mapGetters, mapMutations } from 'vuex'
+    import { SET_ARTICLE_CATALOG } from '@/store/mutation-types'
     import parseMarkdown from '@/utils/parseMarkdown'
+    import MobileArticleCatalog from '@/components/MobileArticleCatalog'
 
     export default{
         data () {
            return {
                article: {},
-               parsedMarkdownStr: ''
+               parsedMarkdownStr: '',
+               catalog: []
            }
+        },
+        components: {
+            MobileArticleCatalog
         },
         props: {
             articleInfo: Object
         },
         methods: {
-            parseMarkdown
+            parseMarkdown,
+            ...mapMutations({
+                setArticleCatalog: SET_ARTICLE_CATALOG
+            }),
+            createArticleCatalog () {
+                this.$nextTick(() => {
+                    Array.from(this.$refs.post.querySelectorAll('h1,h2,h3,h4,h5,h6')).forEach((item, index) => {
+                        item.id = item.localName + '-' + index;
+                        this.catalog.push({
+                            tagName: item.localName,
+                            text: item.innerText,
+                            href: '#' + item.localName + '-' + index,
+                        });
+                    });
+                    this.setArticleCatalog(this.catalog)
+                })
+            }
         },
         watch: {
             articleInfo: function(val, oldVal) {
                 this.article = val
                 this.parsedMarkdownStr = this.parseMarkdown(val.content)
+                this.createArticleCatalog()
             }
         }
     }
@@ -67,7 +94,7 @@
             }
         }
         .content{
-            font-size: 16px;
+            font-size: 14px;
         }
     }
 </style>

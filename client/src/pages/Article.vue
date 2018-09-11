@@ -37,14 +37,6 @@
                 }
             })
         },
-        // mounted () {
-        //     const articleId = this.$route.params.id
-        //     axios.get(`/api/v1/articles/${articleId}`).then(res => {
-        //         if(res.status === 200) {
-        //             this.article = res.data[0]
-        //         }
-        //     })
-        // },
         components: {
             BaseLayout,
             ContentAsideLayout,
@@ -54,8 +46,4 @@
         }
     }
 </script>
-
-<style scoped lang="less">
-    
-</style>
 
