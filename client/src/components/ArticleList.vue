@@ -68,7 +68,6 @@
             axios.get(`/api/v1/articles/allArticle/${offset}/${this.pageSize}`).then(res => {
                 if(res.status === 200) {
                     this.articles = res.data
-                    console.log(this.articles)
                 }
             })      
         }

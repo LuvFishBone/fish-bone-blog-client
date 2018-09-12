@@ -1,6 +1,5 @@
 <template>
     <div>
-        <mobile-article-catalog />
         <div class="article-details">
             <div class="title">
                 <h1>{{article.title}}</h1>
@@ -24,7 +23,6 @@
     import { mapGetters, mapMutations } from 'vuex'
     import { SET_ARTICLE_CATALOG } from '@/store/mutation-types'
     import parseMarkdown from '@/utils/parseMarkdown'
-    import MobileArticleCatalog from '@/components/MobileArticleCatalog'
 
     export default{
         data () {
@@ -33,9 +31,6 @@
                parsedMarkdownStr: '',
                catalog: []
            }
-        },
-        components: {
-            MobileArticleCatalog
         },
         props: {
             articleInfo: Object
