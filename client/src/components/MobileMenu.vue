@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile-menu-shade" :class="{open: mobileMenuDisplay}">
+  <div class="mobile-menu-shade" :class="{open: mobileMenuDisplay}" >
     <div id="mobile-menu" :class="{'mobile-menu': true, open: mobileMenuDisplay}" v-clickoutside="menuClickHandle">
       <ul class="main-menu">
           <li v-for="item in menus" :key="item.name">
@@ -22,7 +22,7 @@
 
   import { mapGetters, mapMutations } from 'vuex'
   import { menus } from '@/utils/static-data'
-  import { MOBILE_MENU_TOGGLE } from '@/store/mutation-types'
+  import { MOBILE_MENU_TOGGLE, OPEN_MOBILE_MENU, CLOSE_MOBILE_MENU } from '@/store/mutation-types'
   import CatalogList from '@/components/CatalogList'
 
   export default {
@@ -34,16 +34,16 @@
     directives: {
       clickoutside: {
         bind (el, binding, vnode) {
-            function documentHandler (e) {
-                if (el.contains(e.target)) {
-                    return false;
-                }
-                if (binding.expression) {
-                    binding.value(e);
-                }
-            }
-            el.__vueClickOutside__ = documentHandler;
-            document.addEventListener('click', documentHandler);
+          function documentHandler (e) {
+              if (el.contains(e.target)) {
+                  return false;
+              }
+              if (binding.expression) {
+                  binding.value(e);
+              }
+          }
+          el.__vueClickOutside__ = documentHandler;
+          document.addEventListener('click', documentHandler);
         },
         unbind (el, binding) {
             document.removeEventListener('click', el.__vueClickOutside__);
@@ -56,10 +56,10 @@
     },
     methods: {
       ...mapMutations({
-        menuToggle: MOBILE_MENU_TOGGLE
+        closeMenu: CLOSE_MOBILE_MENU,
       }),
       menuClickHandle () {
-        this.menuToggle()
+        this.closeMenu()
       }
     },
     components: {
@@ -126,6 +126,7 @@
       height: 40px;
       line-height: 40px;
       border-bottom: 1px solid #eaecef; /*no*/
+      font-size: 18px;
     }
   }
 

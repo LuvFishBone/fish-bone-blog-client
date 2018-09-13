@@ -11,6 +11,12 @@ const getters = {
 const mutations = {
     [mType.MOBILE_MENU_TOGGLE](state, menuName){
         state.mobileMenuDisplay = !state.mobileMenuDisplay
+    },
+    [mType.OPEN_MOBILE_MENU](state, menuName){
+        state.mobileMenuDisplay = true
+    },
+    [mType.CLOSE_MOBILE_MENU](state, menuName){
+        state.mobileMenuDisplay = false
     }
 }
 
