@@ -31,8 +31,13 @@ const router = new Router({
             name: 'about',
             component: About
         },
+        // {
+        //     path: '/article/:id',
+        //     name: 'article',
+        //     component: Article
+        // },
         {
-            path: '/article/:id',
+            path: '/article/:uniqueMark',
             name: 'article',
             component: Article
         }

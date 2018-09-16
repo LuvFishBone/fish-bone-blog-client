@@ -1,7 +1,7 @@
 <template>
   <header id="mobile-header" class="mobile-header">
     <a class="menu-button" @click.stop="showMenu"></a>
-    <a class="logo"></a>
+    <router-link :to="{name: 'index'}" class="logo"></router-link>
   </header>
 </template>
 

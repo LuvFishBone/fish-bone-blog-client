@@ -21,6 +21,27 @@
                         key: 'id'
                     },
                     {
+                        title: 'Thumb',
+                        key: 'thumbUrl',
+                        render: (h, params) => {
+                            
+                            return h('div', {
+                            }, '缩略图')
+                        }   
+                    },
+                    {
+                        title: 'IsRecommend',
+                        key: 'isRecommend',
+                        render: (h, params) => {
+                            const status = params.row.isRecommend ? '是' : '否'
+                            return h('div', {
+                                style: {
+                                    color: params.row.isRecommend ? '#2d8cf0' : '#ff9900'
+                                }
+                            }, status)
+                        }   
+                    },
+                    {
                         title: 'Type',
                         key: 'type',
                         render: (h, params) => {

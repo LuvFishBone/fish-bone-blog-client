@@ -2,28 +2,12 @@
     <div class="article-box">
         <div class="title-bar">
             <h5 class="title">文章列表</h5>
-            <ul class="category">
-                <li class="active">
-                    <span>推荐</span>
-                </li>
-                <li>
-                    <span>前端</span>
-                </li>
-                <li>
-                    <span>后端</span>
-                </li>
-                <li>
-                    <span>算法</span>
-                </li>
-                <li>
-                    <span>计算机基础</span>
-                </li>
-            </ul>
+            <article-types />
         </div>
         <div class="article-list">
             <ul>
-                <li class="item" v-for="item in articles" :key="item.id">
-                    <router-link :to="{name: 'article', params: {id: item.id}}">
+                <li class="item" v-for="item in articles" :key="item.uniqueMark">
+                    <router-link :to="{name: 'article', params: {uniqueMark: item.uniqueMark}}">
                         <div class="content-box">
                             <div class="info-box">
                                 <div class="info-row title-row">
@@ -42,8 +26,8 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="article-thumb">
-
+                            <div class="article-thumb" v-if="item.thumbUrl">
+                                
                             </div>
                         </div>
                     </router-link>
@@ -55,6 +39,9 @@
 </template>
 
 <script>
+
+    import ArticleTypes from '@/components/ArticleTypes'
+
     export default{
         data () {
             return {
@@ -62,6 +49,9 @@
                 pageSize: 3,
                 pageNum: 1
             }
+        },
+        components: {
+            ArticleTypes
         },
         beforeMount () {
             const offset = (this.pageNum-1) * this.pageSize
@@ -88,23 +78,6 @@
             border-bottom: 1px solid #f6f6f6;
             .title{
                 font-size: 16px;
-            }
-            .category{
-                display: flex;
-                align-items: baseline;
-                li{
-                    margin-right: 20px;
-                    cursor: pointer;
-                    span{
-                        font-size: 14px;
-                        color: #90979c;
-                    }
-                }
-                li.active{
-                    span{
-                        color: #007fff
-                    }
-                }
             }
         }
 

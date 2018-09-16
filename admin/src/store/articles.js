@@ -5,10 +5,13 @@ const state = {
     title: '',
     type: '',
     tags: '',
-    views: '',
-    likes: '',
+    views: 0,
+    likes: 0,
     content: '',
-    isPublished: ''
+    isPublished: '',
+    isRecommend: 0,
+    thumbUrl: '',
+    uniqueMark: '',
 }
 
 const getters = {
@@ -58,7 +61,10 @@ const mutations = {
         state.views = payload.views,
         state.likes = payload.likes,
         state.content = payload.content,
-        state.isPublished = payload.isPublished
+        state.isPublished = payload.isPublished,
+        state.isRecommend = payload.isRecommend,
+        state.thumbUrl = payload.thumbUrl,
+        state.uniqueMark = payload.uniqueMark
     },
     [mType.SET_ARTICLE_TYPE] (state, type) {
         state.type = type
@@ -93,6 +99,15 @@ const mutations = {
         state.likes = '',
         state.content = '',
         state.isPublished = 1
+    },
+    [mType.SET_ARTICLE_ISRECOMMEND] (state, isRecommend) {
+        state.isRecommend = isRecommend
+    },
+    [mType.SET_ARTICLE_THUMBURL] (state, thumbUrl) {
+        state.thumbUrl = thumbUrl
+    },
+    [mType.SET_ARTICLE_UNIQUEMARK] (state, uniqueMark) {
+        state.uniqueMark = uniqueMark
     }
 }
 

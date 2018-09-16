@@ -28,8 +28,8 @@
             }
         },
         beforeRouteEnter (to, from, next) {
-            const articleId = to.params.id
-            axios.get(`/api/v1/articles/${articleId}`).then(res => {
+            const uniqueMark = to.params.uniqueMark
+            axios.get(`/api/v1/articles/${uniqueMark}`).then(res => {
                 if(res.status === 200) {
                     next((vm) => {
                         vm.article = res.data[0]

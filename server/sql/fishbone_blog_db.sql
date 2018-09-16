@@ -50,15 +50,18 @@ CREATE TABLE `ARTICLE` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` int(11) DEFAULT NULL,
   `views` int(11) DEFAULT NULL,
-  `title` varchar(255) NOT NULL DEFAULT '',
   `likes` int(11) DEFAULT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `uniqueMark` varchar(50) NOT NULL,
+  `thumbUrl` varchar(255) DEFAULT NULL,
   `tags` varchar(255) NOT NULL DEFAULT '',
   `content` longtext NOT NULL,
   `isPublished` tinyint(1) NOT NULL DEFAULT '0',
+  `isRecommend` tinyint(1) NOT NULL,
   `createTime` datetime NOT NULL,
   `publishTime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +70,7 @@ CREATE TABLE `ARTICLE` (
 
 LOCK TABLES `ARTICLE` WRITE;
 /*!40000 ALTER TABLE `ARTICLE` DISABLE KEYS */;
-INSERT INTO `ARTICLE` VALUES (5,3,NULL,'LINUX文章',NULL,'标签1','LINUX文章LINUX文章LINUX文章LINUX文章LINUX文章LINUX文章',1,'2018-09-03 20:47:31','2018-09-03 20:47:31'),(6,2,NULL,'JAVA文章',NULL,'标签2','java文章内容',1,'2018-09-03 20:48:40','2018-09-03 20:48:40'),(7,1,NULL,'NODEJS文章',NULL,'标签1,标签2','NODEJS文章NODEJS文章NODEJS文章NODEJS文章NODEJS文章NODEJS文章',1,'2018-09-03 20:49:09','2018-09-09 22:23:42'),(8,2,NULL,'VUE',NULL,'标签5','计算属性\n![](http://ask.qcloudimg.com/http-save/yehe-1148782/qfwcb4xrqw.png)\n# 这里是标题\n<h2 id=“title2”>这里是标题2</h2>\n> 1. 在这个地方，模板不再是简单的声明式逻辑。你必须看一段时间才能意识到，这里是想要显示变量 message 的翻转字符串。当你想要在模板中多次引用此处的翻转字符串时，就会更加难以处理。\n> 1. 所以，对于任何复杂逻辑，你都应当使用计算属性。\n**加粗操作**\n> 这里是应用\n\n\n\n\n\n\n\n',1,'2018-09-09 21:45:58','2018-09-09 21:52:20');
+INSERT INTO `ARTICLE` VALUES (1,1,2,3,'标题1','w423dfgdgdfgdf23423fgd','','标签1','这里是内容',1,1,'2018-09-03 20:47:31','2018-09-16 22:01:57');
 /*!40000 ALTER TABLE `ARTICLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +118,7 @@ CREATE TABLE `TAGS` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +127,7 @@ CREATE TABLE `TAGS` (
 
 LOCK TABLES `TAGS` WRITE;
 /*!40000 ALTER TABLE `TAGS` DISABLE KEYS */;
-INSERT INTO `TAGS` VALUES (37,'标签1','#b300e6'),(38,'标签2','#2d8cf0'),(39,'标签3','#00d6e6'),(40,'标签4','#e6ba00'),(41,'标签5','#ff9900');
+INSERT INTO `TAGS` VALUES (1,'标签1','#b300e6');
 /*!40000 ALTER TABLE `TAGS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +153,7 @@ CREATE TABLE `TYPES` (
 
 LOCK TABLES `TYPES` WRITE;
 /*!40000 ALTER TABLE `TYPES` DISABLE KEYS */;
-INSERT INTO `TYPES` VALUES (2,'Java'),(3,'Linux'),(1,'NODEJS');
+INSERT INTO `TYPES` VALUES (1,'NODEJS');
 /*!40000 ALTER TABLE `TYPES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-09 23:04:06
+-- Dump completed on 2018-09-16 22:05:04

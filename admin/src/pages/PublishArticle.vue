@@ -2,11 +2,19 @@
     <Layout>
         <Form class="article-box" :label-width="80" ref="formData" :model="formData">
             <Row>
-                <Col span="8">
+                <Col span="10">
                     <FormItem label="文章状态" prop="isPublished">
                         <Tag :color="this.formData.isPublished ? 'primary': 'warning'">
                             {{this.formData.isPublished ? '已发布': '未发布'}}
                         </Tag>
+                    </FormItem>
+                </Col>
+                <Col span="10">
+                    <FormItem label="是否推荐" prop="isRecommend">
+                        <Switch v-model="formData.isRecommend" @on-change="isRecommendSwitch">
+                            <span slot="open">是</span>
+                            <span slot="close">否</span>
+                        </Switch>
                     </FormItem>
                 </Col>
             </Row>
@@ -95,6 +103,7 @@
 
 <script>
 
+    import md5 from 'md5'
     import Layout from '@/components/Layout'
     import Edit from '@/components/Edit'
     import TagColorBar from '@/components/TagColorBar'
@@ -111,7 +120,10 @@
         CLEAR_ARTICLE, 
         SET_ARTICLE,
         SET_TYPE_LIST,
-        SET_ARTICLE_TYPE
+        SET_ARTICLE_TYPE,
+        SET_ARTICLE_ISRECOMMEND,
+        SET_ARTICLE_THUMBURL,
+        SET_ARTICLE_UNIQUEMARK
     } from '../store/mutation-types'
     import utils from '@/utils'
 
@@ -128,7 +140,10 @@
                     views: 0,
                     likes: 0,
                     content : '',
-                    isPublished : 0
+                    isPublished : 0,
+                    isRecommend : 1,
+                    thumbUrl: '',
+                    uniqueMark: ''
                 }
             }
         },
@@ -155,12 +170,15 @@
                     if(res.status === 200){
                         this.setArticle(res.data[0])
                         this.formData = { ...this.getArticle }
+                        this.formData.isRecommend = this.formData.isRecommend ? true : false
                         this.formData.tags = this.formData.tags.split(',')
                         const tagArr = this.formData.tags
                         const allTags = this.getAllTags()
                         this.selectedTagObjArr = utils.createTagObjs(tagArr, allTags)
                     }
                 })
+            }else{
+                this.setArticleUniqueMark(md5((new Date()).getTime()))
             }
             this.getTypes()
             this.getTagList()
@@ -178,7 +196,9 @@
                 'setArticleLikes': SET_ARTICLE_LIKES,
                 'setArticleIsPublished': SET_ARTICLE_ISPUBLISHED,
                 'setTypeList': SET_TYPE_LIST,
-                'clearArticle': CLEAR_ARTICLE
+                'clearArticle': CLEAR_ARTICLE,
+                'setArticleIsRecommend': SET_ARTICLE_ISRECOMMEND,
+                'setArticleUniqueMark': SET_ARTICLE_UNIQUEMARK
             }),
             ...mapActions([
                 'addArticle',
@@ -187,6 +207,9 @@
                 'getTypeList',
                 'getTagList'
             ]),
+            isRecommendConvert (val) {
+                return val ? true : false;
+            },
             addTitle (event) {
                 const title = event.target.value
                 this.setArticleTitle(title)
@@ -274,8 +297,12 @@
                 const articleTagsStr = this.formatArticleTags(tagObj)
                 this.setArticleTags(articleTagsStr)
             },
-            typeChange (){
-                this.setArticleType(this.formData.type);
+            typeChange () {
+                this.setArticleType(this.formData.type)
+            },
+            isRecommendSwitch (status) {
+                const val = status ? 1 : 0
+                this.setArticleIsRecommend(val)
             },
             getTypes () {
                 this.getTypeList().then(res => {

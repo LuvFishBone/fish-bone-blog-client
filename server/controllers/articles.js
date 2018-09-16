@@ -7,8 +7,8 @@ import Article from '../models/articles'
 class ArticleControllers {
 
     async addArticle (ctx) {
-        const {type, title, tags, views, likes, content, isPublished} = ctx.request.body
-        const res = await Article.addArticle(type, title, tags, views, likes, content, isPublished)
+        const {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark} = ctx.request.body
+        const res = await Article.addArticle(type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark)
         ctx.body = res
     }
 
@@ -48,17 +48,23 @@ class ArticleControllers {
         ctx.body = res
     }
 
-    async updateArticleById (ctx) {
-        const id = ctx.params.id
-        const {type, title, tags, views, likes, content, isPublished} = ctx.request.body
-        ctx.body = await Article.updateArticleById(id, {type, title, tags, views, likes, content, isPublished})
+    async getArticleByUniqueMark (ctx) {
+        console.log(ctx.params.uniqueMark, 'mark')
+        const res = await Article.getArticleByUniqueMark(ctx.params.uniqueMark)
+        ctx.body = res
     }
 
-    async publishArticle (ctx) {
+    async updateArticleById (ctx) {
         const id = ctx.params.id
-        const {title, tags, views, likes, content} = ctx.request.body
-        ctx.body = await Article.publishArticle(id, {title, tags, views, likes, content})
+        const {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark} = ctx.request.body
+        ctx.body = await Article.updateArticleById(id, {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark})
     }
+
+    // async publishArticle (ctx) {
+    //     const id = ctx.params.id
+    //     const {title, tags, views, likes, content} = ctx.request.body
+    //     ctx.body = await Article.publishArticle(id, {title, tags, views, likes, content})
+    // }
 
     async deleteArticle (ctx) {
         ctx.body = await Article.deleteArticle(ctx.params.id)
