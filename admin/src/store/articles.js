@@ -35,7 +35,7 @@ const actions = {
     },
     getArticleById: async function ({commit, state}, id) {
         try {
-            return await axios.get(`/api/v1/articles/${id}`)
+            return await axios.get(`/api/v1/articles/article/${id}`)
         }
         catch (error) {
             console.error(error.response.data.error)

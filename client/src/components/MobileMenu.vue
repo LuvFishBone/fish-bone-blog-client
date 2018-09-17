@@ -59,6 +59,7 @@
         closeMenu: CLOSE_MOBILE_MENU,
       }),
       menuClickHandle () {
+        if(!this.mobileMenuDisplay) return
         this.closeMenu()
       }
     },

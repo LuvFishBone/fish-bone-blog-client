@@ -9,8 +9,10 @@
                 <span class="readers" v-if="article.views"><i class="icon ion-ios-eye"></i> {{article.views}}</span>
                 <span class="readers" v-if="article.likes"><i class="icon ion-ios-heart"></i> {{article.likes}}</span>
                 <div class="tags-box">
-                    <span class="i-tag red"><i class="icon ion-ios-pricetags"></i> 标签</span>
-                    <span class="i-tag blue"><i class="icon ion-ios-pricetags"></i> 标签</span>
+                    <!-- <span class="i-tag red"><i class="icon ion-ios-pricetags"></i> {{article.tags}}</span> -->
+                    <span class="i-tag" v-for="item in tagArr" :key="item" :style="{backgroundColor: getTagColor(item)}">
+                        <i class="icon ion-ios-pricetags"></i> {{item}}
+                    </span>
                 </div>
             </div>
             <div class="content markdown-body" v-html="parsedMarkdownStr" ref="post"></div>
@@ -29,8 +31,14 @@
            return {
                article: {},
                parsedMarkdownStr: '',
-               catalog: []
+               catalog: [],
+               tagArr: []
            }
+        },
+        computed: {
+            ...mapGetters([
+                'getArticleTags'
+            ]),
         },
         props: {
             articleInfo: Object
@@ -52,11 +60,22 @@
                     });
                     this.setArticleCatalog(this.catalog)
                 })
+            },
+            getTagColor (tagName) {
+                let tagColor = ''
+                for(let item of this.getArticleTags){
+                    if(tagName === item.name){
+                        tagColor = item.color
+                        break;
+                    }
+                }
+                return tagColor
             }
         },
         watch: {
             articleInfo: function(val, oldVal) {
                 this.article = val
+                this.tagArr = val.tags.split(',')
                 this.parsedMarkdownStr = this.parseMarkdown(val.content)
                 this.createArticleCatalog()
             }

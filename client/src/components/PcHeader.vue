@@ -1,7 +1,7 @@
 <template>
   <header id="pc-header" class="pc-header">
     <div class="pc-header-main">
-        <a class="logo"></a>
+        <router-link class="logo" :to="{name: 'index'}" />
         <div class="menu-box">
             <ul class="menu">
                 <li v-for="item in menus" :key="item.name" :class="{active: item.name == currentMenu}">

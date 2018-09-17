@@ -20,6 +20,7 @@ router.get('/', ArticleController.getArticleList)
 router.get('/allTotal/', verify, ArticleController.getAllArticleTotal)
 router.get('/allArticle/:offset/:limit', ArticleController.getLimitAllArticles)
 router.get('/:uniqueMark', ArticleController.getArticleByUniqueMark)
+router.get('/article/:id', ArticleController.getArticleById)
 router.delete('/:id', verify, ArticleController.deleteArticle)
 
 module.exports = router
