@@ -5,7 +5,7 @@
                 <h1>{{article.title}}</h1>
             </div>
             <div class="date-info">
-                <span class="datetime"><i class="icon ion-ios-time"></i> {{article.publishTime}}</span>
+                <span class="datetime"><i class="icon ion-ios-time" v-date-interval="article.publishTime"></i></span>
                 <span class="readers" v-if="article.views"><i class="icon ion-ios-eye"></i> {{article.views}}</span>
                 <span class="readers" v-if="article.likes"><i class="icon ion-ios-heart"></i> {{article.likes}}</span>
                 <div class="tags-box">
@@ -75,6 +75,7 @@
         watch: {
             articleInfo: function(val, oldVal) {
                 this.article = val
+                console.log(this.article)
                 this.tagArr = val.tags.split(',')
                 this.parsedMarkdownStr = this.parseMarkdown(val.content)
                 this.createArticleCatalog()

@@ -4,14 +4,18 @@ import Vue from 'vue'
 import App from '@/App'
 import router from './router'
 import store from './store'
+import moment from 'moment'
 import '@/utils/axios.config.js'
 import '@/assets/style/app.less'
+import '@/directives'
 
 // 解决移动端300ms延迟问题
-if (typeof window !== 'undefined') {
-    const Fastclick = require('fastclick');
-    Fastclick.attach(document.body);
-}
+// if (typeof window !== 'undefined') {
+//     const Fastclick = require('fastclick');
+//     Fastclick.attach(document.body);
+// }
+
+moment.locale('zh-cn')
 
 router.beforeEach((to, from, next) => {
     next();

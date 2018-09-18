@@ -20,7 +20,9 @@
                                                 <i class="icon ion-md-pricetags"></i> {{tag}}
                                             </span>
                                         </li>
-                                        <li><i class="icon ion-md-time"></i> {{item.publishTime}}</li>
+                                        <li>
+                                            <i class="icon ion-md-time" v-date-interval="item.publishTime"></i>
+                                        </li>
                                         <li v-if="item.views"><i class="icon ion-md-eye"></i> {{item.views}}</li>
                                         <li v-if="item.likes"><i class="icon ion-md-heart"></i> {{item.likes}}</li>
                                     </ul>
