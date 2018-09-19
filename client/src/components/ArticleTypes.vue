@@ -1,6 +1,6 @@
 <template>
     <ul class="category">
-        <li v-for="item in list" :key="item.id" :class="{active: getCurrentArticleType() === item.name}" @click="typeClick(item.name)">
+        <li v-for="item in this.getArticleTypes()" :key="item.id" :class="{active: getCurrentArticleType() === item.name}" @click="typeClick(item.name)">
             <span>{{item.name}}</span>
         </li>
     </ul>
@@ -19,18 +19,22 @@
             }
         },
         mounted () {
+            if(this.getArticleTypes().length) return
             axios.get('/api/v1/types/').then(res => {
                 this.list = res.data;
                 this.list.unshift(this.defaultType);
                 this.SET_CURRENT_ARTICLE_TYPE(this.list[0].name)
+                this.SET_ARTICLE_TYPES(this.list)
             })
         },
         methods: {
             ...mapGetters([
-                'getCurrentArticleType'
+                'getCurrentArticleType',
+                'getArticleTypes'
             ]),
             ...mapMutations([
-                SET_CURRENT_ARTICLE_TYPE
+                SET_CURRENT_ARTICLE_TYPE,
+                SET_ARTICLE_TYPES
             ]),
             typeClick (name) {
                 this.SET_CURRENT_ARTICLE_TYPE(name)
