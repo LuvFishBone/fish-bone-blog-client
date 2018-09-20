@@ -22,21 +22,8 @@
     import ArticleList from '@/components/ArticleList'
     import BlogIntro from '@/components/BlogIntro'
     import RightAsideTags from '@/components/RightAsideTags'
-
-    import { SET_ARTICLE_TAGS } from '@/store/mutation-types'
-    import { mapMutations } from 'vuex'
-
+    
     export default {
-        beforeMount () {
-            axios.get('/api/v1/tags').then(res => {
-                this.SET_ARTICLE_TAGS(res.data)
-            })      
-        },
-        methods: {
-            ...mapMutations([
-                SET_ARTICLE_TAGS
-            ])
-        },
         components: {
             BaseLayout,
             ContentAsideLayout,

@@ -2,25 +2,39 @@
     <div class="right-aside-tags">
         <div class="title">
             <span class="tag">标签</span>
-            <a class="more" href="/">更多</a>
+            <router-link class="more" :to="{name: 'tags'}">更多</router-link>
         </div>
         <div class="content">
             <div class="taglist">
-                <a href="/" class="tag">JAVA</a>
-                <a href="/" class="tag">H5</a>
-                <a href="/" class="tag">JAVA</a>
-                <a href="/" class="tag">JAVA</a>
-                <a href="/" class="tag">JAVA</a>
-                <a href="/" class="tag">JAVA</a>
-                <a href="/" class="tag">前端开发的重</a>
+                <a href="/" class="tag">前端开发</a>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
+    import { SET_ARTICLE_TAGS } from '@/store/mutation-types'
+    import { mapGetters, mapMutations } from 'vuex'
+
     export default{
-        
+        beforeMount () {
+            if(this.getArticleTags().length) return
+            axios.get('/api/v1/tags').then(res => {
+                this.SET_ARTICLE_TAGS(res.data)
+            })   
+        },
+        mounted () {
+            console.log(this.getArticleTags())
+        },
+        methods: {
+            ...mapGetters([
+                'getArticleTags'
+            ]),
+            ...mapMutations([
+                SET_ARTICLE_TAGS
+            ])
+        },
     }
 </script>
 
@@ -63,6 +77,7 @@
                     margin-right: 12px;
                     margin-bottom: 12px;
                     background-color: #f3f6f3;
+                    border:1px solid #f3f6f3;
                     cursor: pointer;
                     height: 30px;
                     color: inherit;
@@ -70,11 +85,12 @@
                     padding-left: 22px;
                     padding-right: 22px;
                     border-radius: 30px;
-                    font-size: 13px;
+                    font-size: 12px;
                     transition: all .3s ease-in-out;
                     &:hover{
-                        background: #ed4014;
-                        color: #fff;
+                        color: #007fff;
+                        border-color: #007fff;
+                        background: none;
                     }
                 }
             }

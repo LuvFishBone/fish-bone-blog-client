@@ -11,10 +11,20 @@
   import BaseLayout from '@/components/BaseLayout'
   import ContentLayout from '@/components/ContentLayout'
 
-  export default{
+  import { mapGetters } from 'vuex'
+
+  export default {
     components: {
       BaseLayout,
       ContentLayout
+    },
+    computed: {
+      ...mapGetters([
+        'getArticleTags'
+      ])
+    },
+    mounted() {
+      console.log(this.getArticleTags, 'tags data')
     }
   }
 </script>

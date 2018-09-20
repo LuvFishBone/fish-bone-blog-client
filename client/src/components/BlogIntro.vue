@@ -94,6 +94,7 @@
             display: flex;
             align-items: center;
             width: 100%;
+            font-size: 14px;
             span{
                 flex:1;
                 text-align: center;
