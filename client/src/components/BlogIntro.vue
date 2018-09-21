@@ -39,7 +39,6 @@
     .avatar-box{
         background-color: #fff;
         border-radius: 2px;
-        margin-bottom: 15px;
         padding: 15px 0;
         overflow: hidden;
         display: flex;

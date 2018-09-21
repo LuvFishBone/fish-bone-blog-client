@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="catalog-list">
-            <li v-for="item in catalogs" :key="item.text" :class="'catalog-'+item.tagName">
+            <li v-for="item in catalogs" :key="item.href" :class="'catalog-'+item.tagName">
                 <a :href="item.href">{{item.text}}</a>   
             </li> 
         </ul>
@@ -32,7 +32,6 @@
 
 <style scoped lang="less">
 .catalog-list{
-    padding: 15px;
     li{
         text-align: left;
         margin-bottom: 5px;

@@ -5,9 +5,9 @@
                 <article-detail :articleInfo="article" />
             </template>
             <template slot="rightSide">
-                <right-aside-layout>
-                    <article-catalog />
-                </right-aside-layout>
+                <side-panel v-bind:titleInfo="{name:'目录'}">
+                    <catalog-list />
+                </side-panel>
             </template>
         </content-aside-layout>
     </base-layout>
@@ -17,8 +17,8 @@
 
     import BaseLayout from '@/components/BaseLayout'
     import ContentAsideLayout from '@/components/ContentAsideLayout'
-    import RightAsideLayout from '@/components/RightAsideLayout'
-    import ArticleCatalog from '@/components/ArticleCatalog'
+    import SidePanel from '@/components/SiderPanel'
+    import CatalogList from '@/components/CatalogList'
     import ArticleDetail from '@/components/ArticleDetail'
 
     export default {
@@ -40,8 +40,8 @@
         components: {
             BaseLayout,
             ContentAsideLayout,
-            RightAsideLayout,
-            ArticleCatalog,
+            SidePanel,
+            CatalogList,
             ArticleDetail,
         }
     }

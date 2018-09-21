@@ -9,9 +9,9 @@
                 <span class="readers" v-if="article.views"><i class="icon ion-ios-eye"></i> {{article.views}}</span>
                 <span class="readers" v-if="article.likes"><i class="icon ion-ios-heart"></i> {{article.likes}}</span>
                 <div class="tags-box">
-                    <span class="i-tag" v-for="item in tagArr" :key="item" :style="{color: getTagColor(item)}">
+                    <a class="i-tag" v-for="item in tagArr" :key="item" :style="{color: getTagColor(item)}">
                         <i class="icon ion-ios-pricetags"></i> {{item}}
-                    </span>
+                    </a>
                 </div>
             </div>
             <div class="content markdown-body" v-html="parsedMarkdownStr" ref="post"></div>
@@ -62,8 +62,8 @@
             },
             getTagColor (tagName) {
                 let tagColor = ''
-                for(let item of this.getArticleTags){
-                    if(tagName === item.name){
+                for(let item of this.getArticleTags) {
+                    if(tagName === item.name) {
                         tagColor = item.color
                         break;
                     }
