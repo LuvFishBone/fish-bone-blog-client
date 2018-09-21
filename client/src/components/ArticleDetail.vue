@@ -9,8 +9,7 @@
                 <span class="readers" v-if="article.views"><i class="icon ion-ios-eye"></i> {{article.views}}</span>
                 <span class="readers" v-if="article.likes"><i class="icon ion-ios-heart"></i> {{article.likes}}</span>
                 <div class="tags-box">
-                    <!-- <span class="i-tag red"><i class="icon ion-ios-pricetags"></i> {{article.tags}}</span> -->
-                    <span class="i-tag" v-for="item in tagArr" :key="item" :style="{backgroundColor: getTagColor(item)}">
+                    <span class="i-tag" v-for="item in tagArr" :key="item" :style="{color: getTagColor(item)}">
                         <i class="icon ion-ios-pricetags"></i> {{item}}
                     </span>
                 </div>

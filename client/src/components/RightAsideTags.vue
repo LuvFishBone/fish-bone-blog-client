@@ -6,7 +6,13 @@
         </div>
         <div class="content">
             <div class="taglist">
-                <a href="/" class="tag">前端开发</a>
+                <!-- <router-link 
+                    class="tag" 
+                    v-for="item in getArticleTags()" 
+                    :key="item.id"
+                    :to="{name: 'tags'}">
+                    {{item.name}}
+                </router-link> -->
             </div>
         </div>
     </div>
@@ -17,7 +23,12 @@
     import { SET_ARTICLE_TAGS } from '@/store/mutation-types'
     import { mapGetters, mapMutations } from 'vuex'
 
-    export default{
+    export default {
+        data (){
+            return {
+                list: []
+            }
+        },
         beforeMount () {
             if(this.getArticleTags().length) return
             axios.get('/api/v1/tags').then(res => {
@@ -77,7 +88,7 @@
                     margin-right: 12px;
                     margin-bottom: 12px;
                     background-color: #f3f6f3;
-                    border:1px solid #f3f6f3;
+                    border:1px solid #f3f6f3; /*no*/
                     cursor: pointer;
                     height: 30px;
                     color: inherit;

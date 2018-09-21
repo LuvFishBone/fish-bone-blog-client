@@ -12,9 +12,9 @@ module.exports = webpackMerge(webpackBase, {
         contentBase: path.resolve(__dirname, '../dist'),
         hot: true,
         host: '0.0.0.0',
-        port: 8082,
+        port: 5352,
         proxy: {
-            '/api': 'http://localhost:8081',
+            '/api': 'http://localhost:5350',
         }
     },
     devtool: 'inline-source-map',

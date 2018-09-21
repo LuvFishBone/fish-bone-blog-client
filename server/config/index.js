@@ -10,7 +10,7 @@ export const dbName = {
     database: 'fishbone_blog_db'
 }
 
-export const port = 8081
+export const port = 5350
 
 export const baseApi = 'api/v1'
 
