@@ -13,6 +13,7 @@
                                 <div class="info-row title-row">
                                     {{item.title}}
                                 </div>
+                                <div class="article-desc">{{item.content}}</div>
                                 <div class="info-row meta-row">
                                     <ul class="meta-list">
                                         <li class="tags">
@@ -28,14 +29,16 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="article-thumb" v-if="item.thumbUrl">
+                            <div class="article-thumb">
                                 
                             </div>
                         </div>
                     </router-link>
                 </li>
-
             </ul>
+            <div class="load-more" @click="loadMore">
+                {{this.hasMore ? '+点击加载更多' : '暂无更多'}}
+            </div>
         </div>
     </div>
 </template>
@@ -43,25 +46,69 @@
 <script>
 
     import ArticleTypes from '@/components/ArticleTypes'
-
+    import { INCREASE_PAGE_NUM } from '@/store/mutation-types'
+    import { mapGetters, mapMutations } from 'vuex'
+    import { REDUCE_PAGE_NUM, RESET_PAGE_NUM } from '../store/mutation-types';
+    
     export default{
         data () {
             return {
                 articles: [],
                 pageSize: 3,
-                pageNum: 1
+                pageNum: 1,
+                hasMore: true
             }
+        },
+        computed: {
+            ...mapGetters([
+                'getCurrentPageNum',
+                'getCurrentArticleType'
+            ])
+        },
+        mounted() {
+            this.RESET_PAGE_NUM()
+            this.pageNum = this.getCurrentPageNum
+            this.getArticles()
         },
         components: {
             ArticleTypes
         },
-        beforeMount () {
-            const offset = (this.pageNum-1) * this.pageSize
-            axios.get(`/api/v1/articles/allArticle/${offset}/${this.pageSize}`).then(res => {
-                if(res.status === 200) {
-                    this.articles = res.data
-                }
-            })      
+        methods: {
+            ...mapMutations([
+                INCREASE_PAGE_NUM,
+                REDUCE_PAGE_NUM,
+                RESET_PAGE_NUM
+            ]),
+            getArticles() {
+                if(!this.getCurrentArticleType) return
+                const offset = (this.getCurrentPageNum-1) * this.pageSize
+                const prefix = '/api/v1/articles'
+                const requestUrl = this.getCurrentArticleType === 'recommend' ? 
+                `${prefix}/articlesByRecommend/${offset}/${this.pageSize}` :
+                `${prefix}/articlesByType/${offset}/${this.pageSize}/${this.getCurrentArticleType}`
+                axios.get(requestUrl).then(res => {
+                    if(res.status === 200) {
+                        if(res.data.length) {
+                            this.articles = this.articles.concat(res.data)
+                        }else{
+                            this.REDUCE_PAGE_NUM()
+                            this.hasMore = false
+                        }
+                    }
+                })  
+            },
+            loadMore() {
+                if(!this.hasMore) return
+                this.INCREASE_PAGE_NUM()
+                this.getArticles()
+            }
+        },
+        watch: {
+            getCurrentArticleType: function(newVal, oldVal) {
+                this.articles = []
+                this.hasMore = true
+                this.getArticles()
+            }
         }
     }
 </script>
@@ -99,17 +146,28 @@
                             min-height: 100px;
                             .info-box{
                                 flex: 1;
-                                .title-row{
-                                    max-width: 550px;
-                                    margin: 5px 0 8px;
-                                    white-space: nowrap;
-                                    overflow: hidden;
+                                .article-desc{
+                                    // max-height: 45px;
+                                    // max-width: 540px;
+                                    margin: 5px 0;
+                                    overflow : hidden;
                                     text-overflow: ellipsis;
-                                    font-size: 18px;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                }
+                                .title-row{
+                                    margin: 5px 0 4px;
+                                    overflow : hidden;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 1;
+                                    -webkit-box-orient: vertical;
+                                    font-size: 16px;
                                     font-weight: bold;
                                 }
                                 .meta-row{
-                                    font-size: 14px;
+                                    font-size: 13px;
                                     color: #8f969c;
                                     .meta-list{
                                         display: flex;
@@ -122,7 +180,7 @@
                                             &:after{
                                                 content: "\B7";
                                                 margin: 0 .4em;
-                                                font-size: 14px;
+                                                font-size: 13px;
                                                 color: #8f969c;
                                             }
                                         }
@@ -138,6 +196,18 @@
                             }
                         }
                     }
+                }
+            }
+            .load-more{
+                text-align: center;
+                height: 60px;
+                line-height: 60px;
+                font-size: 16px;
+                cursor: pointer;
+                color: #90979c;
+                transition: all .3s ease-in-out;
+                &:hover{
+                    color: #34495e;
                 }
             }
         }

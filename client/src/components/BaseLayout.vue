@@ -18,11 +18,6 @@
     import MobileHeader from '@/components/MobileHeader'
     import Footer from '@/components/Footer'
     export default {
-        data () {
-            return {
-
-            }
-        },
         components: {
             MobileMenu,
             PcHeader,

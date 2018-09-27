@@ -5,6 +5,7 @@ import mobileMenu from './mobileMenu'
 import articleCatalog from './articleCatalog'
 import articleTypes from './articleTypes'
 import articleTags from './articleTags'
+import articlePageNum from './articlePageNum'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const modules = {
     mobileMenu,
     articleCatalog,
     articleTypes,
-    articleTags
+    articleTags,
+    articlePageNum
 }
 export default new Vuex.Store({
     modules,

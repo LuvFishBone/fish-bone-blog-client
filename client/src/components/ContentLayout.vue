@@ -17,8 +17,9 @@
         padding-top: 10px;
         .content-view{
             width: 100%;
-            word-wrap: break-word;
             min-height: 250px;
+            padding: 15px 20px;
+            word-wrap: break-word;
             background: #fff;
         }
     }

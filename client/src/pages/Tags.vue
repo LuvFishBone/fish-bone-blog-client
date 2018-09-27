@@ -35,7 +35,6 @@
 
 <style scoped lang="less">
   .tags-page{
-    padding: 15px 20px;
     .title{
       text-align: center;
       h1{

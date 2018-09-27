@@ -86,20 +86,20 @@
                             return h('div', parseTags(h))
                         }
                     },
-                    {
-                        title: 'Content',
-                        key: 'content',
-                        render: (h, params) => {
-                            return h('div', {
-                                style: {
-                                   textOverflow:'ellipsis',
-                                   overflow:'hidden',
-                                   whiteSpace:'nowrap',
-                                   width:'500px',
-                                },
-                            }, params.row.content)
-                        }
-                    },
+                    // {
+                    //     title: 'Content',
+                    //     key: 'content',
+                    //     render: (h, params) => {
+                    //         return h('div', {
+                    //             style: {
+                    //                textOverflow:'ellipsis',
+                    //                overflow:'hidden',
+                    //                whiteSpace:'nowrap',
+                    //                width:'500px',
+                    //             },
+                    //         }, params.row.content)
+                    //     }
+                    // },
                     {
                         title: 'Status',
                         key: 'isPublished',
@@ -158,7 +158,7 @@
                 ],
                 articles: [],
                 total: 0,
-                pageSize: 3,
+                pageSize: 10,
                 currentPageNum: 1
             }
         },

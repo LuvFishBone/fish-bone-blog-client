@@ -3,6 +3,7 @@
  */
 
 import Article from '../models/articles'
+import async from '../middlewares/check';
 
 class ArticleControllers {
 
@@ -41,6 +42,18 @@ class ArticleControllers {
         const { offset, limit } = ctx.params
         const res = await Article.getLimitAllArticles(offset, limit)
         ctx.body = res
+    }
+
+    async getLimitArticlesByRecommend (ctx) {
+        const { offset, limit } = ctx.params
+        const res = await Article.getLimitArticlesByRecommend(offset, limit)
+        ctx.body = res;
+    }
+
+    async getLimitArticlesByType (ctx) {
+        const { offset, limit, type } = ctx.params
+        const res = await Article.getLimitArticlesByType(offset, limit, type)
+        ctx.body = res;
     }
 
     async getArticleById (ctx) {

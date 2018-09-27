@@ -26,6 +26,14 @@ class Articles {
         return await query(escape`SELECT * FROM ARTICLE ORDER BY publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`)
     }
 
+    async getLimitArticlesByType (offset, limit, type) {
+        return await query(escape`SELECT * FROM ARTICLE WHERE isPublished=1 AND type=${type} ORDER BY publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`)
+    }
+
+    async getLimitArticlesByRecommend (offset, limit) {
+        return await query(escape`SELECT * FROM ARTICLE WHERE isPublished=1 AND isRecommend=1 ORDER BY publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`)
+    }
+
     async getAllArticleTotal () {
         return await query(`SELECT COUNT(*) AS 'total' FROM ARTICLE`)
     }

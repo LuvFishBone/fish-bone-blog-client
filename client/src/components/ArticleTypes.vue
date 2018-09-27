@@ -1,6 +1,10 @@
 <template>
     <ul class="category">
-        <li v-for="item in this.getArticleTypes()" :key="item.id" :class="{active: getCurrentArticleType() === item.name}" @click="typeClick(item.name)">
+        <li 
+            v-for="item in this.getArticleTypes()" 
+            :key="item.id" 
+            :class="{active: getCurrentArticleType() === item.id}" 
+            @click="typeClick(item.id)">
             <span>{{item.name}}</span>
         </li>
     </ul>
@@ -9,7 +13,7 @@
 <script>
 
     import { mapGetters, mapMutations, mapActions } from 'vuex'
-    import { SET_ARTICLE_TYPES, SET_CURRENT_ARTICLE_TYPE } from '../store/mutation-types'
+    import { SET_ARTICLE_TYPES, SET_CURRENT_ARTICLE_TYPE, RESET_PAGE_NUM } from '../store/mutation-types'
 
     export default {
         data () {
@@ -23,7 +27,7 @@
             axios.get('/api/v1/types/').then(res => {
                 this.list = res.data;
                 this.list.unshift(this.defaultType);
-                this.SET_CURRENT_ARTICLE_TYPE(this.list[0].name)
+                this.SET_CURRENT_ARTICLE_TYPE(this.list[0].id)
                 this.SET_ARTICLE_TYPES(this.list)
             })
         },
@@ -34,9 +38,11 @@
             ]),
             ...mapMutations([
                 SET_CURRENT_ARTICLE_TYPE,
-                SET_ARTICLE_TYPES
+                SET_ARTICLE_TYPES,
+                RESET_PAGE_NUM
             ]),
             typeClick (name) {
+                if(name != this.getCurrentArticleType() ) this.RESET_PAGE_NUM()
                 this.SET_CURRENT_ARTICLE_TYPE(name)
             },
         }

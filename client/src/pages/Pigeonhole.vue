@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <content-layout>
-             <div>归档</div>
+             <div class="pigeonhole-page">正在建设中...</div>
         </content-layout>
     </base-layout>
 </template>
@@ -20,5 +20,7 @@
 </script>
 
 <style scoped lang="less">
+  .pigeonhole-page{
 
+  }
 </style>
