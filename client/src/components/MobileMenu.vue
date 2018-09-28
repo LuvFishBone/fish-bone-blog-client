@@ -1,6 +1,9 @@
 <template>
-  <div class="mobile-menu-shade" :class="{open: mobileMenuDisplay}" >
-    <div id="mobile-menu" :class="{'mobile-menu': true, open: mobileMenuDisplay}" v-clickoutside="menuClickHandle">
+  <div class="mobile-menu-shade" :class="{open: mobileMenuDisplay}" @click="hideMenu">
+    <div 
+    id="mobile-menu" 
+    :class="{'mobile-menu': true, open: mobileMenuDisplay}" 
+    @click="hideMenu">
       <ul class="main-menu">
           <li v-for="item in menus" :key="item.name">
             <router-link :to="{name: item.name}">
@@ -32,24 +35,24 @@
       }
     },
     directives: {
-      clickoutside: {
-        bind (el, binding, vnode) {
-          function documentHandler (e) {
-              if (el.contains(e.target)) {
-                  return false;
-              }
-              if (binding.expression) {
-                  binding.value(e);
-              }
-          }
-          el.__vueClickOutside__ = documentHandler;
-          document.addEventListener('click', documentHandler);
-        },
-        unbind (el, binding) {
-            document.removeEventListener('click', el.__vueClickOutside__);
-            delete el.__vueClickOutside__;
-        }
-      }
+      // clickoutside: {
+      //   bind (el, binding, vnode) {
+      //     function documentHandler (e) {
+      //         if (el.contains(e.target)) {
+      //             return false;
+      //         }
+      //         if (binding.expression) {
+      //             binding.value(e);
+      //         }
+      //     }
+      //     el.__vueClickOutside__ = documentHandler;
+      //     document.addEventListener('click', documentHandler);
+      //   },
+      //   unbind (el, binding) {
+      //       document.removeEventListener('click', el.__vueClickOutside__);
+      //       delete el.__vueClickOutside__;
+      //   }
+      // }
     },
     beforeMount () {
       this.menus = menus;
@@ -57,10 +60,15 @@
     methods: {
       ...mapMutations({
         closeMenu: CLOSE_MOBILE_MENU,
+        openMenu: OPEN_MOBILE_MENU
       }),
-      menuClickHandle () {
-        if(!this.mobileMenuDisplay) return
-        this.closeMenu()
+      showMenu () {
+        this.openMenu()
+      },
+      hideMenu (e) {
+        console.log(e.target.className)
+        console.log(e.target.className === 'mobile-menu-shade open')
+        if(e.target.className === 'mobile-menu-shade open') this.closeMenu()
       }
     },
     components: {

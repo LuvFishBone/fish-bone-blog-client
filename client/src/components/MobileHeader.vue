@@ -8,15 +8,15 @@
 <script>
 
   import { mapMutations } from 'vuex'
-  import { MOBILE_MENU_TOGGLE } from '@/store/mutation-types'
+  import { OPEN_MOBILE_MENU } from '@/store/mutation-types'
 
   export default{
     methods: {
-      ...mapMutations({
-          menuToggle: MOBILE_MENU_TOGGLE
-        }),
+      ...mapMutations([
+        OPEN_MOBILE_MENU
+      ]),
       showMenu () {
-        this.menuToggle()     
+        this.OPEN_MOBILE_MENU()     
       }
     }
   }
