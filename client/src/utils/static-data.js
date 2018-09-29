@@ -5,7 +5,7 @@ export const menus = [
         desc: '主页',
     },
     {
-        name: 'pigeonhole',
+        name: 'archives',
         icon: 'ion-md-time',
         desc: '归档'
     },

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Article from '@/pages/Article'
 import About from '@/pages/About'
-import Pigeonhole from '@/pages/Pigeonhole'
+import Archives from '@/pages/Archives'
 import Tags from '@/pages/Tags'
 
 Vue.use(Router)
@@ -17,9 +17,9 @@ const router = new Router({
             component: Home
         },
         {
-            path: '/pigeonhole',
-            name: 'pigeonhole',
-            component: Pigeonhole
+            path: '/archives',
+            name: 'archives',
+            component: Archives
         },
         {
             path: '/tags',

@@ -48,7 +48,7 @@
         }
 
         .main-box{
-            position: relative;
+            // position: relative;
             padding-top: 50px;
             max-width: 960px;
             margin: auto;
