@@ -1,6 +1,12 @@
 <template>
     <div class="taglist">
-        <a href="#" v-for="item in list" :class="[{tag: true}, tagAttr[item.color]]"  :key="item.id">{{item.name}}</a>
+        <router-link 
+            v-for="item in list" 
+            :to="{name:'tagByTag', params: {tag: item.name}}" 
+            :class="[{tag: true}, tagAttr[item.color]]"  
+            :key="item.id">
+            {{item.name}}
+        </router-link>
     </div>
 </template>
 

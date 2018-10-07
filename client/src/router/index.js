@@ -27,6 +27,11 @@ const router = new Router({
             component: Tags
         },
         {
+            path: '/tags/:tag',
+            name: 'tagByTag',
+            component: Tags
+        },
+        {
             path: '/about',
             name: 'about',
             component: About

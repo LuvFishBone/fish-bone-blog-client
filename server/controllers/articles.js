@@ -3,8 +3,6 @@
  */
 
 import Article from '../models/articles'
-import async from '../middlewares/check';
-
 class ArticleControllers {
 
     async addArticle (ctx) {
@@ -81,6 +79,10 @@ class ArticleControllers {
 
     async deleteArticle (ctx) {
         ctx.body = await Article.deleteArticle(ctx.params.id)
+    }
+
+    async getArticleListByTag (ctx) {
+        ctx.body = await Article.getArticleListByTag(ctx.params.tag)
     }
 }
 

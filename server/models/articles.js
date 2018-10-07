@@ -4,7 +4,6 @@
 
 import query from '../utils/query'
 import escape from '../utils/escape'
-
 class Articles {
     async addArticle (type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark) {
         return await query(`INSERT INTO ARTICLE SET type='${type}', title='${title}', tags='${tags}', views=${views}, likes=${likes}, createTime=NOW(), publishTime=NOW(), content='${content}', isPublished=${isPublished}, isRecommend=${isRecommend}, thumbUrl='${thumbUrl}', uniqueMark='${uniqueMark}'`)
@@ -57,6 +56,11 @@ class Articles {
 
     async deleteArticle (id) {
         return await query(escape`DELETE FROM ARTICLE WHERE id=${id}`)
+    }
+
+    async getArticleListByTag (tag) {
+        console.log(tag,'<- params tag')
+        return await query(`SELECT * FROM ARTICLE WHERE isPublished=1 and find_in_set('${tag}', tags)`)
     }
 }
 

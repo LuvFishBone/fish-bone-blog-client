@@ -6,7 +6,6 @@ import Router from 'koa-router'
 import {baseApi} from '../config'
 import TagsControllers from '../controllers/tags'
 import verify from '../middlewares/verify'
-import check from '../middlewares/check'
 
 const api = 'tags'
 

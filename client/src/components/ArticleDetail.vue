@@ -74,7 +74,6 @@
         watch: {
             articleInfo: function(val, oldVal) {
                 this.article = val
-                console.log(this.article)
                 this.tagArr = val.tags.split(',')
                 this.parsedMarkdownStr = this.parseMarkdown(val.content)
                 this.createArticleCatalog()

@@ -66,8 +66,6 @@
         this.openMenu()
       },
       hideMenu (e) {
-        console.log(e.target.className)
-        console.log(e.target.className === 'mobile-menu-shade open')
         if(e.target.className === 'mobile-menu-shade open') this.closeMenu()
       }
     },

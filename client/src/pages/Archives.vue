@@ -2,7 +2,7 @@
     <base-layout>
         <content-layout>
           <div class="archives-page">
-            <div class="archive-item">
+            <!-- <div class="archive-item">
               <div class="circle">
                 <div class="year-num">2013</div>
                 <div class="year-name">Year</div>
@@ -10,7 +10,7 @@
               <ul class="list">
                 <li>
                   <div class="left">
-                    <span><b>2013</b> 0905</span>
+                    <span><b>09月05日</b></span>
                   </div>
                   <div class="point">
                     <span><b></b></span>
@@ -23,7 +23,7 @@
                 </li>
                 <li>
                   <div class="left">
-                    <span><b>2013</b> 0905</span>
+                    <span><b>09月05日</b></span>
                   </div>
                   <div class="point">
                     <span><b></b></span>
@@ -35,37 +35,24 @@
                   </div>
                 </li>
               </ul>
-            </div>
-                        <div class="archive-item">
+            </div> -->
+            <div v-for="(val, key, index) in list" :key="index" class="archive-item">
               <div class="circle">
-                <div class="year-num">2013</div>
+                <div class="year-num">{{key}}</div>
                 <div class="year-name">Year</div>
               </div>
               <ul class="list">
-                <li>
+                <li v-for="item in val" :key="item.uniqueMark">
                   <div class="left">
-                    <span><b>2013</b> 0905</span>
+                    <span><b>{{item.publishTime}}</b></span>
                   </div>
                   <div class="point">
                     <span><b></b></span>
                   </div>
                   <div class="right">
-                    <a href="#">
-                      <span>HTML5 CSS3 发展历程 发布</span>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <div class="left">
-                    <span><b>2013</b> 0905</span>
-                  </div>
-                  <div class="point">
-                    <span><b></b></span>
-                  </div>
-                  <div class="right">
-                    <a href="#">
-                      <span>HTML5 CSS3 发展历程 发布HTML5 发布HTML5发布HTML5发</span>
-                    </a>
+                    <router-link :to="{name: 'article', params: {uniqueMark: item.uniqueMark}}">
+                      <span>{{item.title}}</span>
+                    </router-link>
                   </div>
                 </li>
               </ul>
@@ -79,11 +66,36 @@
 
   import BaseLayout from '@/components/BaseLayout'
   import ContentLayout from '@/components/ContentLayout'
+  import moment from 'moment'
 
   export default{
+    data() {
+      return {
+        list:{}
+      }
+    },
     components: {
       BaseLayout,
       ContentLayout
+    },
+    beforeMount() {
+      axios.get('/api/v1/archives').then((res)=>{
+        this.createList(res.data)
+      })
+    },
+    methods: {
+      createList(data) {
+        let result= {}
+        for(let i = 0, l = data.length; i < l; i++) {
+          let _year = moment(data[i].publishTime).year()
+          data[i].publishTime = moment(data[i].publishTime).format('MM月DD日'); 
+          if(!result[_year]){
+            result[_year] = [];
+          }
+          result[_year].push(data[i])
+        }
+        this.list = result
+      }
     }
   }
 </script>
@@ -113,6 +125,9 @@
       }
       .archive-item{
         position: relative;
+        &:not(:first-child){
+          margin-top: 35px;
+        }
         .circle{
           width: 83px;
           height: 83px;
@@ -128,7 +143,7 @@
           flex-flow: column;
           justify-content: center;
           background: #fff;
-          z-index: 99;
+          z-index: 10;
           .transitions;
           .year-num{
             font-size: 20px;
@@ -157,12 +172,12 @@
               align-items: center;
               span{
                 position: relative;
-                z-index: 999;
-                height: 16px;
-                width: 16px;
+                z-index: 20;
+                height: 16px; /*no*/
+                width: 16px; /*no*/
                 background: #fff;
                 display: block;
-                border-radius: 18px;
+                border-radius: 16px; /*no*/
                 border: 2px solid #007fff; /*no*/
                 .transitions;
                 b{
@@ -172,10 +187,9 @@
                   width: 20px;
                   height: 1px; /*no*/
                   background-color: #ccd1d9;
-                  z-index: 99;
+                  z-index: 10;
                 }
               }
-
             }
             .left{
               text-align: right;
@@ -192,7 +206,7 @@
               }
             }
             .right{
-              font-size: 18px;
+              font-size: 15px;
               color: #8f969c;
               a{
                 display: flex;

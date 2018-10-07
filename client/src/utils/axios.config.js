@@ -10,6 +10,6 @@ axios.interceptors.request.use( config => {
 
 axios.interceptors.response.use(data => {
     return data;
-    }, err => {
+}, err => {
     return Promise.reject(err);
 })

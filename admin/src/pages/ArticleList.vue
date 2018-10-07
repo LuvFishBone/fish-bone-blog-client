@@ -21,7 +21,7 @@
                         key: 'id'
                     },
                     {
-                        title: 'Thumb',
+                        title: '缩略图',
                         key: 'thumbUrl',
                         render: (h, params) => {
                             
@@ -30,7 +30,7 @@
                         }   
                     },
                     {
-                        title: 'IsRecommend',
+                        title: '推荐',
                         key: 'isRecommend',
                         render: (h, params) => {
                             const status = params.row.isRecommend ? '是' : '否'
@@ -42,7 +42,7 @@
                         }   
                     },
                     {
-                        title: 'Type',
+                        title: '类型',
                         key: 'type',
                         render: (h, params) => {
                             const _this = this
@@ -60,11 +60,11 @@
                         }
                     },
                     {
-                        title: 'Title',
+                        title: '标题',
                         key: 'title'
                     },
                     {
-                        title: 'Tags',
+                        title: '标签',
                         key: 'tags',
                         render: (h, params) => {
                             const _this = this
@@ -101,7 +101,7 @@
                     //     }
                     // },
                     {
-                        title: 'Status',
+                        title: '状态',
                         key: 'isPublished',
                         render: (h, params) => {
                             const status = params.row.isPublished ? '已发布' : '未发布'
@@ -113,15 +113,15 @@
                         }  
                     },
                     {
-                        title: 'Create Time',
+                        title: '创建时间',
                         key: 'createTime',
                     },
                     {
-                        title: 'Publish Date',
+                        title: '发布时间',
                         key: 'publishTime',
                     },
                     {
-                        title: 'Action',
+                        title: '操作',
                         key: 'action',
                         width: 150,
                         align: 'center',

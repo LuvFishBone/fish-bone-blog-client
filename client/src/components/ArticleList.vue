@@ -36,7 +36,8 @@
                     </router-link>
                 </li>
             </ul>
-            <div class="load-more" @click="loadMore">
+            <Loading :loadingInfo="{width:'100', height:'20', display: isLoading ? 'block' : 'none'}" />
+            <div class="load-more" @click="loadMore" :style="{display: isLoading ? 'none' : 'block'}">
                 {{this.hasMore ? '+点击加载更多' : '暂无更多'}}
             </div>
         </div>
@@ -46,6 +47,7 @@
 <script>
 
     import ArticleTypes from '@/components/ArticleTypes'
+    import Loading from '@/components/Loading'
     import { INCREASE_PAGE_NUM } from '@/store/mutation-types'
     import { mapGetters, mapMutations } from 'vuex'
     import { REDUCE_PAGE_NUM, RESET_PAGE_NUM } from '../store/mutation-types';
@@ -56,7 +58,8 @@
                 articles: [],
                 pageSize: 3,
                 pageNum: 1,
-                hasMore: true
+                hasMore: true,
+                isLoading: null,
             }
         },
         computed: {
@@ -71,7 +74,8 @@
             this.getArticles()
         },
         components: {
-            ArticleTypes
+            Loading,
+            ArticleTypes,
         },
         methods: {
             ...mapMutations([
@@ -86,6 +90,7 @@
                 const requestUrl = this.getCurrentArticleType === 'recommend' ? 
                 `${prefix}/articlesByRecommend/${offset}/${this.pageSize}` :
                 `${prefix}/articlesByType/${offset}/${this.pageSize}/${this.getCurrentArticleType}`
+                this.isLoading = true
                 axios.get(requestUrl).then(res => {
                     if(res.status === 200) {
                         if(res.data.length) {
@@ -94,6 +99,7 @@
                             this.REDUCE_PAGE_NUM()
                             this.hasMore = false
                         }
+                        this.isLoading = false
                     }
                 })  
             },
