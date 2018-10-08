@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <Form class="article-box" :label-width="80" ref="formData" :model="formData">
+        <Form class="p10" :label-width="80" ref="formData" :model="formData">
             <Row>
                 <Col span="10">
                     <FormItem label="文章状态" prop="isPublished">
@@ -315,9 +315,6 @@
 </script>
 
 <style scoped lang="less">
-    .article-box{
-        padding: 10px;
-    }
     .tags-box{
         white-space: pre-line;
         width: 350px;

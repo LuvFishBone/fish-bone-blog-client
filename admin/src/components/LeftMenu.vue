@@ -25,6 +25,10 @@
         <Icon type="ios-paper-plane" />
         <span>文章发布</span>
     </MenuItem>
+    <MenuItem name="manageComments" to="/manageComments">
+        <Icon type="ios-chatbubbles" />
+        <span>评论管理</span>
+    </MenuItem>
     <MenuItem name="about" to="/about">
         <Icon type="md-person" />
         <span>About Me</span>

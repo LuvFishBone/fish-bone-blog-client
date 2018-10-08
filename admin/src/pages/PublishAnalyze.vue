@@ -1,6 +1,8 @@
 <template>
     <Layout>
-        publish analyze
+        <div class="p10">
+            publish analyze
+        </div>
     </Layout>
 </template>
 
@@ -12,7 +14,3 @@
        } 
     }
 </script>
-
-<style>
-
-</style>

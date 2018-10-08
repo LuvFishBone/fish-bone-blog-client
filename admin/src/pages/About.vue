@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <div class="about-box">
+        <div class="p10">
             <textarea id="aboutMe"></textarea>
             <Button type="primary" @click="saveAbout"><Icon type="ios-paper-plane" size="16" /> 保存</Button>
         </div>
@@ -59,8 +59,3 @@
 
 </script>
 
-<style scoped lang="less">
-    .about-box{
-        padding: 10px;
-    }
-</style>

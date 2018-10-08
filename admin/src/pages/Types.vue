@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <div class="types-box">
+        <div class="types-box m10">
             <Button type="primary" size="small" @click="addTypeHandle">
                 <Icon type="md-add" /> 增加
             </Button>
@@ -154,7 +154,6 @@
 
 <style scoped lang="less">
     .types-box{
-        margin: 10px;
         .list{
             padding: 20px 0 0
         }

@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <Form ref="tagsForm" class="tags-box" :model="tagsForm" :label-width="80">
+        <Form class="p10" ref="tagsForm" :model="tagsForm" :label-width="80">
             <FormItem label="标签颜色">
                 <TagColorBar />
             </FormItem>
@@ -52,9 +52,3 @@
 
     }
 </script>
-
-<style scoped lang="less">
-    .tags-box{ 
-        padding: 10px;
-    }
-</style>

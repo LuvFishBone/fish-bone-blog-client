@@ -61,7 +61,7 @@ CREATE TABLE `ARTICLE` (
   `createTime` datetime NOT NULL,
   `publishTime` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,8 +70,39 @@ CREATE TABLE `ARTICLE` (
 
 LOCK TABLES `ARTICLE` WRITE;
 /*!40000 ALTER TABLE `ARTICLE` DISABLE KEYS */;
-INSERT INTO `ARTICLE` VALUES (1,1,2,3,'标题1','w423dfgdgdfgdf23423fgd','','标签1','这里是内容',1,1,'2018-09-03 20:47:31','2018-09-16 22:01:57');
+INSERT INTO `ARTICLE` VALUES (17,6,0,0,'h5','545865cca3f38f9a1102146a632cf3f6','','HTML5,CSS3','h5',1,1,'2018-09-16 22:35:20','2018-09-18 00:16:36'),(18,13,333,33,'移动端适配问题汇总','45365f705fce873bb383aa1100489b61','','HTML5','# 移动端适配问题汇总\n\n\n\n\n## 移动端适配问题汇总\n\n### 移动端适配问题汇总',1,1,'2018-09-19 00:13:47','2018-09-21 21:34:21');
 /*!40000 ALTER TABLE `ARTICLE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `COMMENTS`
+--
+
+DROP TABLE IF EXISTS `COMMENTS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `COMMENTS` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `articleId` int(11) NOT NULL,
+  `articleTitle` varchar(255) NOT NULL,
+  `comment` longtext NOT NULL,
+  `nickname` varchar(45) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `personalSite` varchar(100) DEFAULT NULL,
+  `createTime` datetime NOT NULL,
+  `isPass` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `COMMENTS`
+--
+
+LOCK TABLES `COMMENTS` WRITE;
+/*!40000 ALTER TABLE `COMMENTS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `COMMENTS` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -118,7 +149,7 @@ CREATE TABLE `TAGS` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +158,7 @@ CREATE TABLE `TAGS` (
 
 LOCK TABLES `TAGS` WRITE;
 /*!40000 ALTER TABLE `TAGS` DISABLE KEYS */;
-INSERT INTO `TAGS` VALUES (1,'标签1','#b300e6');
+INSERT INTO `TAGS` VALUES (46,'HTML5','#2d8cf0'),(47,'JAVASCRIPT','#b300e6'),(48,'CSS3','#b300e6'),(49,'NODEJS','#ff9900'),(50,'LINUX','#ed4014'),(51,'chi','#ed4014'),(52,'cheng','#ff9900'),(53,'huang','#e6ba00'),(54,'lv','#19be6b'),(55,'qing','#00d6e6'),(56,'lan','#2d8cf0'),(57,'zhi','#b300e6');
 /*!40000 ALTER TABLE `TAGS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +175,7 @@ CREATE TABLE `TYPES` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +184,7 @@ CREATE TABLE `TYPES` (
 
 LOCK TABLES `TYPES` WRITE;
 /*!40000 ALTER TABLE `TYPES` DISABLE KEYS */;
-INSERT INTO `TYPES` VALUES (1,'NODEJS');
+INSERT INTO `TYPES` VALUES (13,'前端'),(12,'后端'),(11,'算法'),(10,'计算机基础');
 /*!40000 ALTER TABLE `TYPES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-16 22:05:04
+-- Dump completed on 2018-10-08 22:58:51
