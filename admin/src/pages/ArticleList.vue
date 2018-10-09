@@ -119,7 +119,7 @@
                         key: 'createTime',
                     },
                     {
-                        title: '发布时间',
+                        title: '修改时间',
                         key: 'publishTime',
                     },
                     {

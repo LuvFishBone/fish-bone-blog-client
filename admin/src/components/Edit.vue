@@ -17,7 +17,9 @@
                 element: document.getElementById("articleEdit"),
                 autoDownloadFontAwesome: false,
                 placeholder: '叩首问路，码梦为生！',
-                spellChecker: false
+                spellChecker: false,
+                tabSize: 1,
+                showIcons: ["code", "table","quote","ordered-list","clean-block","link","horizontal-rule","side-by-side","unordered-list","heading","heading-smaller","heading-bigger","heading-1","heading-2","heading-3","strikethrough","quote"],
             })
             this.simplemde.value(this.getArticle.content)
             this.simplemde.codemirror.on("change", () => {

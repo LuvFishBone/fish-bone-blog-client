@@ -15,6 +15,8 @@
                 </div>
             </div>
             <div class="content markdown-body" v-html="parsedMarkdownStr" ref="post"></div>
+            <article-end />
+            <article-comment />
         </div>
     </div>
 </template>
@@ -24,6 +26,8 @@
     import { mapGetters, mapMutations } from 'vuex'
     import { SET_ARTICLE_CATALOG } from '@/store/mutation-types'
     import parseMarkdown from '@/utils/parseMarkdown'
+    import ArticleComment from './ArticleComment'
+    import ArticleEnd from './ArticleEnd'
 
     export default{
         data () {
@@ -33,6 +37,10 @@
                catalog: [],
                tagArr: []
            }
+        },
+        components: {
+            ArticleComment,
+            ArticleEnd
         },
         computed: {
             ...mapGetters([

@@ -70,7 +70,7 @@ CREATE TABLE `ARTICLE` (
 
 LOCK TABLES `ARTICLE` WRITE;
 /*!40000 ALTER TABLE `ARTICLE` DISABLE KEYS */;
-INSERT INTO `ARTICLE` VALUES (17,6,0,0,'h5','545865cca3f38f9a1102146a632cf3f6','','HTML5,CSS3','h5',1,1,'2018-09-16 22:35:20','2018-09-18 00:16:36'),(18,13,333,33,'移动端适配问题汇总','45365f705fce873bb383aa1100489b61','','HTML5','# 移动端适配问题汇总\n\n\n\n\n## 移动端适配问题汇总\n\n### 移动端适配问题汇总',1,1,'2018-09-19 00:13:47','2018-09-21 21:34:21');
+INSERT INTO `ARTICLE` VALUES (17,6,0,0,'h5','545865cca3f38f9a1102146a632cf3f6','','HTML5,CSS3','h5',1,1,'2018-09-16 22:35:20','2018-09-18 00:16:36'),(18,13,333,33,'移动端适配问题汇总','45365f705fce873bb383aa1100489b61','','HTML5','# 移动端适配问题汇总\n\n修改\n\n## 移动端适配问题汇总\n\n### 移动端适配问题汇总',1,1,'2018-09-19 00:13:47','2018-10-09 20:17:28');
 /*!40000 ALTER TABLE `ARTICLE` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,6 +86,7 @@ CREATE TABLE `COMMENTS` (
   `articleId` int(11) NOT NULL,
   `articleTitle` varchar(255) NOT NULL,
   `comment` longtext NOT NULL,
+  `blockquote` longtext,
   `nickname` varchar(45) NOT NULL,
   `email` varchar(100) NOT NULL,
   `personalSite` varchar(100) DEFAULT NULL,
@@ -133,6 +134,32 @@ LOCK TABLES `READING` WRITE;
 /*!40000 ALTER TABLE `READING` DISABLE KEYS */;
 INSERT INTO `READING` VALUES (1,'百年孤独','马尔克斯加西亚[智利]',1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `READING` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `REPLIES`
+--
+
+DROP TABLE IF EXISTS `REPLIES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `REPLIES` (
+  `id` int(11) NOT NULL,
+  `replyId` int(11) NOT NULL,
+  `replayname` varchar(45) NOT NULL,
+  `replayComment` varchar(500) NOT NULL,
+  `createTime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `REPLIES`
+--
+
+LOCK TABLES `REPLIES` WRITE;
+/*!40000 ALTER TABLE `REPLIES` DISABLE KEYS */;
+/*!40000 ALTER TABLE `REPLIES` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -223,4 +250,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-08 22:58:51
+-- Dump completed on 2018-10-09 20:55:11
