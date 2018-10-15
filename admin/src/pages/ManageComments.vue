@@ -56,7 +56,7 @@
                         key: 'isPass'
                     },
                     {
-                        title: '创建时间',
+                        title: '评论时间',
                         key: 'createTime'
                     },
                     {

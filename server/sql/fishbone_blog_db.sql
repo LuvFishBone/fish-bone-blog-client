@@ -86,6 +86,7 @@ CREATE TABLE `COMMENTS` (
   `articleId` int(11) NOT NULL,
   `articleTitle` varchar(255) NOT NULL,
   `comment` longtext NOT NULL,
+  `quoter` varchar(45) DEFAULT NULL,
   `blockquote` longtext,
   `nickname` varchar(45) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -250,4 +251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-09 20:55:11
+-- Dump completed on 2018-10-15 20:13:01

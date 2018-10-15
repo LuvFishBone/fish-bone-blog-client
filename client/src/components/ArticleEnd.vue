@@ -2,7 +2,8 @@
     <div class="article-end">
         <div class="line"></div>
         <div class="note">
-            转载请注明文章原始出处 !
+            <p>原创是写作的动力,</p>
+            <p>转载请注明文章原始出处 !</p>
         </div>
         <div class="qrcode">
             <div><img :src="qrcodeUrl" alt="扫描二维码,在手机阅读！" /></div>
@@ -20,7 +21,8 @@
             }
         },
         mounted() {
-            QRCode.toDataURL('I am a pony!')
+            const url = window.location.href;
+            QRCode.toDataURL(url)
             .then(url => {
                 console.log(url)
                 this.qrcodeUrl = url

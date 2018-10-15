@@ -1,7 +1,8 @@
 <template>
     <div class="article-comment">
         <div class="comment-list">
-            <div class="comment-item">
+            <div class="no-comment">~暂无评论~</div>
+            <!-- <div class="comment-item">
                 <div class="title">1楼 · <span>Mike</span>说：</div>
                 <div class="comment-date">2018年06月20日 10:23 </div>
                 <div class="content">
@@ -23,20 +24,21 @@
                     </div>
                     <div class="comment-date">2018年06月20日 10:23 </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="comment-area">
             <div class="header">发表评论 <span class="total">目前共5条评论</span></div>
             <div class="comment-form">
                 <div class="form-item">
-                    <input type="text" class="input-default" placeholder="请输入昵称" maxlength="50">
+                    <input type="text" class="input-default" placeholder="请输入昵称" maxlength="50" :bind="nickname">
                 </div>
                 <div class="form-item">
-                    <input type="text" class="input-default" placeholder="请输入邮箱" maxlength="80">
+                    <input type="text" class="input-default" placeholder="请输入邮箱" maxlength="80" v-model="email">
                 </div>
                 <div class="form-item">
-                    <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100">
+                    <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" :bind="personalSite">
                 </div>
+                <div v-if="this.blockquote">您引用了：<a class="quote-link" href="#"><span>Mike</span>的发言</a></div>
                 <div class="simplemde-box">
                     <textarea id="articleComment"></textarea>
                 </div>
@@ -55,7 +57,21 @@
     import SimpleMDE from 'simplemde'
 
     export default {
-        mounted(){
+        data() {
+            return {
+                quoter: '',
+                blockquote: '',
+                articleId: '',
+                articleTitle: '',
+                comment: '',
+                nickname: '',
+                email: '',
+                personalSite: '',
+                createTime: '',
+                isPass: 0,
+            }
+        },
+        mounted() {
             this.simplemde = new SimpleMDE({
                 element: document.getElementById("articleComment"),
                 autoDownloadFontAwesome: false,
@@ -70,7 +86,8 @@
         },
         methods: {
             submit() {
-                console.log(this.simplemde.value())
+                // console.log(this.simplemde.value())
+                console.log(this.email);
             }
         }
     }
@@ -124,6 +141,11 @@
                     margin-top: 10px;
                 }
             }
+            .no-comment{
+                text-align: center;
+                padding-bottom: 20px;
+                font-size: 16px;
+            }
         }
         .comment-area{
             padding: 20px 0 5px;
@@ -138,6 +160,9 @@
             .comment-form{
                 .form-item{
                     padding: 5px 0;
+                }
+                .quote-link{
+                    color: #007fff;
                 }
             }
             .simplemde-box{
