@@ -5,6 +5,7 @@ import App from '@/App'
 import router from './router'
 import store from './store'
 import moment from 'moment'
+import Toasted from 'vue-toasted'
 import '@/utils/axios.config.js'
 import '@/assets/style/app.less'
 import '@/directives'
@@ -14,6 +15,12 @@ import '@/directives'
 //     const Fastclick = require('fastclick');
 //     Fastclick.attach(document.body);
 // }
+
+Vue.use(Toasted, { 
+    theme: "primary", 
+    position: "top-center", 
+    duration : 3000
+})
 
 moment.locale('zh-cn')
 

@@ -16,7 +16,7 @@
             </div>
             <div class="content markdown-body" v-html="parsedMarkdownStr" ref="post"></div>
             <article-end />
-            <article-comment />
+            <article-comment v-bind:articleInfo="articleInfo" />
         </div>
     </div>
 </template>

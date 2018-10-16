@@ -24,7 +24,7 @@ class ArticleControllers {
                 articles: ''
             }
             const promises = []
-            promises.push(Article.getPagination())
+            promises.push(Article.getPublishedArticleTotal())
             promises.push(Article.getLimitArticles(offset, limit))
             const results = await Promise.all(promises)
             res.maxPage = Math.ceil(results[0][0]['COUNT(*)'] / limit)

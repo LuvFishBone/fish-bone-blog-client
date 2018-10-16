@@ -30,15 +30,17 @@
             <div class="header">发表评论 <span class="total">目前共5条评论</span></div>
             <div class="comment-form">
                 <div class="form-item">
-                    <input type="text" class="input-default" placeholder="请输入昵称" maxlength="50" :bind="nickname">
+                    <span>*昵称</span><input type="text" class="input-default" placeholder="请输入昵称" maxlength="50" v-model="comment.nickname">
                 </div>
                 <div class="form-item">
-                    <input type="text" class="input-default" placeholder="请输入邮箱" maxlength="80" v-model="email">
+                    <span>*邮箱</span>
+                    <input type="text" class="input-default" placeholder="请输入邮箱" maxlength="80" v-model="comment.email">
                 </div>
                 <div class="form-item">
-                    <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" :bind="personalSite">
+                    <span>站点</span>
+                    <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" v-model="comment.personalSite">
                 </div>
-                <div v-if="this.blockquote">您引用了：<a class="quote-link" href="#"><span>Mike</span>的发言</a></div>
+                <div v-if="comment.blockquote">您引用了：<a class="quote-link" href="#"><span>Mike</span>的发言</a></div>
                 <div class="simplemde-box">
                     <textarea id="articleComment"></textarea>
                 </div>
@@ -59,16 +61,29 @@
     export default {
         data() {
             return {
-                quoter: '',
-                blockquote: '',
-                articleId: '',
-                articleTitle: '',
-                comment: '',
-                nickname: '',
-                email: '',
-                personalSite: '',
-                createTime: '',
-                isPass: 0,
+                comment: {
+                    quoter: '',
+                    blockquote: '',
+                    articleId: this.id,
+                    articleTitle: this.title,
+                    comment: '',
+                    nickname: '',
+                    email: '',
+                    personalSite: '',
+                    createTime: '',
+                    isPass: 0,
+                },
+                list:[]
+            }
+        },
+        props: {
+            articleInfo: Object
+        },
+        watch: {
+            articleInfo: function(val, oldVal) {
+                this.comment.articleId = val.id
+                this.comment.articleTitle = val.title
+                this.getMomentsByArticleId(val.id)
             }
         },
         mounted() {
@@ -79,15 +94,43 @@
                 spellChecker: false,
                 toolbar: false,
             })
-            // this.simplemde.value(this.getArticle.content)
-            // this.simplemde.codemirror.on("change", () => {
-            //     this.setArticleContent(this.simplemde.value())
-            // });
+            this.simplemde.codemirror.on("change", () => {
+                this.comment.comment =  this.simplemde.value()
+            });
         },
         methods: {
+            getMomentsByArticleId(articleId) {
+                axios.get(`/api/v1/comments/${articleId}`)
+                .then((res) => {
+                    console.log(res);
+                })
+            },
             submit() {
-                // console.log(this.simplemde.value())
-                console.log(this.email);
+                if (this.comment.nickname === '') {
+                    this.$toasted.error('昵称不能为空！')
+                    return
+                }
+                if (this.comment.email === '') {
+                    this.$toasted.error('邮箱不能为空！')
+                    return
+                }
+                if (!/^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,3}$/.test(this.comment.email)) {
+                    this.$toasted.error('邮箱格式不正确！')
+                    return
+                }
+                if (this.comment.comment === '') {
+                    this.$toasted.error('评论不能为空不能为空！')
+                    return
+                }
+                if (this.comment.comment.length > 1000) {
+                    this.$toasted.error('评论不能大于1000字符！')
+                    return
+                }
+                const { quoter, blockquote, articleId, articleTitle, comment, nickname, email, personalSite, isPass } = this.comment;
+                axios.post('/api/v1/comments', { quoter, blockquote, articleId, articleTitle, comment, nickname, email, personalSite, isPass })
+                .then((res) => {
+                    this.$toasted.success('评论成功，待管理员审核以后才可显示评论！')
+                })
             }
         }
     }

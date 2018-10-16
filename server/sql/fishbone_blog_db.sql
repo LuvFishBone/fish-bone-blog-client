@@ -84,18 +84,18 @@ DROP TABLE IF EXISTS `COMMENTS`;
 CREATE TABLE `COMMENTS` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `articleId` int(11) NOT NULL,
-  `articleTitle` varchar(255) NOT NULL,
-  `comment` longtext NOT NULL,
-  `quoter` varchar(45) DEFAULT NULL,
-  `blockquote` longtext,
-  `nickname` varchar(45) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `personalSite` varchar(100) DEFAULT NULL,
+  `articleTitle` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `comment` longtext CHARACTER SET utf8 NOT NULL,
+  `quoter` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `blockquote` longtext CHARACTER SET utf8,
+  `nickname` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `personalSite` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `createTime` datetime NOT NULL,
   `isPass` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,6 +104,7 @@ CREATE TABLE `COMMENTS` (
 
 LOCK TABLES `COMMENTS` WRITE;
 /*!40000 ALTER TABLE `COMMENTS` DISABLE KEYS */;
+INSERT INTO `COMMENTS` VALUES (3,18,'移动端适配问题汇总','fff','','','mini','ff','ff','2018-10-16 19:38:14',1),(4,18,'移动端适配问题汇总','4234234','','','mike','42342','3423','2018-10-16 19:52:29',1),(5,18,'移动端适配问题汇总','123','','','tom','12312@qq.com','123','2018-10-16 20:01:49',1),(6,18,'移动端适配问题汇总','123','','','jack','12312@qq.com','123','2018-10-16 20:01:53',1);
 /*!40000 ALTER TABLE `COMMENTS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,10 +146,10 @@ DROP TABLE IF EXISTS `REPLIES`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `REPLIES` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `replyId` int(11) NOT NULL,
-  `replayname` varchar(45) NOT NULL,
-  `replayComment` varchar(500) NOT NULL,
+  `replyname` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `replyComment` varchar(500) CHARACTER SET utf8 NOT NULL,
   `createTime` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -251,4 +252,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-15 20:13:01
+-- Dump completed on 2018-10-16 21:15:57
