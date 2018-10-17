@@ -20,7 +20,7 @@
                     <div class="content">
                         {{item.replyComment}}
                     </div>
-                    <div class="comment-date">{{item.replyTime}}</div>
+                    <div class="comment-date">{{formatDate(item.replyTime)}}</div>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
         methods: {
             parseMarkdown,
             formatDate(datetime) {
-                return moment(datetime).format('YYYY年MM月DD日')
+                return moment(datetime).format('YYYY年MM月DD日-HH时mm分')
             },
             setCurrentQuote(item) {
                 this.comment.blockquote = item.comment
@@ -140,6 +140,10 @@
                 axios.post('/api/v1/comments', { quoter, blockquote, articleId, articleTitle, comment, nickname, email, personalSite, isPass })
                 .then((res) => {
                     this.$toasted.success('评论成功，待管理员审核以后才可显示评论！')
+                    this.comment.blockquote = ''
+                    this.comment.quoter = ''
+                    this.comment.comment = ''
+                    this.simplemde.value('')
                 })
             }
         }

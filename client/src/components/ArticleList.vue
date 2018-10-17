@@ -29,9 +29,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="article-thumb">
-                                
-                            </div>
+                            <div class="article-thumb" v-if="false"></div>
                         </div>
                     </router-link>
                 </li>

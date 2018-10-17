@@ -3,7 +3,15 @@
         <div class="p10" >
             <Table :columns="columns" :data="articles"></Table>
         </div>
-        <Page class-name="p10" :total="total" :current.sync="currentPageNum" :page-size="pageSize" show-elevator prev-text="Previous" next-text="Next" @on-change="pageChage" />
+        <Page 
+            class-name="p10" 
+            :total="total" 
+            :current.sync="currentPageNum" 
+            :page-size="pageSize" 
+            show-elevator 
+            prev-text="Previous" 
+            next-text="Next" 
+            @on-change="pageChage" />
     </Layout>
 </template>
 
@@ -11,6 +19,7 @@
     import Layout from '@/components/Layout'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     import { SET_TYPE_LIST } from '../store/mutation-types'
+    import moment from 'moment'
     import utils from '@/utils'
 
     export default{
@@ -88,20 +97,6 @@
                             return h('div', parseTags(h))
                         }
                     },
-                    // {
-                    //     title: 'Content',
-                    //     key: 'content',
-                    //     render: (h, params) => {
-                    //         return h('div', {
-                    //             style: {
-                    //                textOverflow:'ellipsis',
-                    //                overflow:'hidden',
-                    //                whiteSpace:'nowrap',
-                    //                width:'500px',
-                    //             },
-                    //         }, params.row.content)
-                    //     }
-                    // },
                     {
                         title: '状态',
                         key: 'isPublished',
@@ -117,10 +112,16 @@
                     {
                         title: '创建时间',
                         key: 'createTime',
+                        render:(h, params) => {
+                            return h('span', moment(params.row.createTime).format('YYYY年MM月DD日-HH时mm分'))
+                        }
                     },
                     {
                         title: '修改时间',
                         key: 'publishTime',
+                        render:(h, params) => {
+                            return h('span', moment(params.row.publishTime).format('YYYY年MM月DD日-HH时mm分'))
+                        }
                     },
                     {
                         title: '操作',

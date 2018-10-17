@@ -57,7 +57,8 @@
             }),
             createArticleCatalog () {
                 this.$nextTick(() => {
-                    Array.from(this.$refs.post.querySelectorAll('h1,h2,h3,h4,h5,h6')).forEach((item, index) => {
+                    Array.from(this.$refs.post.querySelectorAll('h1,h2,h3,h4,h5,h6'))
+                    .forEach((item, index) => {
                         item.id = item.localName + '-' + index;
                         this.catalog.push({
                             tagName: item.localName,

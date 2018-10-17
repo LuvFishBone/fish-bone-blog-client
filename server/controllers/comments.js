@@ -1,5 +1,5 @@
 /**
- * @file 关于文章的controller
+ * @file comment controller
  */
 
 import Comments from '../models/comments'
