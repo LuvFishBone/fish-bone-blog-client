@@ -24,7 +24,6 @@
             const url = window.location.href;
             QRCode.toDataURL(url)
             .then(url => {
-                console.log(url)
                 this.qrcodeUrl = url
             })
             .catch(err => {

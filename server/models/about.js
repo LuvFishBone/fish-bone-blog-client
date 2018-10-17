@@ -3,17 +3,16 @@
  */
 
 import query from '../utils/query'
-
+import escape from '../utils/escape'
 class About {
 
     async getAbout(){
-        return await query(`SELECT content FROM ABOUT WHERE id=1`)
+        return await query(escape`SELECT content FROM ABOUT WHERE id=1`)
     }
 
     async updateAbout(content){
-        return await query(`UPDATE ABOUT SET content='${content}' WHERE id=1`)
+        return await query(escape`UPDATE ABOUT SET content=${content} WHERE id=1`)
     }
-
 
 }
 

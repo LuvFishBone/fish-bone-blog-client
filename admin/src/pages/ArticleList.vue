@@ -212,7 +212,6 @@
             },
             deleteArticle (id) {
                 axios.delete(`/api/v1/articles/${id}`).then(res => {
-                    //console.log(res)
                     if(res.status === 200){
                         this.$Notice.success({
                             title: '提示',

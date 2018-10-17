@@ -1,33 +1,31 @@
 <template>
     <div class="article-comment">
         <div class="comment-list">
-            <div class="no-comment">~暂无评论~</div>
-            <!-- <div class="comment-item">
-                <div class="title">1楼 · <span>Mike</span>说：</div>
-                <div class="comment-date">2018年06月20日 10:23 </div>
+            <div class="no-comment" v-if="!this.list.length">~暂无评论~</div>
+            <div class="comment-item" v-for="(item, index) in list" :key="index">
+                <div class="title">{{index + 1}}楼 · <span>{{item.nickname}}</span>说：</div>
+                <div class="comment-date">{{formatDate(item.commentTime)}}</div>
                 <div class="content">
-                    <div class="quote-content">
-                        <div>引用 FishBone 的发言:</div>
-                        <div>是按剩余空间算的，因为你里面有文字，所以刨去了文字宽度，你去掉文字就好了</div>
+                    <div class="quote-content" v-if="item.quoter">
+                        <div>引用 {{item.quoter}} 的发言:</div>
+                        <div>{{item.blockquote}}</div>
                     </div>
-                    问下，支付宝是否已经有页面部署了flex的布局？ 似乎各大浏览器，除了chrome支持的都不是特别好，比如IE8就，FireFox46之前的，Safari9.1之前的都不支持
+                    <div class="markdown-body" v-html="parseMarkdown(item.comment)"></div>
                 </div>
                 <div class="footer">
-                    <span class="quote">引用</span>
+                    <a class="quote" href="#comment-area" @click="setCurrentQuote(item)">引用</a>
                 </div>
-                <div class="admin-reply">
-                    <div class="title">FishBone 回复 <span>Mike</span>:</div>
+                <div class="admin-reply" v-if="item.replyname">
+                    <div class="title">{{item.replyname}} 回复 <span>{{item.nickname}}</span>:</div>
                     <div class="content">
-                        在我测试中有这样的感觉,还请指正
-                        1.当主轴设置的是水平方向时(row,row-reverse)方向还和容器的dir属有关; 
-                        flex-direction 的方向是相对dir设置的方向来设置的.
+                        {{item.replyComment}}
                     </div>
-                    <div class="comment-date">2018年06月20日 10:23 </div>
+                    <div class="comment-date">{{item.replyTime}}</div>
                 </div>
-            </div> -->
+            </div>
         </div>
-        <div class="comment-area">
-            <div class="header">发表评论 <span class="total">目前共5条评论</span></div>
+        <div class="comment-area" id="comment-area">
+            <div class="header">发表评论 <span class="total">共{{list.length}}条评论</span></div>
             <div class="comment-form">
                 <div class="form-item">
                     <span>*昵称</span><input type="text" class="input-default" placeholder="请输入昵称" maxlength="50" v-model="comment.nickname">
@@ -40,7 +38,9 @@
                     <span>站点</span>
                     <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" v-model="comment.personalSite">
                 </div>
-                <div v-if="comment.blockquote">您引用了：<a class="quote-link" href="#"><span>Mike</span>的发言</a></div>
+                <div v-if="comment.blockquote">
+                    您引用了：<span class="quote-link"><i>{{comment.quoter}}</i>的发言</span>
+                </div>
                 <div class="simplemde-box">
                     <textarea id="articleComment"></textarea>
                 </div>
@@ -56,7 +56,9 @@
 
     import 'font-awesome/css/font-awesome.min.css'
     import 'simplemde/dist/simplemde.min.css'
+    import parseMarkdown from '@/utils/parseMarkdown'
     import SimpleMDE from 'simplemde'
+    import moment from 'moment'
 
     export default {
         data() {
@@ -99,10 +101,18 @@
             });
         },
         methods: {
+            parseMarkdown,
+            formatDate(datetime) {
+                return moment(datetime).format('YYYY年MM月DD日')
+            },
+            setCurrentQuote(item) {
+                this.comment.blockquote = item.comment
+                this.comment.quoter = item.nickname
+            },
             getMomentsByArticleId(articleId) {
                 axios.get(`/api/v1/comments/${articleId}`)
                 .then((res) => {
-                    console.log(res);
+                    this.list = res.data
                 })
             },
             submit() {
@@ -173,7 +183,6 @@
                     color: #8f969c;
                     .quote{
                         color: #007fff;
-                        cursor: pointer;
                     }
                 }
                 .admin-reply{
@@ -196,7 +205,7 @@
                 padding-bottom: 10px;
                 font-size: 18px;
                 .total{
-                    font-size: 14px;
+                    font-size: 13px;
                     color: #8f969c;
                 }
             }
@@ -206,6 +215,7 @@
                 }
                 .quote-link{
                     color: #007fff;
+                    cursor: pointer;
                 }
             }
             .simplemde-box{

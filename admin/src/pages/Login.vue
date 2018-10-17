@@ -48,7 +48,6 @@
                 })
             },
             login(){
-                console.log(123);
                 axios.post(
                     '/api/v1/tokens',
                     {

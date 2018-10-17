@@ -8,19 +8,19 @@ import escape from '../utils/escape'
 class Tags{
 
   async addTag (name, color) {
-    return await query(`INSERT INTO TAGS SET name='${name}',color='${color}'`)
+    return await query(escape`INSERT INTO TAGS SET name=${name}, color=${color}`)
   }
 
   async removeTagByName (name) {
-    return await query(`DELETE FROM TAGS WHERE name='${name}'`)
+    return await query(escape`DELETE FROM TAGS WHERE name=${name}`)
   }
 
   async getTagByName (name) {
-    return await query(`SELECT * FROM TAGS WHERE name='${name}'`)
+    return await query(escape`SELECT * FROM TAGS WHERE name=${name}`)
   }
 
   async getAllTags () {
-    return await query(`SELECT * FROM TAGS ORDER BY id DESC`)
+    return await query(escape`SELECT * FROM TAGS ORDER BY id DESC`)
   }
 }
 

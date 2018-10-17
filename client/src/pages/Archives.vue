@@ -2,40 +2,6 @@
     <base-layout>
         <content-layout>
           <div class="archives-page">
-            <!-- <div class="archive-item">
-              <div class="circle">
-                <div class="year-num">2013</div>
-                <div class="year-name">Year</div>
-              </div>
-              <ul class="list">
-                <li>
-                  <div class="left">
-                    <span><b>09月05日</b></span>
-                  </div>
-                  <div class="point">
-                    <span><b></b></span>
-                  </div>
-                  <div class="right">
-                    <a href="#">
-                      <span>HTML5 CSS3 发展历程 发布</span>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <div class="left">
-                    <span><b>09月05日</b></span>
-                  </div>
-                  <div class="point">
-                    <span><b></b></span>
-                  </div>
-                  <div class="right">
-                    <a href="#">
-                      <span>HTML5 CSS3 发展历程 发布HTML5 发布HTML5发布HTML5发</span>
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </div> -->
             <div v-for="(val, key, index) in list" :key="index" class="archive-item">
               <div class="circle">
                 <div class="year-num">{{key}}</div>

@@ -8,27 +8,27 @@ import escape from '../utils/escape'
 class Tags{
 
   async addType (name) {
-    return await query(`INSERT INTO TYPES SET name='${name}'`)
+    return await query(escape`INSERT INTO TYPES SET name=${name}`)
   }
 
   async removeTypeById (id) {
-    return await query(`DELETE FROM TYPES WHERE name='${id}'`)
+    return await query(escape`DELETE FROM TYPES WHERE name=${id}`)
   }
 
   async updateTypeById (id, name) {
-    return await query(`UPDATE TYPES SET name='${name}'  WHERE id=${id}`)
+    return await query(escape`UPDATE TYPES SET name=${name} WHERE id=${id}`)
   }
 
   async getTypeById (id) {
-    return await query(`SELECT * FROM TYPES WHERE id='${id}'`)
+    return await query(escape`SELECT * FROM TYPES WHERE id=${id}`)
   }
 
   async getTypeByName (name) {
-    return await query(`SELECT * FROM TYPES WHERE name='${name}'`)
+    return await query(escape`SELECT * FROM TYPES WHERE name=${name}`)
   }
 
   async getAllTypes () {
-    return await query(`SELECT * FROM TYPES ORDER BY id DESC`)
+    return await query(escape`SELECT * FROM TYPES ORDER BY id DESC`)
   }
 }
 

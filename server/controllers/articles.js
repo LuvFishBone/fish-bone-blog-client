@@ -60,7 +60,6 @@ class ArticleControllers {
     }
 
     async getArticleByUniqueMark (ctx) {
-        console.log(ctx.params.uniqueMark, 'mark')
         const res = await Article.getArticleByUniqueMark(ctx.params.uniqueMark)
         ctx.body = res
     }

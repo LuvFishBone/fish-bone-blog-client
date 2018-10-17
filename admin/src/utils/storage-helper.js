@@ -5,9 +5,7 @@ let storageHelper = {
   };
   
   function getItem(name, prefix) {
-      console.log(name)
     const newName = addPrefix(name, prefix);
-    console.log(localStorage.getItem(newName))
     const storeData = JSON.parse(localStorage.getItem(newName));
     if (storeData === null) return null;
     const { value, options } = storeData;

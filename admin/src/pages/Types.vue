@@ -112,7 +112,6 @@
                 })
             },
             typeClick (item) {
-                console.log(item)
                 this.name = item.name
                 this.id = item.id
                 this.$Modal.confirm({
