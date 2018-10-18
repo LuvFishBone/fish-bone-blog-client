@@ -38,6 +38,13 @@
                 </Col>
             </Row>
             <Row>
+                <Col span="22">
+                    <FormItem label="文章简介" prop="title">
+                        <Input v-model="formData.intro" @on-change="addIntro" type="textarea" :rows="2" placeholder="文章简介" />
+                    </FormItem>
+                </Col>
+            </Row>
+            <Row>
                 <Col span="10">
                     <FormItem label="文章阅读数" prop="views">
                         <Input v-model="formData.views" @on-change="addViews" placeholder="文章阅读数" clearable></Input>
@@ -110,20 +117,21 @@
     import TagAddInput from '@/components/TagAddInput'
     import TagList from '@/components/TagList'
     import { mapGetters, mapMutations, mapActions } from 'vuex'
-    import { 
-        ADD_ARTICLE, 
-        SET_ARTICLE_TITLE, 
+    import {
+        ADD_ARTICLE,
+        SET_ARTICLE_TITLE,
+        SET_ARTICLE_INTRO,
         SET_ARTICLE_TAGS,
         SET_ARTICLE_VIEWS,
         SET_ARTICLE_LIKES,
-        SET_ARTICLE_ISPUBLISHED, 
-        CLEAR_ARTICLE, 
+        SET_ARTICLE_ISPUBLISHED,
+        CLEAR_ARTICLE,
         SET_ARTICLE,
         SET_TYPE_LIST,
         SET_ARTICLE_TYPE,
         SET_ARTICLE_ISRECOMMEND,
         SET_ARTICLE_THUMBURL,
-        SET_ARTICLE_UNIQUEMARK
+        SET_ARTICLE_UNIQUEMARK,
     } from '../store/mutation-types'
     import utils from '@/utils'
 
@@ -136,6 +144,7 @@
                     id: '',
                     type: '',
                     title : '',
+                    intro : '',
                     tags : [],
                     views: 1,
                     likes: 1,
@@ -191,6 +200,7 @@
                 'setArticle': SET_ARTICLE,
                 'setArticleType': SET_ARTICLE_TYPE,
                 'setArticleTitle': SET_ARTICLE_TITLE,
+                'setArticleIntro': SET_ARTICLE_INTRO,
                 'setArticleTags': SET_ARTICLE_TAGS,
                 'setArticleViews': SET_ARTICLE_VIEWS,
                 'setArticleLikes': SET_ARTICLE_LIKES,
@@ -213,6 +223,10 @@
             addTitle (event) {
                 const title = event.target.value
                 this.setArticleTitle(title)
+            },
+            addIntro (event) {
+                const intro = event.target.value
+                this.setArticleIntro(intro)
             },
             addViews (event) {
                 const views = event.target.value || 0
@@ -276,6 +290,10 @@
                 }
                 if(!formdata.title){
                     this.$Message.error('请填写标题!')
+                    return
+                }
+                if(!formdata.intro){
+                    this.$Message.error('请填写简介!')
                     return
                 }
                 if(!formdata.tags.length){

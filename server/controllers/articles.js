@@ -6,8 +6,8 @@ import Article from '../models/articles'
 class ArticleControllers {
 
     async addArticle (ctx) {
-        const {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark} = ctx.request.body
-        const res = await Article.addArticle(type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark)
+        const {type, title, intro, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark} = ctx.request.body
+        const res = await Article.addArticle(type, title, intro, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark)
         ctx.body = res
     }
 
@@ -66,15 +66,9 @@ class ArticleControllers {
 
     async updateArticleById (ctx) {
         const id = ctx.params.id
-        const {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark} = ctx.request.body
-        ctx.body = await Article.updateArticleById(id, {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark})
+        const {type, title, intro, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark} = ctx.request.body
+        ctx.body = await Article.updateArticleById(id, {type, title, intro, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark})
     }
-
-    // async publishArticle (ctx) {
-    //     const id = ctx.params.id
-    //     const {title, tags, views, likes, content} = ctx.request.body
-    //     ctx.body = await Article.publishArticle(id, {title, tags, views, likes, content})
-    // }
 
     async deleteArticle (ctx) {
         ctx.body = await Article.deleteArticle(ctx.params.id)

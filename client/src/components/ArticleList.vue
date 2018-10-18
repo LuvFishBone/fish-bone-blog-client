@@ -13,7 +13,7 @@
                                 <div class="info-row title-row">
                                     {{item.title}}
                                 </div>
-                                <div class="article-desc">{{item.content}}</div>
+                                <div class="article-desc">{{item.intro}}</div>
                                 <div class="info-row meta-row">
                                     <ul class="meta-list">
                                         <li class="tags">

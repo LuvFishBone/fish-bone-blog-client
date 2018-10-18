@@ -103,7 +103,7 @@
         methods: {
             parseMarkdown,
             formatDate(datetime) {
-                return moment(datetime).format('YYYY年MM月DD日-HH时mm分')
+                return moment(datetime).format('YYYY年MM月DD日 HH时mm分')
             },
             setCurrentQuote(item) {
                 this.comment.blockquote = item.comment

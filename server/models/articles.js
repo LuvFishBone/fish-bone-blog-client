@@ -5,13 +5,13 @@
 import query from '../utils/query'
 import escape from '../utils/escape'
 class Articles {
-    async addArticle (type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark) {
-        return await query(escape`
-            INSERT INTO ARTICLE 
-            SET type=${type}, title=${title}, tags=${tags}, views=${views}, likes=${likes}, 
-            createTime=NOW(), publishTime=NOW(), content=${content}, isPublished=${isPublished}, 
-            isRecommend=${isRecommend}, thumbUrl=${thumbUrl}, uniqueMark=${uniqueMark}
-        `)
+    async addArticle (type, title, intro, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark) {
+        return await query(
+            escape`INSERT INTO ARTICLE 
+                    SET type=${type}, title=${title}, intro=${intro}, tags=${tags}, views=${views}, likes=${likes}, 
+                    createTime=NOW(), publishTime=NOW(), content=${content}, isPublished=${isPublished}, 
+                    isRecommend=${isRecommend}, thumbUrl=${thumbUrl}, uniqueMark=${uniqueMark}`
+        )
     }
 
     async getAllArticles () {
@@ -19,13 +19,13 @@ class Articles {
     }
 
     async getLimitPublishedArticles (offset, limit) {
-        return await query(escape`
-            SELECT * FROM ARTICLE 
-            WHERE 
-            isPublished=1 
-            ORDER BY 
-            publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}
-        `)
+        return await query(
+            escape`SELECT * FROM ARTICLE 
+                    WHERE 
+                    isPublished=1 
+                    ORDER BY 
+                    publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`
+        )
     }
 
     async getPublishedArticleTotal () {
@@ -33,30 +33,34 @@ class Articles {
     }
 
     async getLimitAllArticles (offset, limit) {
-        return await query(escape`
-            SELECT * FROM ARTICLE 
-            ORDER BY 
-            publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}
-        `)
+        return await query(
+            escape`SELECT * FROM ARTICLE 
+                    ORDER BY 
+                    publishTime DESC 
+                    LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`
+        )
     }
 
     async getLimitArticlesByType (offset, limit, type) {
-        return await query(escape`
-            SELECT * FROM ARTICLE 
-            WHERE 
-            isPublished=1 AND type=${type} 
-            ORDER BY publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}
-        `)
+        return await query(
+            escape`SELECT title, intro, views, likes, uniqueMark, tags, createTime, thumbUrl FROM ARTICLE 
+                    WHERE 
+                    isPublished=1 AND type=${type} 
+                    ORDER BY publishTime DESC 
+                    LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`
+        )
     }
 
     async getLimitArticlesByRecommend (offset, limit) {
-        return await query(escape`
-            SELECT * FROM ARTICLE 
-            WHERE 
-            isPublished=1 
-            AND 
-            isRecommend=1 ORDER BY publishTime DESC LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}
-        `)
+        return await query(
+            escape`SELECT title, intro, views, likes, uniqueMark, tags, createTime, thumbUrl FROM ARTICLE 
+                    WHERE 
+                    isPublished=1 
+                    AND 
+                    isRecommend=1 
+                    ORDER BY publishTime DESC 
+                    LIMIT ${parseInt(offset, 10)},${parseInt(limit, 10)}`
+        )
     }
 
     async getAllArticleTotal () {
@@ -68,18 +72,19 @@ class Articles {
     }
 
     async getArticleByUniqueMark (uniqueMark) {
-        return await query(escape`
-            SELECT * FROM ARTICLE WHERE uniqueMark=${uniqueMark}
-        `)
+        return await query(
+            escape`SELECT * FROM ARTICLE WHERE uniqueMark=${uniqueMark}`
+        )
     }
 
-    async updateArticleById (id, {type, title, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark}) {
-        return await query(escape`
-            UPDATE ARTICLE SET type=${type}, title=${title}, tags=${tags}, 
-            views=${views}, likes=${likes}, content=${content}, publishTime=NOW(), 
-            isPublished=${isPublished}, isRecommend=${isRecommend}, 
-            thumbUrl=${thumbUrl}, uniqueMark=${uniqueMark} WHERE id=${id}
-        `)
+    async updateArticleById (id, {type, title, intro, tags, views, likes, content, isPublished, isRecommend, thumbUrl, uniqueMark}) {
+        return await query(
+            escape`UPDATE ARTICLE SET type=${type}, title=${title}, intro=${intro}, tags=${tags}, 
+                    views=${views}, likes=${likes}, content=${content}, publishTime=NOW(), 
+                    isPublished=${isPublished}, isRecommend=${isRecommend}, 
+                    thumbUrl=${thumbUrl}, uniqueMark=${uniqueMark} 
+                    WHERE id=${id}`
+        )
     }
 
     // async publishArticle (id, {type, title, tags, views, likes, content}) {
@@ -91,9 +96,9 @@ class Articles {
     }
 
     async getArticleListByTag (tag) {
-        return await query(escape`
-            SELECT * FROM ARTICLE WHERE isPublished=1 and find_in_set(${tag}, tags)
-        `)
+        return await query(
+            escape`SELECT * FROM ARTICLE WHERE isPublished=1 and find_in_set(${tag}, tags)`
+        )
     }
 }
 

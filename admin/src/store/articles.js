@@ -3,6 +3,7 @@ import * as mType from './mutation-types'
 const state = {
     id: '',
     title: '',
+    intro: '',
     type: '',
     tags: '',
     views: 1,
@@ -56,6 +57,7 @@ const mutations = {
     [mType.SET_ARTICLE] (state, payload) {
         state.id = payload.id,
         state.title = payload.title,
+        state.intro = payload.intro,
         state.type = payload.type,
         state.tags = payload.tags,
         state.views = payload.views,
@@ -71,6 +73,9 @@ const mutations = {
     },
     [mType.SET_ARTICLE_TITLE] (state, title) {
         state.title = title
+    },
+    [mType.SET_ARTICLE_INTRO] (state, intro) {
+        state.intro = intro
     },
     [mType.SET_ARTICLE_TAGS] (state, tags) {
         state.tags = tags
@@ -94,6 +99,7 @@ const mutations = {
         state.id = '',
         state.type = '',
         state.title = '',
+        state.intro = '',
         state.tags = '',
         state.views = '',
         state.likes = '',

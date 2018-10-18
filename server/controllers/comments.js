@@ -17,6 +17,12 @@ class CommentsController {
         ctx.body = res
     }
 
+    async getLimitAllComments (ctx) {
+        const { offset, limit } = ctx.params
+        const res = await Comments.getLimitAllComments(offset, limit)
+        ctx.body = res;
+    }
+
 }
 
 export default new CommentsController()
