@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div class="p10">
-            <Table :columns="columns" :data="articles"></Table>
+            <Table :columns="columns" :data="comments"></Table>
             <Page 
                 class-name="p10"
                 :total="total"
@@ -19,13 +19,13 @@
 <script>
     import Layout from '@/components/Layout'
     export default {
-                data () {
+        data () {
             return {
                 typeList: [],
                 columns: [
                     {
                         title: 'ID',
-                        key: 'id'
+                        key: 'commentId'
                     },
                     {
                         title: '文章ID',
@@ -34,6 +34,10 @@
                     {
                         title: '文章标题',
                         key: 'articleTitle'
+                    },
+                    {
+                        title: '文章评论',
+                        key: 'comment'
                     },
                     {
                         title: '昵称',
@@ -48,16 +52,20 @@
                         key: 'personalSite'
                     },
                     {
-                        title: '评论',
-                        key: 'comment'
+                        title: '评论时间',
+                        key: 'commentTime'
                     },
                     {
                         title: '状态',
                         key: 'isPass'
                     },
                     {
-                        title: '评论时间',
-                        key: 'createTime'
+                        title: '回复',
+                        key: 'replyComment'
+                    },
+                    {
+                        title: '回复时间',
+                        key: 'replyTime'
                     },
                     {
                         title: '操作',
@@ -65,15 +73,40 @@
                     }
                     
                 ],
-                articles: [],
+                comments: [],
                 total: 0,
-                pageSize: 10,
+                pageSize: 2,
                 currentPageNum: 1
             }
         },
-       components:{
-           Layout
-       },
+        components: {
+            Layout
+        },
+        mounted() {
+            this.getTotal()
+            this.getLimitComments(1)
+        },
+        methods: {
+            getTotal() {
+                return axios.get('/api/v1/comments/allCommentsTotal/').then(res => {
+                    if(res.status === 200) {
+                        //this.total = res.data[0].total
+                        console.log(res, 'res----');
+                    }
+                })
+            },
+            getLimitComments (pageNum) {
+                const offset = (pageNum-1) * this.pageSize
+                axios.get(`/api/v1/comments/allComments/${offset}/${this.pageSize}`).then(res => {
+                    if(res.status === 200) {
+                        this.comments = res.data
+                    }
+                })
+            },
+            pageChage (num) {
+                this.getLimitComments(num)
+            },
+        }
     }
 </script>
 

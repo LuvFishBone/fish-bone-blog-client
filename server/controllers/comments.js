@@ -23,6 +23,11 @@ class CommentsController {
         ctx.body = res;
     }
 
+    async getAllCommentsTotal (ctx) {
+        const res = await Comments.getAllCommentsTotal()
+        ctx.body = res
+    }
+
 }
 
 export default new CommentsController()
