@@ -18,7 +18,7 @@
                 <div class="admin-reply" v-if="item.replyname">
                     <div class="title">{{item.replyname}} 回复 <span>{{item.nickname}}</span>:</div>
                     <div class="content">
-                        {{item.replyComment}}
+                        <div class="markdown-body" v-html="parseMarkdown(item.replyComment)"></div>
                     </div>
                     <div class="comment-date">{{formatDate(item.replyTime)}}</div>
                 </div>

@@ -13,15 +13,33 @@
                 @on-change="pageChage"
             />
         </div>
+        <Modal
+            v-model="replyModal.display"
+            width=800
+            :title=replyModal.title
+            @on-ok="replyModalOk">
+            <textarea id="articleComment"></textarea>
+        </Modal>
     </Layout>
 </template>
 
 <script>
+
     import Layout from '@/components/Layout'
     import moment from 'moment'
+    import 'font-awesome/css/font-awesome.min.css'
+    import 'simplemde/dist/simplemde.min.css'
+    import SimpleMDE from 'simplemde'
+
     export default {
         data () {
             return {
+                replyModal: {
+                    display: false,
+                    title: '',
+                    commentId: '',
+                    hasReply: ''
+                },
                 typeList: [],
                 columns: [
                     {
@@ -144,13 +162,21 @@
                     {
                         title: '操作',
                         key: 'action',
-                        width: 150,
+                        width: 180,
                         align: 'center',
                         render: (h, params) => {
+                            let approveBtnName = '通过', 
+                                approveBtn = 'primary',
+                                isPass = 1
+                            if (params.row.isPass) {
+                                approveBtn = 'warning'
+                                approveBtnName = '审核'
+                                isPass = 0
+                            }
                             return h('div',[
                                 h('Button', {
                                     props: {
-                                        type: 'primary',
+                                        type: approveBtn,
                                         size: 'small'
                                     },
                                     style: {
@@ -158,7 +184,21 @@
                                     },
                                     on: {
                                         click: () => {
-                                            
+                                            this.updateCommentIsPassById(params.row.commentId, isPass)
+                                        }
+                                    }
+                                }, approveBtnName),
+                                h('Button', {
+                                    props: {
+                                        type: 'success',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.replyComment(params.row.commentId, params.row.replyComment)
                                         }
                                     }
                                 }, '回复'),
@@ -169,14 +209,13 @@
                                     },
                                     on: {
                                         click: () => {
-                                            
+                                            this.deleteCommentById(params.row.commentId, params.row.replyComment)
                                         }
                                     }
                                 }, '删除')
                             ])
                         }
                     }
-                    
                 ],
                 comments: [],
                 total: 0,
@@ -189,11 +228,11 @@
         },
         methods: {
             getTotal() {
-                axios.get('/api/v1/comments/total/').then((res) => {
+                axios.get('/api/v1/comments/total/').then(res => {
                     this.total = res.data[0].total
                 })
             },
-            getLimitComments (pageNum) {
+            getLimitComments(pageNum) {
                 const offset = (pageNum-1) * this.pageSize
                 axios.get(`/api/v1/comments/allComments/${offset}/${this.pageSize}`).then(res => {
                     if(res.status === 200) {
@@ -201,17 +240,67 @@
                     }
                 })
             },
-            pageChage (num) {
+            pageChage(num) {
                 this.getLimitComments(num)
             },
+            updateCommentIsPassById(id, statu) {
+                axios.put(`/api/v1/comments/update/${id}`, { statu:  statu }).then((res) => {
+                    if (res.status === 200) {
+                        this.getLimitComments(this.currentPageNum)
+                        this.$Message.success({content: '更新成功！'})
+                    }
+                })
+            },
+            deleteCommentById(id, reply) {
+                axios.delete(`/api/v1/comments/${id}`, { hasRely: reply }).then((res) => {
+                    if (res.status === 200) {
+                        this.getLimitComments(this.currentPageNum)
+                        this.$Message.success({content: '删除成功！'})
+                    }
+                })
+            },
+            initSimpleMDE() {
+                this.simplemde = new SimpleMDE({
+                    element: document.getElementById("articleComment"),
+                    autoDownloadFontAwesome: false,
+                    spellChecker: false,
+                })
+            },
+            replyComment(id, reply) {
+                this.replyModal.title = '回复评论'
+                if (reply) this.replyModal.title = '更新评论'
+                this.replyModal.display = true
+                reply = reply ? reply : ''
+                this.replyModal.commentId = id
+                this.replyModal.hasReply = reply
+                setTimeout(() => {
+                    this.simplemde.value(reply)
+                }, 300)
+            },
+            replyOperation(id, hasRely, replyComment) {
+                axios.post('/api/v1/comments/reply/operate/', {
+                    commentId: id,
+                    hasReply: hasRely,
+                    replyComment: replyComment
+                })
+                .then(res => {
+                    let tips = hasRely ? '更新回复成功！' : '回复成功！'
+                    if (res.status === 200) {
+                        this.$Message.success({
+                            content: tips
+                        })
+                        this.getLimitComments(this.currentPageNum)
+                    }
+                })
+            },
+            replyModalOk() {
+                this.replyOperation(this.replyModal.commentId, this.replyModal.hasReply, this.simplemde.value())     
+            }
         },
         mounted() {
+            this.initSimpleMDE()
             this.getTotal()
             this.getLimitComments(1)
         },
     }
 </script>
-
-<style>
-
-</style>
