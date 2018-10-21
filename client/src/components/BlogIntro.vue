@@ -6,32 +6,60 @@
         <div class="social">
             <ul>
                 <li>
-                    <a href="/">
+                    <a href="https://www.linkedin.com/in/fishbone-yu-b4b98747/" target="_blank">
                         <i class="icon ion-logo-linkedin"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a href="https://github.com/LuvFishBone" target="_blank">
                         <i class="icon ion-logo-github"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="/">
+                    <a href="https://twitter.com/FishBon59667636" target="_blank">
                         <i class="icon ion-logo-twitter"></i>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="totals">
-            <span><i class="icon ion-ios-list"></i> 100+</span>
-            <span><i class="icon ion-ios-pricetags"></i> 6</span>
+            <span><i class="icon ion-ios-list"></i> {{total}}</span>
+            <span><i class="icon ion-ios-pricetags"></i> {{tags}}</span>
         </div>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default{
-
+        data() {
+            return {
+                tags: 0,
+                total: 0,
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'getArticleTags'
+            ]),
+        },
+        methods: {
+            getArticleTotal() {
+                axios.get('/api/v1/articles/allTotal/').then(res => {
+                    if(res.status === 200) {
+                        this.total = res.data[0].total
+                    }
+                })
+            }
+        },
+        mounted() {
+            this.getArticleTotal()
+        },
+        watch: {
+            getArticleTags: function(newVal, oldVal){
+                this.tags = newVal.length
+            }
+        }
     }
 </script>
 
