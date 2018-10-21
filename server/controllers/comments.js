@@ -20,7 +20,7 @@ class CommentsController {
     async getLimitAllComments (ctx) {
         const { offset, limit } = ctx.params
         const res = await Comments.getLimitAllComments(offset, limit)
-        ctx.body = res;
+        ctx.body = res
     }
 
     async getAllCommentsTotal (ctx) {

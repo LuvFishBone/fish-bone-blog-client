@@ -35,7 +35,6 @@
                         title: '缩略图',
                         key: 'thumbUrl',
                         render: (h, params) => {
-                            
                             return h('div', {
                             }, '缩略图')
                         }   
@@ -112,15 +111,17 @@
                     {
                         title: '创建时间',
                         key: 'createTime',
+                        width: 140,
                         render:(h, params) => {
-                            return h('span', moment(params.row.createTime).format('YYYY年MM月DD日-HH时mm分'))
+                            return h('span', moment(params.row.createTime).format('YYYY-MM-DD-HH:mm'))
                         }
                     },
                     {
                         title: '修改时间',
                         key: 'publishTime',
+                        width: 140,
                         render:(h, params) => {
-                            return h('span', moment(params.row.publishTime).format('YYYY年MM月DD日-HH时mm分'))
+                            return h('span', moment(params.row.publishTime).format('YYYY-MM-DD HH:mm'))
                         }
                     },
                     {
@@ -143,7 +144,7 @@
                                             this.viewArticle(params.row.id)
                                         }
                                     }
-                                }, 'View'),
+                                }, '详情'),
                                 h('Button', {
                                     props: {
                                         type: 'error',
@@ -154,7 +155,7 @@
                                             this.deleteArticle(params.row.id)
                                         }
                                     }
-                                }, 'Delete')
+                                }, '删除')
                             ]);
                         }
                     }

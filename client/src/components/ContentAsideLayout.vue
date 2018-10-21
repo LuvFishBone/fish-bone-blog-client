@@ -15,8 +15,7 @@
         display: flex;
         .content-view{
             flex: 1;
-            width: 100%;
-            // min-height: 250px;
+            max-width: 700px;
             word-wrap: break-word;
         }
         .right-side{

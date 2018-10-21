@@ -110,7 +110,7 @@
                 this.comment.quoter = item.nickname
             },
             getMomentsByArticleId(articleId) {
-                axios.get(`/api/v1/comments/${articleId}`)
+                axios.get(`/api/v1/comments/comment/${articleId}`)
                 .then((res) => {
                     this.list = res.data
                 })

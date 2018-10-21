@@ -44,7 +44,9 @@ class Comments {
     }
 
     async getAllCommentsTotal () {
-        return await query(escape`SELECT COUNT(*) AS total FROM COMMENTS`)
+        return await query(
+            escape`SELECT COUNT(*) as total FROM COMMENTS`
+        )
     }
 
     // async approveCommentById (id) {

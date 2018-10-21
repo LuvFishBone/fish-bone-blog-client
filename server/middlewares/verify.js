@@ -9,6 +9,7 @@ import {secret} from '../config'
 thenifyAll(jwt, {}, ['verify'])
 
 export default async function (ctx, next) {
+    console.log(ctx, 'verify ctx')
     const auth = ctx.get('AuthToken')
     
     const token = auth.split(' ')[1]

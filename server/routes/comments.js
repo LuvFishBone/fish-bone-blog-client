@@ -14,8 +14,8 @@ const router = new Router()
 router.prefix(`/${baseApi}/${api}`)
 
 router.post('/', CommentsController.addComment)
-router.get('/:articleId', CommentsController.getCommentsById)
-router.get('/allCommentsTotal/', verify, CommentsController.getAllCommentsTotal)
-router.get('/allComments/:offset/:limit', verify,CommentsController.getLimitAllComments)
+router.get('/comment/:articleId', CommentsController.getCommentsById)
+router.get('/allComments/:offset/:limit', verify, CommentsController.getLimitAllComments)
+router.get('/total/', verify, CommentsController.getAllCommentsTotal)
 
 module.exports = router
