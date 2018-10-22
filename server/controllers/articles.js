@@ -1,7 +1,3 @@
-/**
- * @file 关于文章的controller
- */
-
 import Article from '../models/articles'
 class ArticleControllers {
 
@@ -16,24 +12,28 @@ class ArticleControllers {
         ctx.body = res
     }
 
-    async getArticleList (ctx) {
-        const {isPublished = 0, offset = 0, limit = 0} = ctx.query
-        if (isPublished) {
-            const res = {
-                maxPage: '',
-                articles: ''
-            }
-            const promises = []
-            promises.push(Article.getPublishedArticleTotal())
-            promises.push(Article.getLimitArticles(offset, limit))
-            const results = await Promise.all(promises)
-            res.maxPage = Math.ceil(results[0][0]['COUNT(*)'] / limit)
-            res.articles = results[1]
-            ctx.body = res
-        }
-        else {
-            ctx.body = await Article.getAllArticles()
-        }
+    // async getArticleList (ctx) {
+    //     const {isPublished = 0, offset = 0, limit = 0} = ctx.query
+    //     if (isPublished) {
+    //         const res = {
+    //             maxPage: '',
+    //             articles: ''
+    //         }
+    //         const promises = []
+    //         promises.push(Article.getPublishedArticleTotal())
+    //         promises.push(Article.getLimitArticles(offset, limit))
+    //         const results = await Promise.all(promises)
+    //         res.maxPage = Math.ceil(results[0][0]['COUNT(*)'] / limit)
+    //         res.articles = results[1]
+    //         ctx.body = res
+    //     }
+    //     else {
+    //         ctx.body = await Article.getAllArticles()
+    //     }
+    // }
+
+    async getPublishedArticleTotal (ctx) {
+        ctx.body = await Article.getPublishedArticleTotal()
     }
 
     async getLimitAllArticles (ctx) {

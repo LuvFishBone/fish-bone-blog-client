@@ -45,7 +45,7 @@
         },
         methods: {
             getArticleTotal() {
-                axios.get('/api/v1/articles/allTotal/').then(res => {
+                axios.get('/api/v1/articles/allPublishedTotal/').then(res => {
                     if(res.status === 200) {
                         this.total = res.data[0].total
                     }

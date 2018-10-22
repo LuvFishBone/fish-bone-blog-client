@@ -1,7 +1,3 @@
-/**
- * @file 检查文章格式的中间件
- */
-
 export default async function (ctx, next) {
     const {title, tags, content, isPublished} = ctx.request.body
     if (isPublished) {

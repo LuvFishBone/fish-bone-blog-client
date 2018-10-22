@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
     import SidePanel from '@/components/SiderPanel'
     import TagList from '@/components/TagList'
     import BlogIntro from '@/components/BlogIntro'

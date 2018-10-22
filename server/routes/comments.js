@@ -1,7 +1,3 @@
-/**
- * @file 操作评论的api
- */
-
 import Router from 'koa-router'
 import {baseApi} from '../config'
 import CommentsController from '../controllers/comments'

@@ -1,7 +1,3 @@
-/**
- * @file 关于token的controller
- */
-
 import jwt from 'jsonwebtoken'
 import User from '../models/users'
 import {

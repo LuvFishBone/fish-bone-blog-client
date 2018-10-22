@@ -1,7 +1,3 @@
-/**
- * @file aboutMe api
- */
-
 import Router from 'koa-router'
 import verify from '../middlewares/verify'
 import {baseApi} from '../config'

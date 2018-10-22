@@ -1,7 +1,3 @@
-/**
- * @file tags api
- */
-
 import Router from 'koa-router'
 import {baseApi} from '../config'
 import TagsControllers from '../controllers/tags'

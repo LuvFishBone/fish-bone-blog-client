@@ -1,7 +1,3 @@
-/**
- * @file articles model
- */
-
 import query from '../utils/query'
 import escape from '../utils/escape'
 class Articles {
@@ -29,7 +25,7 @@ class Articles {
     }
 
     async getPublishedArticleTotal () {
-        return await query(`SELECT COUNT(*) FROM ARTICLE WHERE isPublished=1`)
+        return await query(`SELECT COUNT(*) as total FROM ARTICLE WHERE isPublished=1`)
     }
 
     async getLimitAllArticles (offset, limit) {
@@ -86,10 +82,6 @@ class Articles {
                     WHERE id=${id}`
         )
     }
-
-    // async publishArticle (id, {type, title, tags, views, likes, content}) {
-    //     return await query(escape`UPDATE ARTICLE SET type='${type}', title='${title}', tags='${tags}', views='${views}', likes='${likes}', content='${content}', publishTime=NOW(), isPublished=1 WHERE id=${id}`)
-    // }
 
     async deleteArticle (id) {
         return await query(escape`DELETE FROM ARTICLE WHERE id=${id}`)

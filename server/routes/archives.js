@@ -1,7 +1,3 @@
-/**
- * @file 操作文章的api
- */
-
 import Router from 'koa-router'
 import {baseApi} from '../config'
 import ArchivesControllers from '../controllers/archives'

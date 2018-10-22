@@ -2,7 +2,7 @@
     <div class="article-comment">
         <div class="comment-list">
             <div class="no-comment" v-if="!this.list.length">~暂无评论~</div>
-            <div class="comment-item" v-for="(item, index) in list" :key="index">
+            <div class="comment-item" v-for="(item, index) in list" :key="index" :id="`quote-${index}`">
                 <div class="title">{{index + 1}}楼 · <span>{{item.nickname}}</span>说：</div>
                 <div class="comment-date">{{formatDate(item.commentTime)}}</div>
                 <div class="content">
@@ -13,7 +13,7 @@
                     <div class="markdown-body" v-html="parseMarkdown(item.comment)"></div>
                 </div>
                 <div class="footer">
-                    <a class="quote" href="#comment-area" @click="setCurrentQuote(item)">引用</a>
+                    <a class="quote" href="#comment-area" @click="setCurrentQuote(item, index)">引用</a>
                 </div>
                 <div class="admin-reply" v-if="item.replyname">
                     <div class="title">{{item.replyname}} 回复 <span>{{item.nickname}}</span>:</div>
@@ -39,7 +39,8 @@
                     <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" v-model="comment.personalSite">
                 </div>
                 <div v-if="comment.blockquote">
-                    您引用了：<span class="quote-link"><i>{{comment.quoter}}</i>的发言</span>
+                    您引用了：<a class="quote-link" :href="currentQuoteIndex"><i>{{comment.quoter}}</i>的发言</a>
+                    <span class="delete-quote" @click="deleteQuote">删除引用</span>
                 </div>
                 <div class="simplemde-box">
                     <textarea id="articleComment"></textarea>
@@ -105,15 +106,21 @@
             formatDate(datetime) {
                 return moment(datetime).format('YYYY年MM月DD日 HH时mm分')
             },
-            setCurrentQuote(item) {
+            setCurrentQuote(item, index) {
                 this.comment.blockquote = item.comment
                 this.comment.quoter = item.nickname
+                this.currentQuoteIndex = `#quote-${index}`
             },
             getMomentsByArticleId(articleId) {
                 axios.get(`/api/v1/comments/comment/${articleId}`)
                 .then((res) => {
                     this.list = res.data
                 })
+            },
+            deleteQuote() {
+                this.comment.blockquote = ''
+                this.comment.quoter = ''
+                this.currentQuoteIndex = ''
             },
             submit() {
                 if (this.comment.nickname === '') {
@@ -219,6 +226,11 @@
                 }
                 .quote-link{
                     color: #007fff;
+                    cursor: pointer;
+                }
+                .delete-quote{
+                    color: #8f969c;
+                    float: right;
                     cursor: pointer;
                 }
             }

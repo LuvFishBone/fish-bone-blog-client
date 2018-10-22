@@ -1,7 +1,3 @@
-/**
- * @file aboutme controller
- */
-
 import About from '../models/about'
 
 class AboutControllers {

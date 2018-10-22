@@ -1,7 +1,3 @@
-/**
- * @file comment controller
- */
-
 import Comments from '../models/comments'
 class CommentsController {
 

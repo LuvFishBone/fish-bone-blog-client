@@ -1,7 +1,3 @@
-/**
- * @file 处理验证的中间件
- */
-
 import jwt from 'jsonwebtoken'
 import thenifyAll from 'thenify-all'
 import {secret} from '../config'

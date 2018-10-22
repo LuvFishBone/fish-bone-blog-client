@@ -1,7 +1,3 @@
-/**
- * @file types api
- */
-
 import Router from 'koa-router'
 import {baseApi} from '../config'
 import TypesControllers from '../controllers/types'

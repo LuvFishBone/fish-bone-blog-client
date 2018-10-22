@@ -1,7 +1,3 @@
-/**
- * @file users model
- */
-
 import query from '../utils/query'
 import escape from '../utils/escape'
 

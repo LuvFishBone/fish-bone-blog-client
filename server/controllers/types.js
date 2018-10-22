@@ -2,8 +2,6 @@ import Types from '../models/types'
 
 class TypesControllers {
 
-
-
   async addType (ctx) {
     const {name} = ctx.request.body
     const res = await Types.addType(name)

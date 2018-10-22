@@ -1,7 +1,3 @@
-/**
- * @file upload files api
- */
-
 import Router from 'koa-router'
 import {baseApi} from '../config'
 import UploadFileController from '../controllers/uploadfile'
