@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <content-layout>
-            <div>正在建设中...</div>
+            <div v-html="data"></div>
         </content-layout>
     </base-layout>
 </template>
@@ -10,11 +10,26 @@
 
   import BaseLayout from '@/components/BaseLayout'
   import ContentLayout from '@/components/ContentLayout'
+  import parseMarkdown from '@/utils/parseMarkdown'
 
   export default{
+    data() {
+      return {
+        data: ''
+      }
+    },
     components: {
       BaseLayout,
       ContentLayout
+    },
+    methods: {
+      parseMarkdown
+    },
+    mounted() {
+      axios.get('/api/v1/about/')
+      .then(res => {
+        this.data = this.parseMarkdown(res.data[0].content)
+      })
     }
   }  
 </script>
