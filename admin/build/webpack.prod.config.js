@@ -16,7 +16,7 @@ module.exports = webpackMerge(webpackBase, {
     },
     plugins:[
         new webpack.HashedModuleIdsPlugin(),
-        new CleanWebpackPlugin([path.resolve(__dirname, '../dist')]),
+        // new CleanWebpackPlugin([path.resolve(__dirname, '../dist')]),
         new HtmlWebpackPlugin({
             title: 'fish bone front-end admin',
             inject: true,
