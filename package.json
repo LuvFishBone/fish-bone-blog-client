@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "pm2 start server/config/pm2_config.json",
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "dev-admin": "webpack-dev-server --config ./admin/build/webpack.dev.config.js --process --color --open",
     "build-admin": "webpack --config ./admin/build/webpack.prod.config.js --progress --profile --color",
     "dev-client": "webpack-dev-server --config ./client/build/webpack.dev.config.js --progress --profile --color --open",
-    "build-client": "webpack --config ./client/build/webpack.prod.config.js --progress --profile --color",
+    "build-client": "webpack --config ./client/build/webpack.prod.config.js --progress --color",
     "dev-server": "nodemon server/ --exec babel-node"
   },
   "repository": {
