@@ -6,9 +6,9 @@
   "scripts": {
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "dev-admin": "webpack-dev-server --config ./admin/build/webpack.dev.config.js --process --color --open",
-    "build-admin": "webpack --config ./admin/build/webpack.prod.config.js --process --color",
-    "dev-client": "webpack-dev-server --config ./client/build/webpack.dev.config.js --process --color --open",
-    "build-client": "webpack --config ./client/build/webpack.prod.config.js --process --color",
+    "build-admin": "webpack --config ./admin/build/webpack.prod.config.js --progress --profile --color",
+    "dev-client": "webpack-dev-server --config ./client/build/webpack.dev.config.js --progress --profile --color --open",
+    "build-client": "webpack --config ./client/build/webpack.prod.config.js --progress --profile --color",
     "dev-server": "nodemon server/ --exec babel-node"
   },
   "repository": {
