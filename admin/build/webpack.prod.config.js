@@ -35,13 +35,13 @@ module.exports = webpackMerge(webpackBase, {
     optimization: {
         runtimeChunk: 'single',
         splitChunks: {
-        cacheGroups: {
-            vendor: {
-                test: /[\\/]node_modules[\\/]/,
-                name: 'vendors',
-                chunks: 'all'
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all'
+                }
             }
-        }
         }
     }
 
