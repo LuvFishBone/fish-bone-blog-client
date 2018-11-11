@@ -17,3 +17,4 @@ package-lock.json*
 client/.eslintrc.js
 admin/.eslintrc.js
 server/.eslintrc.js
+server/config/index.js
