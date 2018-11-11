@@ -20,10 +20,14 @@
 <script>
     import { mapMutations, mapGetters } from 'vuex'
     import { MENU_DISPLAY_TOGGLE } from '@/store/mutation-types'
-
+    import md5 from 'md5'
     export default{
         data() {
-          return {}
+          return {
+            oldPwd: '',
+            newPwd: '',
+            confirmPwd: ''
+          }
         },
         computed: {
           rotateIcon() {
@@ -42,7 +46,90 @@
           displayMenu: MENU_DISPLAY_TOGGLE
         }),
         updatePwd() {
-          console.log('go to update pwd')
+          this.$Modal.confirm({
+              title: '修改密码',
+              closable: true,
+              render: (h) => {
+                  return h('div',[
+                    h('Input', {
+                      style: { margin: '5px 0' },
+                      props: {
+                          value: this.oldPwd,
+                          autofocus: true,
+                          placeholder: '输入旧密码',
+                          type: 'password',
+                      },
+                      on: {
+                          input: (val) => {
+                              this.oldPwd = val
+                          },
+                      }
+                    }),
+                    h('Input', {
+                      style: { margin: '5px 0' },
+                      type: 'password',
+                      props: {
+                          value: this.newPwd,
+                          autofocus: true,
+                          placeholder: '输入新密码',
+                          type: 'password',
+                      },
+                      on: {
+                          input: (val) => {
+                              this.newPwd = val
+                          }
+                      }
+                    }),
+                    h('Input', {
+                      style: { margin: '5px 0' },
+                      type: 'password',
+                      props: {
+                          value: this.confirmPwd,
+                          autofocus: true,
+                          placeholder: '请确认新密码',
+                          type: 'password',
+                      },
+                      on: {
+                          input: (val) => {
+                              this.confirmPwd = val;
+                          }
+                      }
+                    }), 
+                ])
+              },
+              onOk: () => {
+                if(!this.oldPwd) {
+                  this.$Message.error({
+                    content: '旧密码不能为空！'
+                  })
+                  return;
+                }
+                if(!this.newPwd || !this.confirmPwd) {
+                  this.$Message.error({
+                    content: '新密码不能为空！'
+                  })
+                  return;
+                }
+                if(this.newPwd !== this.confirmPwd) {
+                  this.$Message.error({
+                    content: '两次密码输入不一样'
+                  })
+                  return;
+                }
+                axios.put('api/v1/password', { oldpwd: md5(md5(this.oldPwd)), newpwd: md5(md5(this.newPwd)) })
+                .then(res => {
+                  const data = res.data
+                  if (data.msg) {
+                    this.$Message.error({
+                      content: data.msg
+                    })
+                  }
+                  this.$Message.success({
+                    content: '修改成功！'
+                  })
+                })
+              },
+          })
         },
         loginOut() {
           localStorage.clear('AuthToken')
@@ -81,5 +168,10 @@
   }
   .ivu-menu-horizontal.ivu-menu-light:after{
     height: 0;
+  }
+  .ivu-modal{
+    .ivu-input-type{
+      margin-top: 10px;
+    }
   }
 </style>

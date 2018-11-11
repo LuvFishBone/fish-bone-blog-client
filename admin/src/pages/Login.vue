@@ -32,13 +32,14 @@
                     ],
                     password: [
                         { required: true, message: 'Please fill in the password.', trigger: 'blur' },
-                        { type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
+                        { type: 'string', min: 1, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
                     ]
                 }
             }
         },
         methods: {
             handleSubmit(name) {
+                console.log(md5(md5('zdgf264760')));
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         this.login();
@@ -52,7 +53,7 @@
                     '/api/v1/tokens',
                     {
                         username: this.formInline.user,
-                        password: md5(this.formInline.password)
+                        password: md5(md5(this.formInline.password))
                     }
                 )
                 .then(res => {
