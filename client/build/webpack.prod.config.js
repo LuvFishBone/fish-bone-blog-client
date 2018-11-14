@@ -10,7 +10,7 @@ module.exports = webpackMerge(webpackBase, {
     output: {
         filename: 'js/[name].[chunkhash].js',
         path: path.resolve(__dirname, '../dist'),
-        publicPath: './'
+        publicPath: '/'
     },
     plugins:[
         new webpack.HashedModuleIdsPlugin(),
