@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -13,5 +14,3 @@ yarn-error.log*
 *.sln
 
 package-lock.json*
-client/.eslintrc.js
-admin/.eslintrc.js
