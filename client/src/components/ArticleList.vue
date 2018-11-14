@@ -7,7 +7,7 @@
         <div class="article-list">
             <ul>
                 <li class="item" v-for="item in articles" :key="item.uniqueMark">
-                    <router-link :to="{name: 'article', params: {uniqueMark: item.uniqueMark}}">
+                    <router-link :to="{name: 'article', query: {uniqueMark: item.uniqueMark}}">
                         <div class="content-box">
                             <div class="info-box">
                                 <div class="info-row title-row">

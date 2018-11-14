@@ -27,22 +27,17 @@ const router = new Router({
             component: Tags
         },
         {
+            path: '/about',
+            name: 'about',
+            component: About
+        },
+        {
             path: '/tags/:tag',
             name: 'tagByTag',
             component: Tags
         },
         {
-            path: '/about',
-            name: 'about',
-            component: About
-        },
-        // {
-        //     path: '/article/:id',
-        //     name: 'article',
-        //     component: Article
-        // },
-        {
-            path: '/article/:uniqueMark',
+            path: '/article',
             name: 'article',
             component: Article
         }

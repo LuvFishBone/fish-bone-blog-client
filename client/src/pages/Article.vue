@@ -30,25 +30,17 @@
                 isLoading: null
             }
         },
-        // beforeRouteEnter (to, from, next) {
-        //     const uniqueMark = to.params.uniqueMark
-        //     axios.get(`/api/v1/articles/${uniqueMark}`).then(res => {
-        //         if(res.status === 200) {
-        //             next((vm) => {
-        //                 vm.article = res.data[0]
-        //             })
-        //         }
-        //     })
-        // },
         mounted() {
             this.isLoading = true
-            const uniqueMark = this.$route.params.uniqueMark
-            axios.get(`/api/v1/articles/${uniqueMark}`).then(res => {
-                if(res.status === 200) {
-                    this.article = res.data[0]
-                    this.isLoading = false
-                }
-            })
+            if (this.$route.query.uniqueMark) {
+                const uniqueMark = this.$route.query.uniqueMark
+                axios.get(`/api/v1/articles/${uniqueMark}`).then(res => {
+                    if(res.status === 200) {
+                        this.article = res.data[0]
+                        this.isLoading = false
+                    }
+                })
+            }
         },
         components: {
             Loading,
