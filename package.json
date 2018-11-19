@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --config ./build/webpack.dev.config.js --progress --profile --color --open",
-    "clear": "rm -rf dist",
+    "clear": "rm -rf ./dist",
     "build": "npm run clear && webpack --config ./build/webpack.prod.config.js --progress --color"
   },
   "repository": {
