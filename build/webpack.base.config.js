@@ -14,25 +14,8 @@ module.exports = {
        rules:[
             {
                 test: /\.css$/,
-                use: ['style-loader','css-loader']
+                use: ['vue-style-loader','css-loader']
             },
-           {
-               test: /\.(less)$/,
-               use: [
-                   'style-loader',
-                   'css-loader',
-                   {
-                        loader: 'px2rem-loader',
-                        options: {
-                            remUnit: 50,
-                            remPrecision: 8
-                        }
-                    },
-                   'postcss-loader',
-                   'less-loader',
-                ],
-                exclude: /node_modules/
-           },
            {
                test: /\.js$/,
                use: [
@@ -56,10 +39,7 @@ module.exports = {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
                     {
-                        loader: 'url-loader',
-                        options: {
-                          limit: 50000,
-                        }
+                        loader: 'url-loader'
                     }
                 ]
             },

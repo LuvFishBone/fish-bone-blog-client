@@ -4,7 +4,6 @@ const webpackMerge = require('webpack-merge');
 const webpackBase = require('./webpack.base.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 module.exports = webpackMerge(webpackBase, {
     mode: 'development',
     devServer: {
@@ -18,6 +17,27 @@ module.exports = webpackMerge(webpackBase, {
         }
     },
     devtool: 'inline-source-map',
+    module: {
+        rules:[
+            {
+                test: /\.(less)$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    {
+                         loader: 'px2rem-loader',
+                         options: {
+                             remUnit: 50,
+                             remPrecision: 8
+                         }
+                     },
+                    'postcss-loader',
+                    'less-loader',
+                 ],
+                 exclude: /node_modules/
+            }
+        ]
+    },
     plugins: [
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -30,7 +50,6 @@ module.exports = webpackMerge(webpackBase, {
         new webpack.ProvidePlugin({
             axios: 'axios'
         })
-
     ],
     output: {
         filename: '[name].bundle.js',
