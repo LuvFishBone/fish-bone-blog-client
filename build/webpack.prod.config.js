@@ -23,7 +23,7 @@ module.exports = webpackMerge(webpackBase, {
                     {
                         loader: MiniCssExtractPlugin.loader,
                         options: {
-                            publicPath: '../dist/'
+                            publicPath: '../'
                         },
                     },
                     'css-loader',
