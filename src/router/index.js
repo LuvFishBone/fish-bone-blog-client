@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/Home'
-import Article from '@/pages/Article'
-import About from '@/pages/About'
-import Archives from '@/pages/Archives'
-import Tags from '@/pages/Tags'
+// import Home from '@/pages/Home'
+// import Article from '@/pages/Article'
+// import About from '@/pages/About'
+// import Archives from '@/pages/Archives'
+// import Tags from '@/pages/Tags'
 
 Vue.use(Router)
 
@@ -14,32 +14,32 @@ const router = new Router({
         {
             path: '/',
             name: 'index',
-            component: Home
+            component: resolve =>require(['@/pages/Home'], resolve)
         },
         {
             path: '/archives',
             name: 'archives',
-            component: Archives
+            component: resolve =>require(['@/pages/Archives'], resolve)
         },
         {
             path: '/tags',
             name: 'tags',
-            component: Tags
+            component: resolve =>require(['@/pages/Tags'], resolve)
         },
         {
             path: '/about',
             name: 'about',
-            component: About
+            component: resolve =>require(['@/pages/About'], resolve)
         },
         {
             path: '/tags/:tag',
             name: 'tagByTag',
-            component: Tags
+            component: resolve =>require(['@/pages/Tags'], resolve)
         },
         {
             path: '/article',
             name: 'article',
-            component: Article
+            component: resolve =>require(['@/pages/Article'], resolve)
         }
     ]
 })
