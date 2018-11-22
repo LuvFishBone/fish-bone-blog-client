@@ -12,12 +12,11 @@ module.exports = webpackMerge(webpackBase, {
     devtool: false,
     output: {
         filename: 'js/[name].[chunkhash].js',
-        chunkFilename: 'js/[name].[chunkhash].chunk.js',
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/'
     },
     module: {
-        rules:[
+        rules: [
             {
                 test: /\.(less)$/,
                 use: [
