@@ -10,12 +10,6 @@ import '@/utils/axios.config.js'
 import '@/assets/style/app.less'
 import '@/directives'
 
-// 解决移动端300ms延迟问题
-// if (typeof window !== 'undefined') {
-//     const Fastclick = require('fastclick');
-//     Fastclick.attach(document.body);
-// }
-
 Vue.use(Toasted, { 
     theme: "primary", 
     position: "top-center", 
