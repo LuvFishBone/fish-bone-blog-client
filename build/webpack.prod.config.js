@@ -64,6 +64,14 @@ module.exports = webpackMerge(webpackBase, {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
+                    priority: 10,
+                    enforce: true,
+                    chunks: 'initial'
+                },
+                commons: {
+                    minChunks: 3,
+                    name: 'commons',
+                    enforce: true,
                     chunks: 'all'
                 }
             }
