@@ -6,12 +6,6 @@
     </div>
 </template>
 
-<script>
-    export default{
-
-    }
-</script>
-
 <style scoped lang="less">
     .main-content{
         padding-top: 10px;

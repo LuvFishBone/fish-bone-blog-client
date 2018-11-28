@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from '@/pages/Home'
-// import Article from '@/pages/Article'
-// import About from '@/pages/About'
-// import Archives from '@/pages/Archives'
-// import Tags from '@/pages/Tags'
 
 Vue.use(Router)
 

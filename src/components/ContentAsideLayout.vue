@@ -1,6 +1,6 @@
 <template>
     <div class="main-content">
-        <div class="content-view">
+        <div id="content-view" class="content-view">
             <slot name="contentView"></slot>
         </div>
         <div id="right-aside" class="right-side">
