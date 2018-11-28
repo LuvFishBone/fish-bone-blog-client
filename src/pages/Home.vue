@@ -17,7 +17,7 @@
     import ContentAsideLayout from '@/components/ContentAsideLayout'
     import ArticleList from '@/components/ArticleList'
     import RightAside from '@/components/RightAside'
-    
+
     export default {
         components: {
             BaseLayout,

@@ -55,7 +55,7 @@
 
 <script>
     import parseMarkdown from '@/utils/parseMarkdown'
-    import moment from 'moment'
+    // import moment from 'moment'
 
     export default {
         data() {
@@ -84,18 +84,6 @@
                 this.data.articleTitle = val.title
                 this.getMomentsByArticleId(val.id)
             }
-        },
-        mounted() {
-            // this.simplemde = new SimpleMDE({
-            //     element: document.getElementById("articleComment"),
-            //     autoDownloadFontAwesome: false,
-            //     placeholder: '请填写评论！(支持Markdown语法)',
-            //     spellChecker: false,
-            //     toolbar: false,
-            // })
-            // this.simplemde.codemirror.on("change", () => {
-            //     this.data.comment =  this.simplemde.value()
-            // });
         },
         methods: {
             parseMarkdown,

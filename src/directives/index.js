@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 //import Demo from './Demo'
 import DateInterval from './DateInterval'
 
