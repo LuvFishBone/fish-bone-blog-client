@@ -1,10 +1,10 @@
 require("babel-polyfill")
 
-import Vue from 'vue'
+// import Vue from 'vue'
 import App from '@/App'
 import router from './router'
 import store from './store'
-import moment from 'moment'
+// import moment from 'moment'
 import Toasted from 'vue-toasted'
 import '@/utils/axios.config.js'
 import '@/assets/style/app.less'

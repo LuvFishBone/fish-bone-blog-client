@@ -1,40 +1,40 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+// import Vue from 'vue'
+// import Router from 'vue-router'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-const router = new Router({
+const router = new VueRouter({
     mode: 'history',
     routes: [
         {
             path: '/',
             name: 'index',
-            component: resolve =>require(['@/pages/Home'], resolve)
+            component: resolve => require(['@/pages/Home'], resolve)
         },
         {
             path: '/archives',
             name: 'archives',
-            component: resolve =>require(['@/pages/Archives'], resolve)
+            component: resolve => require(['@/pages/Archives'], resolve)
         },
         {
             path: '/tags',
             name: 'tags',
-            component: resolve =>require(['@/pages/Tags'], resolve)
+            component: resolve => require(['@/pages/Tags'], resolve)
         },
         {
             path: '/about',
             name: 'about',
-            component: resolve =>require(['@/pages/About'], resolve)
+            component: resolve => require(['@/pages/About'], resolve)
         },
         {
             path: '/tags/:tag',
             name: 'tagByTag',
-            component: resolve =>require(['@/pages/Tags'], resolve)
+            component: resolve => require(['@/pages/Tags'], resolve)
         },
         {
             path: '/article',
             name: 'article',
-            component: resolve =>require(['@/pages/Article'], resolve)
+            component: resolve => require(['@/pages/Article'], resolve)
         }
     ]
 })

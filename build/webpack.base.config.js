@@ -34,14 +34,14 @@ module.exports = {
                 'file-loader'
                 ]
             },
-            { 
-                test: /\.(woff|woff2|eot|ttf|svg|jpg|png|gif)\??.*$/, 
-                loader: 'url-loader',
-                query: {
-                  limit: 8192,
-                  name: 'resourse/[name].[ext]'
-                }
-            },
+            // { 
+            //     test: /\.(woff|woff2|eot|ttf|svg|jpg|png|gif)\??.*$/, 
+            //     loader: 'url-loader',
+            //     query: {
+            //       limit: 8192,
+            //       name: 'resourse/[name].[ext]'
+            //     }
+            // },
             {
                 test: /\.(html|tpl)$/,
                 loader: 'html-loader'
@@ -58,5 +58,9 @@ module.exports = {
             'vue$': 'vue/dist/vue.esm.js',
             '@': resolve('src')
         }
-    }
+    },
+    externals: {
+        'vue': 'Vue',
+        'vue-router': 'VueRouter'
+    },
 }
