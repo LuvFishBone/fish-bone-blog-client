@@ -28,22 +28,22 @@
             <div class="header">发表评论 <span class="total">共{{list.length}}条评论</span></div>
             <div class="comment-form">
                 <div class="form-item">
-                    <span>*昵称</span><input type="text" class="input-default" placeholder="请输入昵称" maxlength="50" v-model="comment.nickname">
+                    <span>*昵称</span><input type="text" class="input-default" placeholder="请输入昵称" maxlength="50" v-model="data.nickname">
                 </div>
                 <div class="form-item">
                     <span>*邮箱</span>
-                    <input type="text" class="input-default" placeholder="请输入邮箱" maxlength="80" v-model="comment.email">
+                    <input type="text" class="input-default" placeholder="请输入邮箱" maxlength="80" v-model="data.email">
                 </div>
                 <div class="form-item">
                     <span>站点</span>
-                    <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" v-model="comment.personalSite">
+                    <input type="text" class="input-default" placeholder="请输入个人站点" maxlength="100" v-model="data.personalSite">
                 </div>
-                <div v-if="comment.blockquote">
-                    您引用了：<a class="quote-link" :href="currentQuoteIndex"><i>{{comment.quoter}}</i>的发言</a>
+                <div v-if="data.blockquote">
+                    您引用了：<a class="quote-link" :href="currentQuoteIndex"><i>{{data.quoter}}</i>的发言</a>
                     <span class="delete-quote" @click="deleteQuote">删除引用</span>
                 </div>
-                <div class="simplemde-box">
-                    <textarea id="articleComment"></textarea>
+                <div class="comment-box">
+                    <textarea v-model="data.comment" placeholder="请输入内容，可使用marketdown语法编写代码"></textarea>
                 </div>
             </div>
             <div class="submit">
@@ -54,17 +54,13 @@
 </template>
 
 <script>
-
-    import 'font-awesome/css/font-awesome.min.css'
-    import 'simplemde/dist/simplemde.min.css'
     import parseMarkdown from '@/utils/parseMarkdown'
-    import SimpleMDE from 'simplemde'
     import moment from 'moment'
 
     export default {
         data() {
             return {
-                comment: {
+                data: {
                     quoter: '',
                     blockquote: '',
                     articleId: this.id,
@@ -84,22 +80,22 @@
         },
         watch: {
             articleInfo: function(val, oldVal) {
-                this.comment.articleId = val.id
-                this.comment.articleTitle = val.title
+                this.data.articleId = val.id
+                this.data.articleTitle = val.title
                 this.getMomentsByArticleId(val.id)
             }
         },
         mounted() {
-            this.simplemde = new SimpleMDE({
-                element: document.getElementById("articleComment"),
-                autoDownloadFontAwesome: false,
-                placeholder: '请填写评论！(支持Markdown语法)',
-                spellChecker: false,
-                toolbar: false,
-            })
-            this.simplemde.codemirror.on("change", () => {
-                this.comment.comment =  this.simplemde.value()
-            });
+            // this.simplemde = new SimpleMDE({
+            //     element: document.getElementById("articleComment"),
+            //     autoDownloadFontAwesome: false,
+            //     placeholder: '请填写评论！(支持Markdown语法)',
+            //     spellChecker: false,
+            //     toolbar: false,
+            // })
+            // this.simplemde.codemirror.on("change", () => {
+            //     this.data.comment =  this.simplemde.value()
+            // });
         },
         methods: {
             parseMarkdown,
@@ -107,8 +103,8 @@
                 return moment(datetime).format('YYYY年MM月DD日 HH时mm分')
             },
             setCurrentQuote(item, index) {
-                this.comment.blockquote = item.comment
-                this.comment.quoter = item.nickname
+                this.data.blockquote = item.comment
+                this.data.quoter = item.nickname
                 this.currentQuoteIndex = `#quote-${index}`
             },
             getMomentsByArticleId(articleId) {
@@ -118,39 +114,38 @@
                 })
             },
             deleteQuote() {
-                this.comment.blockquote = ''
-                this.comment.quoter = ''
+                this.data.blockquote = ''
+                this.data.quoter = ''
                 this.currentQuoteIndex = ''
             },
             submit() {
-                if (this.comment.nickname === '') {
+                if (this.data.nickname === '') {
                     this.$toasted.error('昵称不能为空！')
                     return
                 }
-                if (this.comment.email === '') {
+                if (this.data.email === '') {
                     this.$toasted.error('邮箱不能为空！')
                     return
                 }
-                if (!/^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,3}$/.test(this.comment.email)) {
+                if (!/^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,3}$/.test(this.data.email)) {
                     this.$toasted.error('邮箱格式不正确！')
                     return
                 }
-                if (this.comment.comment === '') {
+                if (this.data.comment === '') {
                     this.$toasted.error('评论不能为空不能为空！')
                     return
                 }
-                if (this.comment.comment.length > 1000) {
+                if (this.data.comment.length > 1000) {
                     this.$toasted.error('评论不能大于1000字符！')
                     return
                 }
-                const { quoter, blockquote, articleId, articleTitle, comment, nickname, email, personalSite, isPass } = this.comment;
+                const { quoter, blockquote, articleId, articleTitle, comment, nickname, email, personalSite, isPass } = this.data;
                 axios.post('/api/v1/comments', { quoter, blockquote, articleId, articleTitle, comment, nickname, email, personalSite, isPass })
                 .then((res) => {
                     this.$toasted.success('评论成功，待管理员审核以后才可显示评论！')
-                    this.comment.blockquote = ''
-                    this.comment.quoter = ''
-                    this.comment.comment = ''
-                    this.simplemde.value('')
+                    this.data.blockquote = ''
+                    this.data.quoter = ''
+                    this.data.comment = ''
                 })
             }
         }
@@ -234,8 +229,16 @@
                     cursor: pointer;
                 }
             }
-            .simplemde-box{
+            .comment-box{
                 margin-top: 10px;
+                textarea{
+                    width: 100%;
+                    min-height: 300px;
+                    padding: 5px;
+                    border: 1Px solid #dcdee2;
+                    border-radius: 4px;
+                    color: #515a6e;
+                }
             }
             .submit{
                 padding: 10px 0 0;

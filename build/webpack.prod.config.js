@@ -68,7 +68,7 @@ module.exports = webpackMerge(webpackBase, {
                     chunks: 'initial', // 只对入口文件处理
                 },
                 commons: {
-                    minChunks: 3,//最少有两个文件共用的代码
+                    minChunks: 2,//最少有两个文件共用的代码
                     name: 'commons',
                     enforce: true,
                     chunks: 'all', // 针对所有文件

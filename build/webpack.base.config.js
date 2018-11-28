@@ -34,13 +34,13 @@ module.exports = {
                 'file-loader'
                 ]
             },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    {
-                        loader: 'url-loader'
-                    }
-                ]
+            { 
+                test: /\.(woff|woff2|eot|ttf|svg|jpg|png|gif)\??.*$/, 
+                loader: 'url-loader',
+                query: {
+                  limit: 8192,
+                  name: 'resourse/[name].[ext]'
+                }
             },
             {
                 test: /\.(html|tpl)$/,
