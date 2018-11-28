@@ -56,6 +56,7 @@
         li{
             margin-right: 20px;
             cursor: pointer;
+            list-style: none;
             span{
                 font-size: 14px;
                 color: #90979c;

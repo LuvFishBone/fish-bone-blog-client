@@ -15,7 +15,6 @@
 </template>
 
 <script>
-
     import BaseLayout from '@/components/BaseLayout'
     import ContentAsideLayout from '@/components/ContentAsideLayout'
     import SidePanel from '@/components/SiderPanel'

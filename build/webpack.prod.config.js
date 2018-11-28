@@ -60,18 +60,18 @@ module.exports = webpackMerge(webpackBase, {
         runtimeChunk: 'single',
         splitChunks: {
             cacheGroups: {
-                vendor: {
+                vendors: { 
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
+                    name: 'vendor',
                     priority: 10,
                     enforce: true,
-                    chunks: 'initial'
+                    chunks: 'initial', // 只对入口文件处理
                 },
                 commons: {
-                    minChunks: 3,
+                    minChunks: 3,//最少有两个文件共用的代码
                     name: 'commons',
                     enforce: true,
-                    chunks: 'all'
+                    chunks: 'all', // 针对所有文件
                 }
             }
         },
