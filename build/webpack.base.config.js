@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 function resolve(dir) {
@@ -57,8 +56,7 @@ module.exports = {
         extensions: ['.js', '.vue', '.json'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
-            '@': resolve('src'),
-            fastclick: 'fastclick/lib/fastclick.js',
+            '@': resolve('src')
         }
     }
 }
