@@ -1,6 +1,6 @@
 <template>
     <div class="avatar-box">
-        <div class="avatar"></div>
+        <!-- <div class="avatar"></div> -->
         <div class="nickname">FishBone</div>
         <div class="motto">叩首问路，码梦为生</div>
         <div class="social">
@@ -78,16 +78,16 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        .avatar{
-            display: none;
-            width: 115px;
-            height: 115px;
-            border: 1px solid rgba(178, 186, 194, 0.15);
-            border-radius: 100%;
-            background: url('../assets/img/fishbone_128px.png') center center no-repeat;
-            background-size: 100px;
-            margin-bottom: 5px;
-        }
+        // .avatar{
+        //     display: none;
+        //     width: 115px;
+        //     height: 115px;
+        //     border: 1px solid rgba(178, 186, 194, 0.15);
+        //     border-radius: 100%;
+        //     background: url('../assets/img/fishbone_128px.png') center center no-repeat;
+        //     background-size: 100px;
+        //     margin-bottom: 5px;
+        // }
         .nickname{
             margin-bottom: 15px;
             font-size: 24px;
