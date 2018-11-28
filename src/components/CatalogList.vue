@@ -38,6 +38,7 @@
         padding-left: 20px;
         word-wrap: break-word;
         word-break: all;
+        list-style: none;
         a{
             display: block;
             max-width: 200px;
